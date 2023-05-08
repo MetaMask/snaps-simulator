@@ -4,7 +4,7 @@ export const JSON_RPC_SCHEMA = {
   type: 'object',
   properties: {
     jsonrpc: {
-      type: 'string',
+      const: '2.0',
     },
     id: {
       oneOf: [
@@ -14,32 +14,20 @@ export const JSON_RPC_SCHEMA = {
         {
           type: 'number',
         },
+        {
+          type: 'null',
+        },
       ],
     },
     method: {
       type: 'string',
     },
     params: {
-      oneOf: [
-        {
-          type: 'object',
-          properties: {
-            hello: {
-              type: 'string',
-            },
-          },
-          required: ['hello'],
-        },
-        {
-          type: 'array',
-          items: {
-            type: 'string',
-          },
-        },
-      ],
+      type: ['number', 'string', 'boolean', 'object', 'array', 'null'],
     },
   },
   required: ['jsonrpc', 'id', 'method'],
+  additionalProperties: false,
 };
 
 export const SAMPLE_JSON_RPC_REQUEST = `
