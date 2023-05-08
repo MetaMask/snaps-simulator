@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
-import { tagAnatomy, formAnatomy } from '@chakra-ui/anatomy';
+import { tagAnatomy, formAnatomy, tabsAnatomy } from '@chakra-ui/anatomy';
 import {
   createMultiStyleConfigHelpers,
   defineStyle,
@@ -18,6 +18,11 @@ const {
   definePartsStyle: defineFormPartsStyle,
   defineMultiStyleConfig: defineFormMultiStyleConfig,
 } = createMultiStyleConfigHelpers(formAnatomy.keys);
+
+const {
+  definePartsStyle: defineTabsPartsStyle,
+  defineMultiStyleConfig: defineTabsMultiStyleConfig,
+} = createMultiStyleConfigHelpers(tabsAnatomy.keys);
 /* eslint-enable @typescript-eslint/unbound-method */
 
 export const theme = extendTheme({
@@ -28,6 +33,7 @@ export const theme = extendTheme({
   colors: {
     text: {
       default: '#24272A',
+      alternative: '#535A61',
     },
     info: {
       default: '#0376C9',
@@ -113,6 +119,39 @@ export const theme = extendTheme({
           opacity: '0.6',
           borderRadius: 'lg',
         },
+      },
+    }),
+
+    Tabs: defineTabsMultiStyleConfig({
+      variants: {
+        line: defineTabsPartsStyle({
+          tablist: {
+            background: 'background.alternative',
+            borderBottom: '1px solid',
+            borderColor: 'border.default',
+            paddingX: '4',
+          },
+          tab: {
+            color: 'text.alternative',
+            fontSize: 'xs',
+            fontWeight: '600',
+            textTransform: 'uppercase',
+            outline: 'none',
+            paddingTop: '0',
+            paddingX: '0',
+            paddingBottom: '0.5',
+            marginY: '3',
+            background: 'none',
+            '& + &': {
+              marginLeft: '4',
+            },
+            _selected: {
+              color: 'text.default',
+              borderBottom: '2px solid',
+              borderColor: 'border.active',
+            },
+          },
+        }),
       },
     }),
 
