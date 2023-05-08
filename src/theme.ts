@@ -1,4 +1,15 @@
-import { defineStyleConfig, extendTheme } from '@chakra-ui/react';
+/* eslint-disable @typescript-eslint/naming-convention */
+
+import { tagAnatomy } from '@chakra-ui/anatomy';
+import {
+  createMultiStyleConfigHelpers,
+  defineStyleConfig,
+  extendTheme,
+} from '@chakra-ui/react';
+
+// eslint-disable-next-line @typescript-eslint/unbound-method
+const { definePartsStyle, defineMultiStyleConfig } =
+  createMultiStyleConfigHelpers(tagAnatomy.keys);
 
 export const theme = extendTheme({
   borders: {
@@ -6,8 +17,12 @@ export const theme = extendTheme({
   },
 
   colors: {
+    background: {
+      alternative: '#F2F4F6',
+    },
     gray: {
       muted: '#D6D9DC',
+      40: '#F2F4F6',
     },
   },
 
@@ -30,11 +45,24 @@ export const theme = extendTheme({
       },
     }),
 
-    Heading: defineStyleConfig({
-      baseStyle: {
-        fontFamily: 'Euclid Circular B, sans-serif',
+    Tag: defineMultiStyleConfig({
+      variants: {
+        code: definePartsStyle({
+          container: {
+            background: '#F2F4F6',
+            borderRadius: '0px',
+            fontWeight: 'normal',
+            fontFamily: 'code',
+          },
+        }),
       },
     }),
+  },
+
+  fonts: {
+    heading: `'Euclid Circular B', sans-serif`,
+    body: `'Euclid Circular B', sans-serif`,
+    code: `'IBM Plex Mono', monospace`,
   },
 
   styles: {
