@@ -102,6 +102,7 @@
     "jest": "^28.1.3",
     "jest-environment-jsdom": "^29.5.0",
     "jest-it-up": "^2.0.2",
+    "jest-transformer-svg": "^2.0.1",
     "lint-staged": "^13.2.2",
     "prettier": "^2.7.1",
     "prettier-plugin-packagejson": "^2.3.0",
