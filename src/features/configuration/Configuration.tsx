@@ -15,6 +15,7 @@ import {
   HStack,
   Textarea,
   Text,
+  Divider,
 } from '@chakra-ui/react';
 import { FormEvent } from 'react';
 
@@ -65,13 +66,14 @@ export const Configuration = () => {
       >
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>
+          <ModalHeader pb="0">
             <Text fontSize="2xl">Configure environment</Text>
-            <Text fontSize="md" color="#535A61">
+            <Text fontSize="md" color="#535A61" fontWeight="400">
               Settings and variables to setup the context for the simulation.
             </Text>
           </ModalHeader>
-          <ModalBody>
+          <Divider my="4" />
+          <ModalBody pt="0">
             <FormControl>
               <FormLabel>Local server location</FormLabel>
               <Input
