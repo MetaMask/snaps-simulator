@@ -2711,7 +2711,6 @@ __metadata:
     jest: ^28.1.3
     jest-environment-jsdom: ^29.5.0
     jest-it-up: ^2.0.2
-    jest-transformer-svg: ^2.0.1
     json-rpc-engine: ^6.1.0
     json-rpc-middleware-stream: ^4.2.1
     lint-staged: ^13.2.2
@@ -8937,16 +8936,6 @@ __metadata:
     pretty-format: ^28.1.3
     semver: ^7.3.5
   checksum: 2a46a5493f1fb50b0a236a21f25045e7f46a244f9f3ae37ef4fbcd40249d0d68bb20c950ce77439e4e2cac985b05c3061c90b34739bf6069913a1199c8c716e1
-  languageName: node
-  linkType: hard
-
-"jest-transformer-svg@npm:^2.0.1":
-  version: 2.0.1
-  resolution: "jest-transformer-svg@npm:2.0.1"
-  peerDependencies:
-    jest: ">= 28.1.0"
-    react: ^17.0.0 || ^18.0.0
-  checksum: 6fffcc64c952c9a9a59c87d7bb7e51000990ccd19daba4e9d58b42fefd2448bde8accc3402a494b884681a32b8d637381d62647bf05da69d8bca5738c449cda3
   languageName: node
   linkType: hard
 

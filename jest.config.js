@@ -42,9 +42,9 @@ module.exports = {
   coverageThreshold: {
     global: {
       branches: 98.24,
-      functions: 91.3,
-      lines: 89.4,
-      statements: 90.59,
+      functions: 89.69,
+      lines: 89.87,
+      statements: 90.23,
     },
   },
 
@@ -85,7 +85,10 @@ module.exports = {
   // ],
 
   // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
-  // moduleNameMapper: {},
+  moduleNameMapper: {
+    // Mocks out all these file formats when tests are run
+    '\\.(css|less|scss|sass|svg)$': '<rootDir>/src/assets/file-mock.ts',
+  },
 
   // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
   // modulePathIgnorePatterns: [],
@@ -186,14 +189,12 @@ module.exports = {
   // A map from regular expressions to paths to transformers
   transform: {
     '^.+\\.(t|j)sx?$': '@swc/jest',
-    '^.+\\.svg$': 'jest-transformer-svg',
   },
 
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
-  // transformIgnorePatterns: [
-  //   "/node_modules/",
-  //   "\\.pnp\\.[^\\/]+$"
-  // ],
+  transformIgnorePatterns: [
+    'node_modules/(?!(monaco-editor|react-monaco-editor))',
+  ],
 
   // An array of regexp pattern strings that are matched against all modules before the module loader will automatically return a mock for them
   // unmockedModulePathPatterns: undefined,
