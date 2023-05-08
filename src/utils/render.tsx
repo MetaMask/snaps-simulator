@@ -1,5 +1,6 @@
 import { render as testingLibraryRender } from '@testing-library/react';
 import { ReactElement } from 'react';
+import { MemoryRouter } from 'react-router-dom';
 
 import { Root } from '../components';
 import { createStore } from '../store';
@@ -15,6 +16,10 @@ import { createStore } from '../store';
 export function render(component: ReactElement) {
   const store = createStore();
   return testingLibraryRender(component, {
-    wrapper: ({ children }) => <Root store={store}>{children}</Root>,
+    wrapper: ({ children }) => (
+      <Root store={store}>
+        <MemoryRouter>{children}</MemoryRouter>
+      </Root>
+    ),
   });
 }
