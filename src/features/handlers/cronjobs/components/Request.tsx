@@ -1,6 +1,6 @@
 import {
-  Box,
   Button,
+  Flex,
   FormControl,
   FormErrorMessage,
   FormLabel,
@@ -35,35 +35,43 @@ export const Request: FunctionComponent = () => {
   };
 
   return (
-    <Box flex="1">
-      {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <FormControl isInvalid={Boolean(errors.origin)}>
-          <FormLabel htmlFor="origin">Origin</FormLabel>
-          <Input
-            id="origin"
-            placeholder="metamask.io"
-            fontFamily="code"
-            {...register('origin')}
-          />
-          <FormErrorMessage>{errors.origin?.message}</FormErrorMessage>
-        </FormControl>
+    <Flex
+      as="form"
+      flexDirection="column"
+      flex="1"
+      /* eslint-disable-next-line @typescript-eslint/no-misused-promises */
+      onSubmit={handleSubmit(onSubmit)}
+    >
+      <FormControl isInvalid={Boolean(errors.origin)}>
+        <FormLabel htmlFor="origin">Origin</FormLabel>
+        <Input
+          id="origin"
+          placeholder="metamask.io"
+          fontFamily="code"
+          {...register('origin')}
+        />
+        <FormErrorMessage>{errors.origin?.message}</FormErrorMessage>
+      </FormControl>
 
-        <FormControl isInvalid={Boolean(errors.request)}>
-          <FormLabel htmlFor="request">Request</FormLabel>
-          <Controller
-            control={control}
-            name="request"
-            render={({ field: { onChange, value } }) => (
-              <Editor onChange={onChange} value={value} />
-            )}
-          />
-        </FormControl>
+      <FormControl
+        isInvalid={Boolean(errors.request)}
+        display="flex"
+        flexDirection="column"
+        flex="1"
+      >
+        <FormLabel htmlFor="request">Request</FormLabel>
+        <Controller
+          control={control}
+          name="request"
+          render={({ field: { onChange, value } }) => (
+            <Editor onChange={onChange} value={value} />
+          )}
+        />
+      </FormControl>
 
-        <Button type="submit" marginTop="4">
-          Submit
-        </Button>
-      </form>
-    </Box>
+      <Button type="submit" marginTop="4">
+        Submit
+      </Button>
+    </Flex>
   );
 };

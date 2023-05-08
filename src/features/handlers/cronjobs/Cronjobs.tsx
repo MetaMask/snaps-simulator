@@ -14,18 +14,18 @@ import { Request } from './components';
 export const Cronjobs: FunctionComponent = () => (
   <Flex width="100%" direction="column">
     <Flex direction="row" flex="1">
-      <Box width="50%">
-        <Tabs>
+      <Flex direction="column" flex="1" width="50%">
+        <Tabs display="flex" flexDirection="column" flex="1">
           <TabList>
             <Tab>Request</Tab>
           </TabList>
-          <TabPanels>
-            <TabPanel>
+          <TabPanels display="flex" flexDirection="column" flex="1">
+            <TabPanel display="flex" flexDirection="column" flex="1">
               <Request />
             </TabPanel>
           </TabPanels>
         </Tabs>
-      </Box>
+      </Flex>
       <Box width="50%" borderLeft="1px solid" borderColor="border.default">
         <Tabs>
           <TabList>
