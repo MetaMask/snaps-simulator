@@ -19,6 +19,7 @@ describe('simulation slice', () => {
         {
           executionService: null,
           sourceCode: '',
+          manifest: null,
           request: null,
           response: null,
         },
@@ -36,6 +37,7 @@ describe('simulation slice', () => {
           executionService:
             new MockExecutionService() as unknown as IframeExecutionService,
           sourceCode: '',
+          manifest: null,
           request: null,
           response: null,
         },
@@ -58,6 +60,7 @@ describe('simulation slice', () => {
           executionService:
             new MockExecutionService() as unknown as IframeExecutionService,
           sourceCode: '',
+          manifest: null,
           request: null,
           response: null,
         },
@@ -75,6 +78,7 @@ describe('simulation slice', () => {
           executionService:
             new MockExecutionService() as unknown as IframeExecutionService,
           sourceCode: '',
+          manifest: null,
           request: null,
           response: null,
         },
