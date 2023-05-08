@@ -1,8 +1,12 @@
-import { Box, Heading } from '@chakra-ui/react';
+import { Box, Container } from '@chakra-ui/react';
 import { FunctionComponent } from 'react';
 
+import { Editor } from '../../../components';
+
 export const JsonRpc: FunctionComponent = () => (
-  <Box>
-    <Heading>JSON-RPC</Heading>
+  <Box flex="1">
+    <Container size="fullWidth">
+      <Editor />
+    </Container>
   </Box>
 );

@@ -1,6 +1,7 @@
 import ReactRefreshPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
+import MonacoEditorWebpackPlugin from 'monaco-editor-webpack-plugin';
 import { Configuration, ProvidePlugin } from 'webpack';
 import { Configuration as DevServerConfiguration } from 'webpack-dev-server';
 import WebpackBarPlugin from 'webpackbar';
@@ -54,6 +55,10 @@ const config: Configuration & Record<'devServer', DevServerConfiguration> = {
         },
         mode: 'write-references',
       },
+    }),
+    new MonacoEditorWebpackPlugin({
+      languages: ['json'],
+      features: ['bracketMatching', 'clipboard', 'hover'],
     }),
   ],
   cache: {
