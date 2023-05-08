@@ -1,4 +1,4 @@
-import { Container, List, Stack, Tag, Text } from '@chakra-ui/react';
+import { Box, Container, List, Stack, Tag, Text } from '@chakra-ui/react';
 import { FunctionComponent } from 'react';
 
 import { useSelector } from '../../hooks';
@@ -16,18 +16,27 @@ export const Navigation: FunctionComponent = () => {
   return (
     <Container as="nav" size="fullWidth">
       <Stack as={List} marginTop="4" spacing="4">
-        {NAVIGATION_ITEMS.map(({ condition, icon, label, tag, path }) => {
-          if (condition && !condition(applicationState)) {
-            return null;
-          }
+        {NAVIGATION_ITEMS.map(
+          ({ condition, icon, label, tag, description, path }) => {
+            if (condition && !condition(applicationState)) {
+              return null;
+            }
 
-          return (
-            <Item key={path} icon={icon} path={path}>
-              <Text>{label}</Text>
-              <Tag variant="code">{tag}</Tag>
-            </Item>
-          );
-        })}
+            return (
+              <Item key={path} icon={icon} path={path}>
+                <Text>
+                  <Box as="span" fontWeight="600">
+                    {label}
+                  </Box>{' '}
+                  <Tag variant="code">{tag}</Tag>
+                </Text>
+                <Text fontSize="sm" marginTop="1">
+                  {description}
+                </Text>
+              </Item>
+            );
+          },
+        )}
       </Stack>
     </Container>
   );
