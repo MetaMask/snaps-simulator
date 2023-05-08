@@ -4,13 +4,14 @@ import {
   Route,
 } from 'react-router-dom';
 
-import { Overview } from './features';
-import { Layout } from './features/layout';
+import { Cronjobs, JsonRpc, Layout, Transactions } from './features';
 
 export const router = createHashRouter(
   createRoutesFromElements(
     <Route element={<Layout />}>
-      <Route path="/" element={<Overview />} />
+      <Route path="/" element={<JsonRpc />} />
+      <Route path="/cronjobs" element={<Cronjobs />} />
+      <Route path="/transactions" element={<Transactions />} />
     </Route>,
   ),
 );

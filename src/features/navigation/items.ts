@@ -21,7 +21,7 @@ export const NAVIGATION_ITEMS: NavigationItem[] = [
     label: 'JSON-RPC',
     tag: 'onRpcRequest',
     icon: 'textBubble',
-    path: '/json-rpc',
+    path: '/',
   },
   {
     label: 'Cronjobs',
