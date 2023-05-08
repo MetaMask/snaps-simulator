@@ -12,6 +12,7 @@
     "swc-loader",
     "ts-node",
     "typedoc",
-    "webpack-cli"
+    "webpack-cli",
+    "process"
   ]
 }

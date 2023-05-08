@@ -39,7 +39,7 @@ export function createStore() {
       getDefaultMiddleware({
         thunk: false,
         immutableCheck: true,
-        serializableCheck: true,
+        serializableCheck: false,
       }).concat(sagaMiddleware),
   });
 
