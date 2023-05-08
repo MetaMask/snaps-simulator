@@ -1,6 +1,6 @@
 import { IframeExecutionService } from '@metamask/snaps-controllers/dist/services';
-import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { SnapRpcHookArgs } from '@metamask/snaps-utils';
+import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const INITIAL_STATE = {
   executionService: null as IframeExecutionService | null,
