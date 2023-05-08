@@ -17,8 +17,16 @@ export const theme = extendTheme({
   },
 
   colors: {
+    text: {
+      default: '#24272A',
+    },
+    info: {
+      default: '#0376C9',
+      muted: 'rgba(3, 118, 201, 0.1)',
+    },
     background: {
       alternative: '#F2F4F6',
+      hover: '#FAFBFC',
     },
     gray: {
       muted: '#D6D9DC',
@@ -45,11 +53,33 @@ export const theme = extendTheme({
       },
     }),
 
+    Link: defineStyleConfig({
+      variants: {
+        'navigation-active': {
+          opacity: '1',
+          background: 'background.alternative',
+          borderRadius: 'lg',
+        },
+
+        'navigation-default': {
+          opacity: '0.6',
+          borderRadius: 'lg',
+        },
+      },
+    }),
+
+    Text: defineStyleConfig({
+      baseStyle: {
+        color: 'text.default',
+      },
+    }),
+
     Tag: defineMultiStyleConfig({
       variants: {
         code: definePartsStyle({
           container: {
-            background: '#F2F4F6',
+            color: 'info.default',
+            background: 'info.muted',
             borderRadius: '0px',
             fontWeight: 'normal',
             fontFamily: 'code',
@@ -60,9 +90,9 @@ export const theme = extendTheme({
   },
 
   fonts: {
-    heading: `'Euclid Circular B', sans-serif`,
-    body: `'Euclid Circular B', sans-serif`,
-    code: `'IBM Plex Mono', monospace`,
+    heading: `-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"`,
+    body: `-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"`,
+    code: `SFMono-Regular, Consolas, "Liberation Mono", Menlo, Courier, monospace`,
   },
 
   styles: {
