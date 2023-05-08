@@ -15,7 +15,7 @@ export const Navigation: FunctionComponent = () => {
 
   return (
     <Container as="nav" size="fullWidth">
-      <Stack as={List} marginTop="4" spacing="4">
+      <Stack as={List} spacing="4">
         {NAVIGATION_ITEMS.map(
           ({ condition, icon, label, tag, description, path }) => {
             if (condition && !condition(applicationState)) {
