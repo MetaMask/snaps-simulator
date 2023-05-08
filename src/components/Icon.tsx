@@ -3,6 +3,7 @@ import { FunctionComponent } from 'react';
 
 import alertIcon from '../assets/icons/alert.svg';
 import arrowRightIcon from '../assets/icons/arrow-right.svg';
+import configurationIcon from '../assets/icons/configuration.svg';
 import textBubbleIcon from '../assets/icons/text-bubble.svg';
 
 const DEFAULT_ICONS = {
@@ -17,6 +18,10 @@ const DEFAULT_ICONS = {
   textBubble: {
     alt: 'Text bubble',
     src: textBubbleIcon,
+  },
+  configuration: {
+    alt: 'Configuration',
+    src: configurationIcon,
   },
 };
 
