@@ -1,6 +1,6 @@
 import { all, fork } from 'redux-saga/effects';
 
-import { overviewSaga } from '../features';
+import { overviewSaga, simulationSaga } from '../features';
 
 /**
  * Root saga for the application.
@@ -10,5 +10,5 @@ import { overviewSaga } from '../features';
 export function* rootSaga() {
   // To avoid one saga failing and crashing all sagas, we fork each saga
   // individually.
-  yield all([fork(overviewSaga)]);
+  yield all([fork(overviewSaga), fork(simulationSaga)]);
 }

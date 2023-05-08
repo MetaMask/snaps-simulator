@@ -1,7 +1,7 @@
 import ReactRefreshPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-import { Configuration } from 'webpack';
+import { Configuration, ProvidePlugin } from 'webpack';
 import { Configuration as DevServerConfiguration } from 'webpack-dev-server';
 import WebpackBarPlugin from 'webpackbar';
 
@@ -19,8 +19,17 @@ const config: Configuration & Record<'devServer', DevServerConfiguration> = {
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx'],
+    fallback: {
+      process: require.resolve('process/browser'),
+      util: false,
+    },
   },
   plugins: [
+    new ProvidePlugin({
+      // These Node.js modules are used in some of the stream libs used
+      process: 'process/browser',
+      Buffer: ['buffer', 'Buffer'],
+    }),
     new ReactRefreshPlugin(),
     new HtmlWebpackPlugin({
       template: './src/index.html',
