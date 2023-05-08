@@ -5,11 +5,20 @@
  * @license  MIT
  */
 
+/*! @license DOMPurify 2.3.1 | (c) Cure53 and other contributors | Released under the Apache license 2.0 and Mozilla Public License 2.0 | github.com/cure53/DOMPurify/blob/2.3.1/LICENSE */
+
 /*! ieee754. BSD-3-Clause License. Feross Aboukhadijeh <https://feross.org/opensource> */
 
 /*! noble-hashes - MIT License (c) 2022 Paul Miller (paulmillr.com) */
 
 /*! scure-base - MIT License (c) 2022 Paul Miller (paulmillr.com) */
+
+/*!-----------------------------------------------------------------------------
+ * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Version: 0.38.0(0e330ae453813de4e6cf272460fb79c7117073d0)
+ * Released under the MIT license
+ * https://github.com/microsoft/monaco-editor/blob/main/LICENSE.txt
+ *-----------------------------------------------------------------------------*/
 
 /**
  * @license React
