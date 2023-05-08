@@ -14,6 +14,7 @@ import {
   Switch,
   HStack,
   Textarea,
+  Text,
 } from '@chakra-ui/react';
 import { FormEvent } from 'react';
 
@@ -64,7 +65,12 @@ export const Configuration = () => {
       >
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Configure environment</ModalHeader>
+          <ModalHeader>
+            <Text fontSize="2xl">Configure environment</Text>
+            <Text fontSize="md" color="#535A61">
+              Settings and variables to setup the context for the simulation.
+            </Text>
+          </ModalHeader>
           <ModalBody>
             <FormControl>
               <FormLabel>Local server location</FormLabel>
@@ -97,6 +103,7 @@ export const Configuration = () => {
               bg="#24272A"
               textColor="white"
               onClick={onClose}
+              _hover={{ bg: '#0376C9' }}
             >
               Apply config
             </Button>
