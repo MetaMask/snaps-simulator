@@ -93,6 +93,14 @@ export const theme = extendTheme({
       }),
     }),
 
+    Heading: {
+      variants: {
+        main: {
+          fontFamily: 'custom',
+        },
+      },
+    },
+
     Link: defineStyleConfig({
       variants: {
         'navigation-active': {
@@ -148,6 +156,7 @@ export const theme = extendTheme({
     heading: `-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"`,
     body: `-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"`,
     code: `SFMono-Regular, Consolas, "Liberation Mono", Menlo, Courier, monospace`,
+    custom: `"Euclid Circular B", sans-serif`,
   },
 
   styles: {
