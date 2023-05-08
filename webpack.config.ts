@@ -20,7 +20,6 @@ const config: Configuration & Record<'devServer', DevServerConfiguration> = {
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx'],
     fallback: {
-      process: require.resolve('process/browser'),
       util: false,
     },
   },
