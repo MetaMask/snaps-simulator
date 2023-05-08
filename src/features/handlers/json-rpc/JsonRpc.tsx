@@ -1,5 +1,5 @@
 import {
-  Box,
+  Flex,
   Button,
   Container,
   FormControl,
@@ -36,10 +36,20 @@ export const JsonRpc: FunctionComponent = () => {
   };
 
   return (
-    <Box flex="1">
-      <Container size="fullWidth">
-        {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
-        <form onSubmit={handleSubmit(onSubmit)}>
+    <Flex direction="column" flex="1">
+      <Container
+        display="flex"
+        flexDirection="column"
+        flex="1"
+        size="fullWidth"
+      >
+        <Flex
+          as="form"
+          flexDirection="column"
+          flex="1"
+          /* eslint-disable-next-line @typescript-eslint/no-misused-promises */
+          onSubmit={handleSubmit(onSubmit)}
+        >
           <FormControl isInvalid={Boolean(errors.origin)}>
             <FormLabel htmlFor="origin">Origin</FormLabel>
             <Input
@@ -51,7 +61,12 @@ export const JsonRpc: FunctionComponent = () => {
             <FormErrorMessage>{errors.origin?.message}</FormErrorMessage>
           </FormControl>
 
-          <FormControl isInvalid={Boolean(errors.request)}>
+          <FormControl
+            isInvalid={Boolean(errors.request)}
+            display="flex"
+            flexDirection="column"
+            flex="1"
+          >
             <FormLabel htmlFor="request">Request</FormLabel>
             <Controller
               control={control}
@@ -65,8 +80,8 @@ export const JsonRpc: FunctionComponent = () => {
           <Button type="submit" marginTop="4">
             Submit
           </Button>
-        </form>
+        </Flex>
       </Container>
-    </Box>
+    </Flex>
   );
 };

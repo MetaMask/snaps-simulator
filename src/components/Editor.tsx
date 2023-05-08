@@ -33,11 +33,11 @@ export const Editor: FunctionComponent<EditorProps> = (props) => {
   return (
     <Box
       width="100%"
-      height="200px"
       padding="4"
       borderWidth="1px"
       borderStyle="solid"
       borderColor="gray.muted"
+      flex="1"
     >
       <MonacoEditor
         language="json"
