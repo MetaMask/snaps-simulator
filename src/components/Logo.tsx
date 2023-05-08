@@ -1,12 +1,13 @@
-import { Heading } from '@chakra-ui/react';
+import { Image } from '@chakra-ui/react';
 import { FunctionComponent } from 'react';
 
+import logo from '../assets/metamask.svg';
+
 /**
- * Render the "logo" of the application. This is just for demonstrational
- * purposes.
+ * Render the MetaMask logo.
  *
  * @returns A React component.
  */
 export const Logo: FunctionComponent = () => (
-  <Heading>React Boilerplate</Heading>
+  <Image src={logo} alt="MetaMask" height="7" />
 );

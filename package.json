@@ -44,6 +44,7 @@
     ]
   },
   "dependencies": {
+    "@chakra-ui/anatomy": "^2.1.1",
     "@chakra-ui/react": "^2.6.1",
     "@emotion/react": "^11.10.8",
     "@emotion/styled": "^11.10.8",
@@ -84,6 +85,7 @@
     "@types/webpack-env": "^1.18.0",
     "@typescript-eslint/eslint-plugin": "^5.43.0",
     "@typescript-eslint/parser": "^5.43.0",
+    "css-loader": "^6.7.3",
     "depcheck": "^1.4.3",
     "eslint": "^8.27.0",
     "eslint-config-prettier": "^8.5.0",
@@ -99,6 +101,7 @@
     "jest": "^28.1.3",
     "jest-environment-jsdom": "^29.5.0",
     "jest-it-up": "^2.0.2",
+    "jest-transformer-svg": "^2.0.1",
     "lint-staged": "^13.2.2",
     "prettier": "^2.7.1",
     "prettier-plugin-packagejson": "^2.3.0",
@@ -107,6 +110,7 @@
     "redux-saga-test-plan": "^4.0.6",
     "rimraf": "^3.0.2",
     "simple-git-hooks": "^2.8.1",
+    "style-loader": "^3.3.2",
     "swc-loader": "^0.2.3",
     "ts-node": "^10.7.0",
     "typescript": "~4.8.4",

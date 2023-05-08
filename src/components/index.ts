@@ -3,5 +3,7 @@
 // only used in one place, such as components that are only used in one route,
 // should be exported from their respective feature folder.
 
+export * from './Icon';
 export * from './Logo';
 export * from './Root';
+export * from './Link';

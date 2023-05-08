@@ -15,6 +15,18 @@ const config: Configuration & Record<'devServer', DevServerConfiguration> = {
         test: /\.tsx?$/u,
         use: 'swc-loader',
       },
+      {
+        test: /\.(png|jpe?g|gif|svg)$/u,
+        type: 'asset',
+      },
+      {
+        test: /\.woff2?$/u,
+        type: 'asset/resource',
+      },
+      {
+        test: /\.css$/u,
+        use: ['style-loader', 'css-loader'],
+      },
     ],
   },
   resolve: {

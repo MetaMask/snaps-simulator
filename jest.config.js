@@ -41,10 +41,10 @@ module.exports = {
   // An object that configures minimum threshold enforcement for coverage results
   coverageThreshold: {
     global: {
-      branches: 96.96,
-      functions: 87.87,
-      lines: 85.96,
-      statements: 87.41,
+      branches: 98.14,
+      functions: 87.83,
+      lines: 87.87,
+      statements: 88.95,
     },
   },
 
@@ -186,6 +186,7 @@ module.exports = {
   // A map from regular expressions to paths to transformers
   transform: {
     '^.+\\.(t|j)sx?$': '@swc/jest',
+    '^.+\\.svg$': 'jest-transformer-svg',
   },
 
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
