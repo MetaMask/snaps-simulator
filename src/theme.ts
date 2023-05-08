@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
-import { tagAnatomy } from '@chakra-ui/anatomy';
+import { tagAnatomy, formAnatomy } from '@chakra-ui/anatomy';
 import {
   createMultiStyleConfigHelpers,
   defineStyle,
@@ -8,9 +8,17 @@ import {
   extendTheme,
 } from '@chakra-ui/react';
 
-// eslint-disable-next-line @typescript-eslint/unbound-method
-const { definePartsStyle, defineMultiStyleConfig } =
-  createMultiStyleConfigHelpers(tagAnatomy.keys);
+/* eslint-disable @typescript-eslint/unbound-method */
+const {
+  definePartsStyle: defineTagPartsStyle,
+  defineMultiStyleConfig: defineTagMultiStyleConfig,
+} = createMultiStyleConfigHelpers(tagAnatomy.keys);
+
+const {
+  definePartsStyle: defineFormPartsStyle,
+  defineMultiStyleConfig: defineFormMultiStyleConfig,
+} = createMultiStyleConfigHelpers(formAnatomy.keys);
+/* eslint-enable @typescript-eslint/unbound-method */
 
 export const theme = extendTheme({
   borders: {
@@ -33,6 +41,10 @@ export const theme = extendTheme({
       muted: '#D6D9DC',
       40: '#F2F4F6',
     },
+    border: {
+      default: '#D6D9DC',
+      active: '#24272A',
+    },
   },
 
   components: {
@@ -52,6 +64,33 @@ export const theme = extendTheme({
       baseStyle: {
         opacity: 1,
       },
+    }),
+
+    Form: defineFormMultiStyleConfig({
+      baseStyle: defineFormPartsStyle({
+        container: {
+          label: {
+            fontSize: 'xs',
+            marginBottom: 1,
+          },
+          input: {
+            marginBottom: 4,
+            borderColor: 'border.default',
+            outline: 'none',
+            fontSize: 'sm',
+            _active: {
+              borderColor: 'border.active',
+              outline: 'none',
+              boxShadow: 'none',
+            },
+            _focusVisible: {
+              borderColor: 'border.active',
+              outline: 'none',
+              boxShadow: 'none',
+            },
+          },
+        },
+      }),
     }),
 
     Link: defineStyleConfig({
@@ -75,9 +114,9 @@ export const theme = extendTheme({
       },
     }),
 
-    Tag: defineMultiStyleConfig({
+    Tag: defineTagMultiStyleConfig({
       variants: {
-        code: definePartsStyle({
+        code: defineTagPartsStyle({
           container: {
             color: 'info.default',
             background: 'info.muted',
@@ -117,7 +156,7 @@ export const theme = extendTheme({
       '#root': {
         display: 'flex',
         flexDirection: 'column',
-        minHeight: '100vh',
+        minHeight: '$100vh',
       },
     },
   },

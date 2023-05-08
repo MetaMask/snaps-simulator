@@ -2,8 +2,7 @@ import { Box, Stack } from '@chakra-ui/react';
 import { FunctionComponent, ReactNode } from 'react';
 import { Outlet } from 'react-router-dom';
 
-import { Header } from './components';
-import { Sidebar } from './components/Sidebar';
+import { Header, Sidebar } from './components';
 
 type LayoutProps = {
   children?: ReactNode;
@@ -15,7 +14,7 @@ type LayoutProps = {
  * @returns A React component.
  */
 export const Layout: FunctionComponent<LayoutProps> = () => (
-  <Box height="100vh">
+  <Box height="$100vh">
     <Header />
     <Stack direction="row" height="full">
       <Sidebar />
