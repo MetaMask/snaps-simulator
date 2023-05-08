@@ -15,18 +15,18 @@ export const methodHandlers = {
  * A mock handler for metamask_getProviderState that always returns a specific hardcoded result.
  *
  * @param _request - Incoming JSON-RPC request, ignored for this specific handler.
- * @param result - The outgoing JSON-RPC response, modified to return the result.
+ * @param response - The outgoing JSON-RPC response, modified to return the result.
  * @param _next - The json-rpc-engine middleware next handler.
  * @param end - The json-rpc-engine middleware end handler.
  */
 async function getProviderStateHandler(
   _request: JsonRpcRequest<unknown>,
-  result: PendingJsonRpcResponse<unknown>,
+  response: PendingJsonRpcResponse<unknown>,
   _next: JsonRpcEngineNextCallback,
   end: JsonRpcEngineEndCallback,
 ) {
   // For now this will return a mocked result, this should probably match whatever network we are talking to
-  result.result = {
+  response.result = {
     isUnlocked: true,
     chainId: '0x01',
     networkVersion: '0x01',
@@ -44,6 +44,7 @@ export function createMiscMethodMiddleware(): JsonRpcMiddleware<
   unknown,
   unknown
 > {
+  // This should probably use createAsyncMiddleware
   // eslint-disable-next-line @typescript-eslint/no-misused-promises
   return async function methodMiddleware(request, response, next, end) {
     const handler =

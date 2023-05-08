@@ -42,6 +42,14 @@ module.exports = {
         '@metamask/eslint-config-jest',
         '@metamask/eslint-config-nodejs',
       ],
+      rules: {
+        'jest/expect-expect': [
+          'error',
+          {
+            assertFunctionNames: ['expect', 'expectSaga'],
+          },
+        ],
+      },
     },
 
     {
