@@ -18,7 +18,7 @@ export type EditorProps = MonacoEditorProps & BoxProps;
  */
 export const Editor: FunctionComponent<EditorProps> = (props) => {
   const handleMount = (editor: typeof monaco) => {
-    editor.languages.json.jsonDefaults.setDiagnosticsOptions({
+    editor.languages.json?.jsonDefaults.setDiagnosticsOptions({
       validate: true,
       schemas: [
         {
