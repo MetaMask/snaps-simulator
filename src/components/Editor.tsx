@@ -1,4 +1,4 @@
-import { Box } from '@chakra-ui/react';
+import { Box, BoxProps } from '@chakra-ui/react';
 import { FunctionComponent } from 'react';
 import MonacoEditor, { monaco, MonacoEditorProps } from 'react-monaco-editor';
 
@@ -8,26 +8,15 @@ import {
   SAMPLE_JSON_RPC_REQUEST,
 } from '../features/handlers/json-rpc/schema';
 
-/**
- * Wrapper component for Monaco Editor. This is used to set the height of the
- * editor, since Chakra UI's Box component doesn't pass the height prop to the
- * underlying DOM element otherwise.
- *
- * @param props - The props.
- * @param props.height - The height of the editor. Defaults to 200px.
- * @returns The wrapper component.
- */
-const MonacoWrapper: FunctionComponent<MonacoEditorProps> = ({
-  height = '200px',
-  ...props
-}) => <MonacoEditor height={height} {...props} />;
+export type EditorProps = MonacoEditorProps & BoxProps;
 
 /**
  * Editor component. This uses Monaco Editor to provide a JSON editor.
  *
+ * @param props - The props.
  * @returns The editor component.
  */
-export const Editor: FunctionComponent = () => {
+export const Editor: FunctionComponent<EditorProps> = (props) => {
   const handleMount = (editor: typeof monaco) => {
     editor.languages.json.jsonDefaults.setDiagnosticsOptions({
       validate: true,
@@ -43,28 +32,39 @@ export const Editor: FunctionComponent = () => {
 
   return (
     <Box
-      as={MonacoWrapper}
       width="100%"
       height="200px"
+      padding="4"
       borderWidth="1px"
       borderStyle="solid"
       borderColor="gray.muted"
-      language="json"
-      editorWillMount={handleMount}
-      value={SAMPLE_JSON_RPC_REQUEST}
-      options={{
-        tabSize: 2,
-        scrollBeyondLastLine: false,
-        renderLineHighlight: 'none',
-        hideCursorInOverviewRuler: true,
-        scrollbar: {
-          vertical: 'visible',
-          verticalScrollbarSize: 5,
-        },
-        minimap: {
-          enabled: false,
-        },
-      }}
-    />
+    >
+      <MonacoEditor
+        language="json"
+        editorWillMount={handleMount}
+        value={SAMPLE_JSON_RPC_REQUEST}
+        theme="vs-light"
+        options={{
+          tabSize: 2,
+          scrollBeyondLastLine: false,
+          renderLineHighlight: 'none',
+          hideCursorInOverviewRuler: true,
+          scrollbar: {
+            vertical: 'visible',
+            verticalScrollbarSize: 5,
+          },
+          minimap: {
+            enabled: false,
+          },
+          lineNumbers: 'off',
+          automaticLayout: true,
+          glyphMargin: false,
+          folding: false,
+          lineDecorationsWidth: 0,
+          lineNumbersMinChars: 0,
+        }}
+        {...props}
+      />
+    </Box>
   );
 };
