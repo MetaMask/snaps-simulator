@@ -1,0 +1,17 @@
+{
+  "ignores": [
+    "@lavamoat/allow-scripts",
+    "@lavamoat/preinstall-always-fail",
+    "@metamask/auto-changelog",
+    "@swc/core",
+    "@swc/jest",
+    "@types/*",
+    "lint-staged",
+    "prettier-plugin-packagejson",
+    "simple-git-hooks",
+    "swc-loader",
+    "ts-node",
+    "typedoc",
+    "webpack-cli"
+  ]
+}
