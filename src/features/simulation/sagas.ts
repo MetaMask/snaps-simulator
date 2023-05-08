@@ -3,7 +3,7 @@ import {
   IframeExecutionService,
   setupMultiplex,
 } from '@metamask/snaps-controllers/dist/services';
-import { HandlerType, SnapRpcHookArgs } from '@metamask/snaps-utils';
+import { SnapRpcHookArgs } from '@metamask/snaps-utils';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { JsonRpcEngine } from 'json-rpc-engine';
 import { createEngineStream } from 'json-rpc-middleware-stream';
@@ -19,13 +19,16 @@ import {
   captureResponse,
 } from './slice';
 
+// TODO: Use actual snap ID
+export const DEFAULT_SNAP_ID = 'simulated-snap';
+
 /**
  * The initialization saga is run on page load and initializes the snaps execution environment.
  * This saga also creates the JSON-RPC engine and middlewares used to process RPC requests from the executing snap.
  *
  * @yields Puts the execution environment after creation.
  */
-function* initSaga() {
+export function* initSaga() {
   const controllerMessenger = new ControllerMessenger();
 
   /**
@@ -68,13 +71,6 @@ function* initSaga() {
   });
 
   yield put(setExecutionService(executionService));
-
-  // TODO: Remove
-  yield put(
-    setSourceCode(
-      'module.exports.onRpcRequest = () => { return "bar returned from snap"; }',
-    ),
-  );
 }
 
 /**
@@ -85,28 +81,16 @@ function* initSaga() {
  * @param action.payload - The payload of the action, in this case the source code.
  * @yields Select for selecting the execution service and call to call the execution service.
  */
-function* rebootSaga({ payload }: PayloadAction<string>) {
+export function* rebootSaga({ payload }: PayloadAction<string>) {
   const executionService: IframeExecutionService = yield select(
     getExecutionService,
   );
 
   yield call([executionService, 'terminateAllSnaps']);
   yield call([executionService, 'executeSnap'], {
-    snapId: 'foo',
+    snapId: DEFAULT_SNAP_ID,
     sourceCode: payload,
   });
-
-  // TODO: Remove
-  yield put(
-    sendRequest({
-      origin: 'Snaps Simulator',
-      handler: HandlerType.OnRpcRequest,
-      request: {
-        jsonrpc: '2.0',
-        method: 'foo',
-      },
-    }),
-  );
 }
 
 /**
@@ -117,14 +101,14 @@ function* rebootSaga({ payload }: PayloadAction<string>) {
  * @param action.payload - The payload of the action, in this case the RPC request.
  * @yields Select for selecting the execution service, call to call the execution service and put for storing the response.
  */
-function* requestSaga({ payload }: PayloadAction<SnapRpcHookArgs>) {
+export function* requestSaga({ payload }: PayloadAction<SnapRpcHookArgs>) {
   const executionService: IframeExecutionService = yield select(
     getExecutionService,
   );
 
   const response: unknown = yield call(
     [executionService, 'handleRpcRequest'],
-    'foo',
+    DEFAULT_SNAP_ID,
     payload,
   );
 
