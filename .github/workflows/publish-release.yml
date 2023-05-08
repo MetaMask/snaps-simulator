@@ -1,0 +1,32 @@
+name: Publish Release
+
+on:
+  workflow_call:
+    secrets:
+      NPM_TOKEN:
+        required: true
+
+jobs:
+  publish-release:
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.sha }}
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+      - uses: MetaMask/action-publish-release@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  publish-release-to-gh-pages:
+    name: Publish site to `gh-pages`
+    permissions:
+      contents: write
+    uses: ./.github/workflows/publish-site.yml
+    with:
+      destination_dir: .
