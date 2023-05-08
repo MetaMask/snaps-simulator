@@ -7,7 +7,6 @@ import {
   ModalOverlay,
   ModalFooter,
   useDisclosure,
-  IconButton,
   FormControl,
   FormLabel,
   Input,
@@ -16,6 +15,7 @@ import {
   Textarea,
   Text,
   Divider,
+  Link,
 } from '@chakra-ui/react';
 import { FormEvent } from 'react';
 
@@ -52,12 +52,9 @@ export const Configuration = () => {
 
   return (
     <>
-      <IconButton
-        bg="white"
-        onClick={onOpen}
-        icon={<Icon width="20px" icon="configuration" />}
-        aria-label="Configuration"
-      />
+      <Link onClick={onOpen}>
+        <Icon width="20px" icon="configuration" />
+      </Link>
       <Modal
         isOpen={isOpen}
         onClose={onClose}
@@ -100,13 +97,7 @@ export const Configuration = () => {
           </ModalBody>
 
           <ModalFooter>
-            <Button
-              width="100%"
-              bg="#24272A"
-              textColor="white"
-              onClick={onClose}
-              _hover={{ bg: '#0376C9' }}
-            >
+            <Button width="100%" onClick={onClose}>
               Apply config
             </Button>
           </ModalFooter>
