@@ -3,6 +3,7 @@
 import { tagAnatomy } from '@chakra-ui/anatomy';
 import {
   createMultiStyleConfigHelpers,
+  defineStyle,
   defineStyleConfig,
   extendTheme,
 } from '@chakra-ui/react';
@@ -83,6 +84,21 @@ export const theme = extendTheme({
             borderRadius: '0px',
             fontWeight: 'normal',
             fontFamily: 'code',
+          },
+        }),
+      },
+    }),
+
+    Button: defineStyleConfig({
+      variants: {
+        solid: defineStyle({
+          bg: '#24272A',
+          textColor: 'white',
+          _hover: {
+            bg: '#0376C9',
+          },
+          _active: {
+            bg: '#0376C9',
           },
         }),
       },
