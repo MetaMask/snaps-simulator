@@ -46,7 +46,6 @@
   "dependencies": {
     "@chakra-ui/anatomy": "^2.1.1",
     "@chakra-ui/react": "^2.6.1",
-    "@chakra-ui/styled-system": "^2.9.0",
     "@emotion/react": "^11.10.8",
     "@emotion/styled": "^11.10.8",
     "@metamask/base-controller": "^2.0.0",
@@ -97,7 +96,6 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "file-loader": "^6.2.0",
     "fork-ts-checker-webpack-plugin": "^8.0.0",
     "html-webpack-plugin": "^5.5.1",
     "jest": "^28.1.3",
