@@ -59,3 +59,8 @@ export const getChecksum = createSelector(
   (state: { simulation: typeof INITIAL_STATE }) => state.simulation,
   (state) => state.manifest?.source.shasum,
 );
+
+export const getResponse = createSelector(
+  (state: { simulation: typeof INITIAL_STATE }) => state.simulation,
+  (state) => state.response,
+);

@@ -2563,6 +2563,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@metamask/rpc-errors@npm:^5.1.1":
+  version: 5.1.1
+  resolution: "@metamask/rpc-errors@npm:5.1.1"
+  dependencies:
+    "@metamask/utils": ^5.0.0
+    fast-safe-stringify: ^2.0.6
+  checksum: ccd1b24da66af3ae63960b79c04b86efb8b96acb89ca6f7e0bbfe636d23ba5cddeba533c0692eafb87c44ec6f840085372d0f21b39e05df9a80700ff61538a30
+  languageName: node
+  linkType: hard
+
 "@metamask/rpc-methods@npm:^0.32.2":
   version: 0.32.2
   resolution: "@metamask/rpc-methods@npm:0.32.2"
@@ -2678,6 +2688,7 @@ __metadata:
     "@metamask/eslint-config-jest": ^11.0.0
     "@metamask/eslint-config-nodejs": ^11.0.1
     "@metamask/eslint-config-typescript": ^11.0.0
+    "@metamask/rpc-errors": ^5.1.1
     "@metamask/snaps-controllers": ^0.32.2
     "@metamask/snaps-utils": ^0.32.2
     "@metamask/utils": ^5.0.2

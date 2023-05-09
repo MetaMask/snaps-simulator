@@ -12,9 +12,9 @@ import { Controller, useForm } from 'react-hook-form';
 import { Editor } from '../../../../components';
 import { useDispatch } from '../../../../hooks';
 import { sendRequest } from '../../../simulation';
-import { SAMPLE_JSON_RPC_REQUEST } from '../../json-rpc/schema';
+import { SAMPLE_JSON_RPC_REQUEST } from '../schema';
 
-type CronjobFormData = {
+type JsonRpcFormData = {
   origin: string;
   request: string;
 };
@@ -25,7 +25,7 @@ export const Request: FunctionComponent = () => {
     register,
     control,
     formState: { errors },
-  } = useForm<CronjobFormData>({
+  } = useForm<JsonRpcFormData>({
     defaultValues: {
       origin: '',
       request: SAMPLE_JSON_RPC_REQUEST,
@@ -34,11 +34,11 @@ export const Request: FunctionComponent = () => {
 
   const dispatch = useDispatch();
 
-  const onSubmit = (data: CronjobFormData) => {
+  const onSubmit = (data: JsonRpcFormData) => {
     dispatch(
       sendRequest({
         origin: data.origin,
-        handler: HandlerType.OnCronjob,
+        handler: HandlerType.OnRpcRequest,
         request: JSON.parse(data.request),
       }),
     );

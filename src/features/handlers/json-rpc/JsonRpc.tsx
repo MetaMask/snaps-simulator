@@ -1,87 +1,65 @@
 import {
   Flex,
   Button,
-  Container,
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
-  Input,
+  Tabs,
+  Tab,
+  Box,
+  TabList,
+  TabPanel,
+  TabPanels,
 } from '@chakra-ui/react';
 import { FunctionComponent } from 'react';
-import { Controller, useForm } from 'react-hook-form';
 
-import { Editor } from '../../../components';
-import { SAMPLE_JSON_RPC_REQUEST } from './schema';
+import { Icon } from '../../../components';
+import { Response } from '../components';
+import { Request } from './components';
 
-type JsonRpcFormData = {
-  origin: string;
-  request: string;
-};
-
-export const JsonRpc: FunctionComponent = () => {
-  const {
-    handleSubmit,
-    register,
-    control,
-    formState: { errors },
-  } = useForm<JsonRpcFormData>({
-    defaultValues: {
-      origin: '',
-      request: SAMPLE_JSON_RPC_REQUEST,
-    },
-  });
-
-  const onSubmit = (data: JsonRpcFormData) => {
-    console.log(data);
-  };
-
-  return (
-    <Flex direction="column" flex="1">
-      <Container
+export const JsonRpc: FunctionComponent = () => (
+  <Flex width="100%" direction="column">
+    <Flex direction="row" flex="1">
+      <Flex direction="column" flex="1" width="50%">
+        <Tabs display="flex" flexDirection="column" flex="1">
+          <TabList alignItems="center">
+            <Tab>Request</Tab>
+            <Box marginLeft="auto">
+              <Button
+                variant="unstyled"
+                type="submit"
+                minWidth="0"
+                form="request-form"
+              >
+                <Icon icon="play" width="24px" />
+              </Button>
+            </Box>
+          </TabList>
+          <TabPanels display="flex" flexDirection="column" flex="1">
+            <TabPanel display="flex" flexDirection="column" flex="1">
+              <Request />
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
+      </Flex>
+      <Box
         display="flex"
         flexDirection="column"
         flex="1"
-        size="fullWidth"
+        width="50%"
+        borderLeft="1px solid"
+        borderColor="border.default"
       >
-        <Flex
-          as="form"
-          flexDirection="column"
-          flex="1"
-          /* eslint-disable-next-line @typescript-eslint/no-misused-promises */
-          onSubmit={handleSubmit(onSubmit)}
-        >
-          <FormControl isInvalid={Boolean(errors.origin)}>
-            <FormLabel htmlFor="origin">Origin</FormLabel>
-            <Input
-              id="origin"
-              placeholder="metamask.io"
-              fontFamily="code"
-              {...register('origin')}
-            />
-            <FormErrorMessage>{errors.origin?.message}</FormErrorMessage>
-          </FormControl>
-
-          <FormControl
-            isInvalid={Boolean(errors.request)}
-            display="flex"
-            flexDirection="column"
-            flex="1"
-          >
-            <FormLabel htmlFor="request">Request</FormLabel>
-            <Controller
-              control={control}
-              name="request"
-              render={({ field: { onChange, value } }) => (
-                <Editor onChange={onChange} value={value} />
-              )}
-            />
-          </FormControl>
-
-          <Button type="submit" marginTop="4">
-            Submit
-          </Button>
-        </Flex>
-      </Container>
+        <Tabs display="flex" flexDirection="column" flex="1">
+          <TabList>
+            <Tab>Response</Tab>
+            <Tab>History</Tab>
+          </TabList>
+          <TabPanels display="flex" flexDirection="column" flex="1">
+            <TabPanel display="flex" flexDirection="column" flex="1">
+              <Response />
+            </TabPanel>
+            <TabPanel>Bar</TabPanel>
+          </TabPanels>
+        </Tabs>
+      </Box>
     </Flex>
-  );
-};
+  </Flex>
+);

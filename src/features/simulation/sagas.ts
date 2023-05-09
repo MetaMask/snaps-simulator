@@ -1,4 +1,5 @@
 import { ControllerMessenger } from '@metamask/base-controller';
+import { serializeError } from '@metamask/rpc-errors';
 import {
   IframeExecutionService,
   setupMultiplex,
@@ -109,13 +110,16 @@ export function* requestSaga({ payload }: PayloadAction<SnapRpcHookArgs>) {
     getExecutionService,
   );
 
-  const response: unknown = yield call(
-    [executionService, 'handleRpcRequest'],
-    DEFAULT_SNAP_ID,
-    payload,
-  );
-
-  yield put(captureResponse(response));
+  try {
+    const result: unknown = yield call(
+      [executionService, 'handleRpcRequest'],
+      DEFAULT_SNAP_ID,
+      payload,
+    );
+    yield put(captureResponse({ result }));
+  } catch (error) {
+    yield put(captureResponse({ error: serializeError(error) }));
+  }
 }
 
 /**
