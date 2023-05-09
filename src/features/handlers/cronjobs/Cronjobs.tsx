@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   Flex,
   Tab,
   TabList,
@@ -9,6 +10,7 @@ import {
 } from '@chakra-ui/react';
 import { FunctionComponent } from 'react';
 
+import { Icon } from '../../../components';
 import { Request } from './components';
 
 export const Cronjobs: FunctionComponent = () => (
@@ -16,8 +18,18 @@ export const Cronjobs: FunctionComponent = () => (
     <Flex direction="row" flex="1">
       <Flex direction="column" flex="1" width="50%">
         <Tabs display="flex" flexDirection="column" flex="1">
-          <TabList>
+          <TabList alignItems="center">
             <Tab>Request</Tab>
+            <Box marginLeft="auto">
+              <Button
+                variant="unstyled"
+                type="submit"
+                minWidth="0"
+                form="request-form"
+              >
+                <Icon icon="play" width="24px" />
+              </Button>
+            </Box>
           </TabList>
           <TabPanels display="flex" flexDirection="column" flex="1">
             <TabPanel display="flex" flexDirection="column" flex="1">

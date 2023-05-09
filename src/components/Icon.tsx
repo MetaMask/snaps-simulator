@@ -4,6 +4,7 @@ import { FunctionComponent } from 'react';
 import alertIcon from '../assets/icons/alert.svg';
 import arrowRightIcon from '../assets/icons/arrow-right.svg';
 import configurationIcon from '../assets/icons/configuration.svg';
+import playIcon from '../assets/icons/play.svg';
 import textBubbleIcon from '../assets/icons/text-bubble.svg';
 
 const DEFAULT_ICONS = {
@@ -22,6 +23,10 @@ const DEFAULT_ICONS = {
   configuration: {
     alt: 'Configuration',
     src: configurationIcon,
+  },
+  play: {
+    alt: 'Play',
+    src: playIcon,
   },
 };
 

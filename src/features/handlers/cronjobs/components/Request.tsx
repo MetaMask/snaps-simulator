@@ -1,5 +1,4 @@
 import {
-  Button,
   Flex,
   FormControl,
   FormErrorMessage,
@@ -41,6 +40,7 @@ export const Request: FunctionComponent = () => {
       flex="1"
       /* eslint-disable-next-line @typescript-eslint/no-misused-promises */
       onSubmit={handleSubmit(onSubmit)}
+      id="request-form"
     >
       <FormControl isInvalid={Boolean(errors.origin)}>
         <FormLabel htmlFor="origin">Origin</FormLabel>
@@ -68,10 +68,6 @@ export const Request: FunctionComponent = () => {
           )}
         />
       </FormControl>
-
-      <Button type="submit" marginTop="4">
-        Submit
-      </Button>
     </Flex>
   );
 };
