@@ -15,6 +15,7 @@
     "ts-node",
     "typedoc",
     "webpack-cli",
-    "process"
+    "process",
+    "assert"
   ]
 }

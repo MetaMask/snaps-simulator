@@ -2,7 +2,7 @@ import { ControllerMessenger } from '@metamask/base-controller';
 import {
   IframeExecutionService,
   setupMultiplex,
-} from '@metamask/snaps-controllers/dist/services';
+} from '@metamask/snaps-controllers';
 import { DEFAULT_ENDOWMENTS, SnapRpcHookArgs } from '@metamask/snaps-utils';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { JsonRpcEngine } from 'json-rpc-engine';

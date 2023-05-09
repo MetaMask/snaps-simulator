@@ -1,4 +1,4 @@
-import { IframeExecutionService } from '@metamask/snaps-controllers/dist/services';
+import { IframeExecutionService } from '@metamask/snaps-controllers';
 import { SnapManifest, SnapRpcHookArgs } from '@metamask/snaps-utils';
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 

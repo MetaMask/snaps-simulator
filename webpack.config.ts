@@ -36,7 +36,10 @@ const config: Configuration & Record<'devServer', DevServerConfiguration> = {
       assert: require.resolve('assert/'),
       constants: require.resolve('constants-browserify'),
       stream: require.resolve('stream-browserify'),
-      _stream_transform: require.resolve('readable-stream/lib/_stream_transform.js'),
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      _stream_transform: require.resolve(
+        'readable-stream/lib/_stream_transform.js',
+      ),
       util: false,
     },
   },
