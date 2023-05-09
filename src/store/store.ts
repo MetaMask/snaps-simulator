@@ -2,6 +2,7 @@ import { configureStore, createAction } from '@reduxjs/toolkit';
 import createSagaMiddleware, { SagaIterator, Saga } from 'redux-saga';
 import { cancel, fork, take } from 'redux-saga/effects';
 
+import { setSnapUrl } from '../features';
 import { reducer } from './reducer';
 import { rootSaga } from './sagas';
 
@@ -54,6 +55,9 @@ export function createStore() {
     });
   }
   /* eslint-enabled no-restricted-globals */
+
+  // Dispatch to start polling the default URL
+  store.dispatch(setSnapUrl('http://localhost:8080'));
 
   return store;
 }

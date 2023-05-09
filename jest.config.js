@@ -41,10 +41,10 @@ module.exports = {
   // An object that configures minimum threshold enforcement for coverage results
   coverageThreshold: {
     global: {
-      branches: 98.41,
-      functions: 89.89,
-      lines: 90.06,
-      statements: 90.36,
+      branches: 98.43,
+      functions: 91.15,
+      lines: 91.37,
+      statements: 91.57,
     },
   },
 
@@ -147,7 +147,7 @@ module.exports = {
   // snapshotSerializers: [],
 
   // The test environment that will be used for testing
-  testEnvironment: 'jest-environment-jsdom',
+  testEnvironment: '<rootDir>/jest.environment.js',
 
   // Options that will be passed to the testEnvironment
   testEnvironmentOptions: {

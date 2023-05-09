@@ -6,9 +6,11 @@ import {
   simulation as reducer,
   sendRequest,
   setExecutionService,
+  setManifest,
   setSourceCode,
 } from './slice';
 import { MockExecutionService } from './test/mockExecutionService';
+import { MOCK_MANIFEST } from './test/mockManifest';
 
 describe('simulation slice', () => {
   describe('setExecutionService', () => {
@@ -19,6 +21,7 @@ describe('simulation slice', () => {
         {
           executionService: null,
           sourceCode: '',
+          manifest: null,
           request: null,
           response: null,
         },
@@ -36,6 +39,7 @@ describe('simulation slice', () => {
           executionService:
             new MockExecutionService() as unknown as IframeExecutionService,
           sourceCode: '',
+          manifest: null,
           request: null,
           response: null,
         },
@@ -43,6 +47,24 @@ describe('simulation slice', () => {
       );
 
       expect(result.sourceCode).toBe('foo');
+    });
+  });
+
+  describe('setManifest', () => {
+    it('sets the manifest', () => {
+      const result = reducer(
+        {
+          executionService:
+            new MockExecutionService() as unknown as IframeExecutionService,
+          sourceCode: '',
+          manifest: null,
+          request: null,
+          response: null,
+        },
+        setManifest(MOCK_MANIFEST),
+      );
+
+      expect(result.manifest).toBe(MOCK_MANIFEST);
     });
   });
 
@@ -58,6 +80,7 @@ describe('simulation slice', () => {
           executionService:
             new MockExecutionService() as unknown as IframeExecutionService,
           sourceCode: '',
+          manifest: null,
           request: null,
           response: null,
         },
@@ -75,6 +98,7 @@ describe('simulation slice', () => {
           executionService:
             new MockExecutionService() as unknown as IframeExecutionService,
           sourceCode: '',
+          manifest: null,
           request: null,
           response: null,
         },

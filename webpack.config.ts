@@ -33,6 +33,13 @@ const config: Configuration & Record<'devServer', DevServerConfiguration> = {
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx'],
     fallback: {
+      assert: require.resolve('assert/'),
+      constants: require.resolve('constants-browserify'),
+      stream: require.resolve('stream-browserify'),
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      _stream_transform: require.resolve(
+        'readable-stream/lib/_stream_transform.js',
+      ),
       util: false,
     },
   },
@@ -68,6 +75,7 @@ const config: Configuration & Record<'devServer', DevServerConfiguration> = {
     },
   },
   devServer: {
+    port: 8000,
     historyApiFallback: true,
   },
 };

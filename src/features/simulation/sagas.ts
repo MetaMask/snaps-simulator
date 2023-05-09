@@ -2,8 +2,8 @@ import { ControllerMessenger } from '@metamask/base-controller';
 import {
   IframeExecutionService,
   setupMultiplex,
-} from '@metamask/snaps-controllers/dist/services';
-import { SnapRpcHookArgs } from '@metamask/snaps-utils';
+} from '@metamask/snaps-controllers';
+import { DEFAULT_ENDOWMENTS, SnapRpcHookArgs } from '@metamask/snaps-utils';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { JsonRpcEngine } from 'json-rpc-engine';
 import { createEngineStream } from 'json-rpc-middleware-stream';
@@ -21,6 +21,8 @@ import {
 
 // TODO: Use actual snap ID
 export const DEFAULT_SNAP_ID = 'simulated-snap';
+
+export const ALL_APIS = [...DEFAULT_ENDOWMENTS, 'fetch', 'WebAssembly'];
 
 /**
  * The initialization saga is run on page load and initializes the snaps execution environment.
@@ -90,6 +92,7 @@ export function* rebootSaga({ payload }: PayloadAction<string>) {
   yield call([executionService, 'executeSnap'], {
     snapId: DEFAULT_SNAP_ID,
     sourceCode: payload,
+    endowments: ALL_APIS,
   });
 }
 
