@@ -22,7 +22,7 @@ import {
 // TODO: Use actual snap ID
 export const DEFAULT_SNAP_ID = 'simulated-snap';
 
-const ALL_APIS = [...DEFAULT_ENDOWMENTS, 'fetch', 'WebAssembly'];
+export const ALL_APIS = [...DEFAULT_ENDOWMENTS, 'fetch', 'WebAssembly'];
 
 /**
  * The initialization saga is run on page load and initializes the snaps execution environment.

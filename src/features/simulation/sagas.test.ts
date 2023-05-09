@@ -1,7 +1,13 @@
 import { HandlerType } from '@metamask/snaps-utils';
 import { expectSaga } from 'redux-saga-test-plan';
 
-import { DEFAULT_SNAP_ID, initSaga, rebootSaga, requestSaga } from './sagas';
+import {
+  ALL_APIS,
+  DEFAULT_SNAP_ID,
+  initSaga,
+  rebootSaga,
+  requestSaga,
+} from './sagas';
 import {
   captureResponse,
   sendRequest,
@@ -31,6 +37,7 @@ describe('rebootSaga', () => {
       .call([executionService, 'executeSnap'], {
         snapId: DEFAULT_SNAP_ID,
         sourceCode,
+        endowments: ALL_APIS,
       })
       .silentRun();
   });
