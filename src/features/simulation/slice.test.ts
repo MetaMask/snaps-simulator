@@ -9,11 +9,30 @@ import {
   setExecutionService,
   setManifest,
   setSourceCode,
+  setStatus,
 } from './slice';
 import { MockExecutionService } from './test/mockExecutionService';
 import { MOCK_MANIFEST } from './test/mockManifest';
 
 describe('simulation slice', () => {
+  describe('setStatus', () => {
+    it('sets the snap status', () => {
+      const result = reducer(
+        {
+          status: SnapStatus.Loading,
+          executionService: null,
+          sourceCode: '',
+          manifest: null,
+          request: null,
+          response: null,
+        },
+        setStatus(SnapStatus.OK),
+      );
+
+      expect(result.status).toStrictEqual(SnapStatus.OK);
+    });
+  });
+
   describe('setExecutionService', () => {
     it('sets execution service', () => {
       const executionService =
