@@ -29,7 +29,6 @@ import {
   setExecutionService,
   setSourceCode,
   sendRequest,
-  captureResponse,
   SnapStatus,
   setStatus,
   getPermissionController,
@@ -157,6 +156,7 @@ export function* rebootSaga({ payload }: PayloadAction<string>) {
  * @yields Select for selecting the execution service, call to call the execution service and put for storing the response.
  */
 export function* requestSaga({ payload }: PayloadAction<SnapRpcHookArgs>) {
+  yield put({ type: `${payload.handler}/setRequest`, payload });
   const executionService: IframeExecutionService = yield select(
     getExecutionService,
   );
@@ -167,9 +167,13 @@ export function* requestSaga({ payload }: PayloadAction<SnapRpcHookArgs>) {
       DEFAULT_SNAP_ID,
       payload,
     );
-    yield put(captureResponse({ result }));
+
+    yield put({ type: `${payload.handler}/setResponse`, payload: result });
   } catch (error) {
-    yield put(captureResponse({ error: serializeError(error) }));
+    yield put({
+      type: `${payload.handler}/setResponse`,
+      payload: { error: serializeError(error) },
+    });
   }
 }
 
