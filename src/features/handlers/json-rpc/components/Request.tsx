@@ -1,0 +1,85 @@
+import {
+  Flex,
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
+  Input,
+} from '@chakra-ui/react';
+import { HandlerType } from '@metamask/snaps-utils';
+import { FunctionComponent } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+
+import { Editor } from '../../../../components';
+import { useDispatch } from '../../../../hooks';
+import { sendRequest } from '../../../simulation';
+import { SAMPLE_JSON_RPC_REQUEST } from '../schema';
+
+type JsonRpcFormData = {
+  origin: string;
+  request: string;
+};
+
+export const Request: FunctionComponent = () => {
+  const {
+    handleSubmit,
+    register,
+    control,
+    formState: { errors },
+  } = useForm<JsonRpcFormData>({
+    defaultValues: {
+      origin: '',
+      request: SAMPLE_JSON_RPC_REQUEST,
+    },
+  });
+
+  const dispatch = useDispatch();
+
+  const onSubmit = (data: JsonRpcFormData) => {
+    dispatch(
+      sendRequest({
+        origin: data.origin,
+        handler: HandlerType.OnRpcRequest,
+        request: JSON.parse(data.request),
+      }),
+    );
+    console.log(data);
+  };
+
+  return (
+    <Flex
+      as="form"
+      flexDirection="column"
+      flex="1"
+      /* eslint-disable-next-line @typescript-eslint/no-misused-promises */
+      onSubmit={handleSubmit(onSubmit)}
+      id="request-form"
+    >
+      <FormControl isInvalid={Boolean(errors.origin)}>
+        <FormLabel htmlFor="origin">Origin</FormLabel>
+        <Input
+          id="origin"
+          placeholder="metamask.io"
+          fontFamily="code"
+          {...register('origin')}
+        />
+        <FormErrorMessage>{errors.origin?.message}</FormErrorMessage>
+      </FormControl>
+
+      <FormControl
+        isInvalid={Boolean(errors.request)}
+        display="flex"
+        flexDirection="column"
+        flex="1"
+      >
+        <FormLabel htmlFor="request">Request</FormLabel>
+        <Controller
+          control={control}
+          name="request"
+          render={({ field: { onChange, value } }) => (
+            <Editor onChange={onChange} value={value} />
+          )}
+        />
+      </FormControl>
+    </Flex>
+  );
+};

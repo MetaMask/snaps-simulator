@@ -44,6 +44,7 @@ export const Editor: FunctionComponent<EditorProps> = (props) => {
         editorWillMount={handleMount}
         value={SAMPLE_JSON_RPC_REQUEST}
         theme="vs-light"
+        {...props}
         options={{
           tabSize: 2,
           scrollBeyondLastLine: false,
@@ -62,8 +63,8 @@ export const Editor: FunctionComponent<EditorProps> = (props) => {
           folding: false,
           lineDecorationsWidth: 0,
           lineNumbersMinChars: 0,
+          ...props.options,
         }}
-        {...props}
       />
     </Box>
   );
