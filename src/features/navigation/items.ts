@@ -23,20 +23,20 @@ export const NAVIGATION_ITEMS: NavigationItem[] = [
     tag: 'onRpcRequest',
     description: 'Send JSON-RPC requests to the snap',
     icon: 'textBubble',
-    path: '/',
+    path: '/handler/json-rpc',
   },
   {
     label: 'Cronjobs',
     tag: 'onCronjob',
     description: 'Schedule and run periodic actions',
     icon: 'alert',
-    path: '/cronjobs',
+    path: '/handler/cronjobs',
   },
   {
     label: 'Transaction',
     tag: 'onTransaction',
     description: 'Send transactions to the snap',
     icon: 'textBubble',
-    path: '/transactions',
+    path: '/handler/transactions',
   },
 ];
