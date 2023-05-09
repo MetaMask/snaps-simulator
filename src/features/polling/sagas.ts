@@ -1,12 +1,9 @@
-import { call, delay, put, race, select } from 'redux-saga/effects';
-import { getSnapUrl } from '../configuration';
 import { LocalLocation } from '@metamask/snaps-controllers/dist/snaps/location';
 import { SnapManifest, VirtualFile } from '@metamask/snaps-utils';
-import {
-  getChecksum,
-  setManifest,
-  setSourceCode,
-} from '../simulation';
+import { call, delay, put, all, select, takeLatest } from 'redux-saga/effects';
+
+import { getSnapUrl, setSnapUrl } from '../configuration';
+import { getChecksum, setManifest, setSourceCode } from '../simulation';
 
 export function* fetchingSaga() {
   const url: string = yield select(getSnapUrl);
@@ -17,24 +14,19 @@ export function* fetchingSaga() {
     'manifest',
   ]);
 
-  const checksum: string = yield select(getChecksum);
+  const currentChecksum: string = yield select(getChecksum);
 
   const manifestChecksum = manifest.result.source.shasum;
 
-  if (checksum === manifestChecksum) {
+  if (currentChecksum === manifestChecksum) {
     return;
   }
 
   yield put(setManifest(manifest.result));
 
-  console.log('Snap changed!');
-
   const bundlePath = manifest.result.source.location.npm.filePath;
 
-  const bundle: VirtualFile<unknown> = yield call(
-    [location, 'fetch'],
-    bundlePath,
-  );
+  const bundle: VirtualFile = yield call([location, 'fetch'], bundlePath);
 
   yield put(setSourceCode(bundle.toString()));
 }
@@ -52,5 +44,5 @@ export function* pollingSaga() {
 }
 
 export function* rootPollingSaga() {
-  yield race([pollingSaga()]);
+  yield all([takeLatest(setSnapUrl.type, pollingSaga)]);
 }
