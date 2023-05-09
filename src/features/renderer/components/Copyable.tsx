@@ -46,7 +46,7 @@ export const Copyable: FunctionComponent<CopyableProps> = ({ node }) => {
       borderRadius="md"
       background="background.alternative"
       justifyContent="space-between"
-      paddingBottom="1"
+      marginBottom="1"
     >
       <Text
         fontFamily="custom"

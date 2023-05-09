@@ -1,8 +1,7 @@
-import { Box } from '@chakra-ui/react';
+import { Flex } from '@chakra-ui/react';
 import { FunctionComponent, ReactNode } from 'react';
 
 import { Author } from './Author';
-import { Delineator } from './Delineator';
 
 type WindowProps = {
   snapName: string;
@@ -24,11 +23,14 @@ export const Window: FunctionComponent<WindowProps> = ({
   snapId,
   children,
 }) => (
-  <Box boxShadow="lg" maxWidth="360px" maxHeight="672px" paddingY="4">
+  <Flex
+    direction="column"
+    boxShadow="lg"
+    maxWidth="360px"
+    height="600px"
+    paddingY="4"
+  >
     <Author snapName={snapName} snapId={snapId} />
-    <Box margin="4" marginTop="0">
-      <Delineator snapName={snapName}>{children}</Delineator>
-    </Box>
-    <Box>{/* buttons */}</Box>
-  </Box>
+    {children}
+  </Flex>
 );
