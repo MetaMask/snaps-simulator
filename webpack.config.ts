@@ -17,6 +17,14 @@ const config: Configuration & Record<'devServer', DevServerConfiguration> = {
         use: 'swc-loader',
       },
       {
+        test: /\.mjs$/u,
+        include: /node_modules/u,
+        type: 'javascript/auto',
+        resolve: {
+          fullySpecified: false,
+        },
+      },
+      {
         test: /\.(png|jpe?g|gif|svg)$/u,
         type: 'asset',
       },

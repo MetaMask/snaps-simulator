@@ -50,7 +50,7 @@ export const Cronjobs: FunctionComponent = () => (
         <Tabs display="flex" flexDirection="column" flex="1">
           <TabList>
             <Tab>Response</Tab>
-            <Tab>History</Tab>
+            <Tab>UI</Tab>
           </TabList>
           <TabPanels display="flex" flexDirection="column" flex="1">
             <TabPanel
