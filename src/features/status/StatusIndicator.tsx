@@ -11,15 +11,15 @@ export const StatusIndicator = () => {
 
   const color =
     // eslint-disable-next-line no-nested-ternary
-    status === SnapStatus.OK
-      ? '#579F6E'
+    status === SnapStatus.Ok
+      ? 'text.success'
       : status === SnapStatus.Error
-      ? '#D34C46'
-      : '#0376C9';
+      ? 'text.error'
+      : 'info.default';
 
   return (
     <>
-      {status === SnapStatus.OK && <Icon icon="dot" width="8px" />}
+      {status === SnapStatus.Ok && <Icon icon="dot" width="8px" />}
       {status === SnapStatus.Loading && <Spinner color={color} size="xs" />}
       {status === SnapStatus.Error && (
         <Icon icon="errorTriangle" width="16px" />

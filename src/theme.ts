@@ -34,6 +34,8 @@ export const theme = extendTheme({
     text: {
       default: '#24272A',
       alternative: '#535A61',
+      success: '#579F6E',
+      error: '#D34C46',
     },
     info: {
       default: '#0376C9',

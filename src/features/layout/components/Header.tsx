@@ -19,7 +19,7 @@ export const Header: FunctionComponent = () => (
       <Divider orientation="vertical" marginX="2" borderColor="gray.muted" />
       <Heading
         as="h1"
-        fontSize="1rem"
+        fontSize="md"
         textColor="text.default"
         lineHeight="150%"
         variant="main"

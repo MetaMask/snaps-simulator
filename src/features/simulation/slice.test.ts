@@ -26,10 +26,10 @@ describe('simulation slice', () => {
           request: null,
           response: null,
         },
-        setStatus(SnapStatus.OK),
+        setStatus(SnapStatus.Ok),
       );
 
-      expect(result.status).toStrictEqual(SnapStatus.OK);
+      expect(result.status).toStrictEqual(SnapStatus.Ok);
     });
   });
 
@@ -100,7 +100,7 @@ describe('simulation slice', () => {
       };
       const result = reducer(
         {
-          status: SnapStatus.OK,
+          status: SnapStatus.Ok,
           executionService:
             new MockExecutionService() as unknown as IframeExecutionService,
           sourceCode: '',
@@ -119,7 +119,7 @@ describe('simulation slice', () => {
     it('sets the response', () => {
       const result = reducer(
         {
-          status: SnapStatus.OK,
+          status: SnapStatus.Ok,
           executionService:
             new MockExecutionService() as unknown as IframeExecutionService,
           sourceCode: '',

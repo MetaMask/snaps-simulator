@@ -98,7 +98,7 @@ export function* rebootSaga({ payload }: PayloadAction<string>) {
       sourceCode: payload,
       endowments: ALL_APIS,
     });
-    yield put(setStatus(SnapStatus.OK));
+    yield put(setStatus(SnapStatus.Ok));
   } catch (error) {
     console.error(error);
     yield put(setStatus(SnapStatus.Error));
