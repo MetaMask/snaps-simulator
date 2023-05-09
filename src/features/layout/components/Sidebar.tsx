@@ -9,7 +9,7 @@ import { Navigation } from '../../navigation';
  * @returns The sidebar component.
  */
 export const Sidebar: FunctionComponent = () => (
-  <Box width="375px" borderRight="muted">
+  <Box width="375px" borderRight="muted" flexShrink="0">
     <Navigation />
   </Box>
 );
