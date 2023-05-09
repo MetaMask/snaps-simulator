@@ -12,7 +12,7 @@ export type HistoryEntry<Request> = {
 
 export type HandlerState<Request, Response> = {
   request: Request;
-  response: Response;
+  response: Response | null;
   history: HistoryEntry<Request>[];
 };
 

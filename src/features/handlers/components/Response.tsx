@@ -1,11 +1,26 @@
 import { Center, Heading, Text } from '@chakra-ui/react';
+import { HandlerType } from '@metamask/snaps-utils';
+import { assert } from '@metamask/utils';
+import { useMatch } from 'react-router-dom';
 
 import { Editor, Icon } from '../../../components';
 import { useSelector } from '../../../hooks';
-import { getResponse } from '../../simulation';
 
 export const Response = () => {
-  const response = useSelector(getResponse);
+  const match = useMatch('/handler/:handlerId');
+  const handlerId = match?.params.handlerId;
+
+  assert(handlerId, 'The handler ID should be defined.');
+
+  const response = useSelector(
+    (state) =>
+      state[
+        handlerId as
+          | HandlerType.OnCronjob
+          | HandlerType.OnRpcRequest
+          | HandlerType.OnTransaction
+      ].response,
+  );
 
   if (!response) {
     return (

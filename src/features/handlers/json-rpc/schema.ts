@@ -30,11 +30,13 @@ export const JSON_RPC_SCHEMA = {
   additionalProperties: false,
 };
 
-export const SAMPLE_JSON_RPC_REQUEST = `
-{
-  "jsonrpc": "2.0",
-  "id": 1,
-  "method": "subtract",
-  "params": [42, 23]
-}
-`.trimStart();
+export const SAMPLE_JSON_RPC_REQUEST = JSON.stringify(
+  {
+    jsonrpc: '2.0',
+    id: 1,
+    method: 'subtract',
+    params: [42, 23],
+  },
+  null,
+  2,
+);

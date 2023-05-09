@@ -12,7 +12,7 @@ type Request = {
 type Response = string;
 
 const slice = createHandlerSlice<Request, Response>({
-  name: HandlerType.OnCronjob,
+  name: HandlerType.OnTransaction,
   initialState: {
     request: {
       origin: '',
@@ -22,15 +22,15 @@ const slice = createHandlerSlice<Request, Response>({
   },
 });
 
-export const cronjob = slice.reducer;
+export const transactions = slice.reducer;
 export const {
-  setRequest: setCronjobRequest,
-  setResponse: setCronjobResponse,
+  setRequest: setTransactionRequest,
+  setResponse: setTransactionResponse,
 } = slice.actions;
 
-export const getCronjobRequest = createSelector(
+export const getTransactionRequest = createSelector(
   (state: {
-    [HandlerType.OnCronjob]: ReturnType<typeof slice['getInitialState']>;
-  }) => state[HandlerType.OnCronjob],
+    [HandlerType.OnTransaction]: ReturnType<typeof slice['getInitialState']>;
+  }) => state[HandlerType.OnTransaction],
   (state) => state.request,
 );

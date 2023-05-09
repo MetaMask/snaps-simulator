@@ -17,7 +17,7 @@ const slice = createHandlerSlice<Request, Response>({
     request: {
       origin: '',
     },
-    response: '',
+    response: null,
     history: [],
   },
 });
@@ -29,7 +29,8 @@ export const {
 } = slice.actions;
 
 export const getJsonRpcRequest = createSelector(
-  (state: { jsonRpc: ReturnType<typeof slice['getInitialState']> }) =>
-    state.jsonRpc,
+  (state: {
+    [HandlerType.OnRpcRequest]: ReturnType<typeof slice['getInitialState']>;
+  }) => state[HandlerType.OnRpcRequest],
   (state) => state.request,
 );

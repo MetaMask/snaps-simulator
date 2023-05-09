@@ -1,10 +1,18 @@
+import { HandlerType } from '@metamask/snaps-utils';
 import { combineReducers } from '@reduxjs/toolkit';
 
-import { simulation, configuration, jsonRpc, cronjob } from '../features';
+import {
+  simulation,
+  configuration,
+  jsonRpc,
+  cronjob,
+  transactions,
+} from '../features';
 
 export const reducer = combineReducers({
   configuration,
   simulation,
-  jsonRpc,
-  cronjob,
+  [HandlerType.OnRpcRequest]: jsonRpc,
+  [HandlerType.OnCronjob]: cronjob,
+  [HandlerType.OnTransaction]: transactions,
 });
