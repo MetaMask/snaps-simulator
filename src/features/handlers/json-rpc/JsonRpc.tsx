@@ -11,7 +11,8 @@ import {
 import { FunctionComponent } from 'react';
 
 import { Icon } from '../../../components';
-import { Request, Response } from './components';
+import { Response } from '../components';
+import { Request } from './components';
 
 export const JsonRpc: FunctionComponent = () => (
   <Flex width="100%" direction="column">

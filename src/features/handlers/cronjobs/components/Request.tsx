@@ -5,10 +5,13 @@ import {
   FormLabel,
   Input,
 } from '@chakra-ui/react';
+import { HandlerType } from '@metamask/snaps-utils';
 import { FunctionComponent } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
 import { Editor } from '../../../../components';
+import { useDispatch } from '../../../../hooks';
+import { sendRequest } from '../../../simulation';
 import { SAMPLE_JSON_RPC_REQUEST } from '../../json-rpc/schema';
 
 type CronjobFormData = {
@@ -29,7 +32,16 @@ export const Request: FunctionComponent = () => {
     },
   });
 
+  const dispatch = useDispatch();
+
   const onSubmit = (data: CronjobFormData) => {
+    dispatch(
+      sendRequest({
+        origin: data.origin,
+        handler: HandlerType.OnCronjob,
+        request: JSON.parse(data.request),
+      }),
+    );
     console.log(data);
   };
 

@@ -11,6 +11,7 @@ import {
 import { FunctionComponent } from 'react';
 
 import { Icon } from '../../../components';
+import { Response } from '../components';
 import { Request } from './components';
 
 export const Cronjobs: FunctionComponent = () => (
@@ -38,14 +39,23 @@ export const Cronjobs: FunctionComponent = () => (
           </TabPanels>
         </Tabs>
       </Flex>
-      <Box width="50%" borderLeft="1px solid" borderColor="border.default">
-        <Tabs>
+      <Box
+        display="flex"
+        flexDirection="column"
+        flex="1"
+        width="50%"
+        borderLeft="1px solid"
+        borderColor="border.default"
+      >
+        <Tabs display="flex" flexDirection="column" flex="1">
           <TabList>
             <Tab>Response</Tab>
             <Tab>History</Tab>
           </TabList>
-          <TabPanels>
-            <TabPanel>Foo</TabPanel>
+          <TabPanels display="flex" flexDirection="column" flex="1">
+            <TabPanel display="flex" flexDirection="column" flex="1">
+              <Response />
+            </TabPanel>
             <TabPanel>Bar</TabPanel>
           </TabPanels>
         </Tabs>

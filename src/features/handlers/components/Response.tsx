@@ -1,6 +1,6 @@
-import { Editor } from '../../../../components';
-import { useSelector } from '../../../../hooks';
-import { getResponse } from '../../../simulation';
+import { Editor } from '../../../components';
+import { useSelector } from '../../../hooks';
+import { getResponse } from '../../simulation';
 
 export const Response = () => {
   const response = useSelector(getResponse);
