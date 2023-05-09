@@ -42,7 +42,6 @@ export const Request: FunctionComponent = () => {
         request: JSON.parse(data.request),
       }),
     );
-    console.log(data);
   };
 
   return (

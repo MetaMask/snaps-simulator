@@ -60,7 +60,7 @@ describe('requestSaga', () => {
         simulation: { sourceCode, executionService },
       })
       .call([executionService, 'handleRpcRequest'], DEFAULT_SNAP_ID, request)
-      .put(captureResponse('foobar'))
+      .put(captureResponse({ result: 'foobar' }))
       .silentRun();
   });
 });
