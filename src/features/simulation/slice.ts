@@ -1,3 +1,4 @@
+import { GenericPermissionController } from '@metamask/permission-controller';
 import { IframeExecutionService } from '@metamask/snaps-controllers';
 import { SnapManifest, SnapRpcHookArgs } from '@metamask/snaps-utils';
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
@@ -11,6 +12,7 @@ export enum SnapStatus {
 type SimulationState = {
   status: SnapStatus;
   executionService: IframeExecutionService | null;
+  permissionController: GenericPermissionController | null;
   manifest: SnapManifest | null;
   sourceCode: string;
   request: SnapRpcHookArgs | null;
@@ -20,6 +22,7 @@ type SimulationState = {
 export const INITIAL_STATE: SimulationState = {
   status: SnapStatus.Loading,
   executionService: null,
+  permissionController: null,
   manifest: null,
   sourceCode: '',
   request: null,
@@ -35,6 +38,12 @@ const slice = createSlice({
     },
     setExecutionService(state, action: PayloadAction<IframeExecutionService>) {
       state.executionService = action.payload;
+    },
+    setPermissionController(
+      state,
+      action: PayloadAction<GenericPermissionController>,
+    ) {
+      state.permissionController = action.payload as any;
     },
     setManifest(state, action: PayloadAction<SnapManifest>) {
       // Type error occurs here due to some weirdness with SnapManifest and WritableDraft or PayloadAction
@@ -55,6 +64,7 @@ const slice = createSlice({
 export const {
   setStatus,
   setExecutionService,
+  setPermissionController,
   setManifest,
   setSourceCode,
   sendRequest,
@@ -70,6 +80,16 @@ export const getStatus = createSelector(
 export const getExecutionService = createSelector(
   (state: { simulation: typeof INITIAL_STATE }) => state.simulation,
   (state) => state.executionService,
+);
+
+export const getPermissionController = createSelector(
+  (state: { simulation: typeof INITIAL_STATE }) => state.simulation,
+  (state) => state.permissionController,
+);
+
+export const getManifest = createSelector(
+  (state: { simulation: typeof INITIAL_STATE }) => state.simulation,
+  (state) => state.manifest,
 );
 
 export const getChecksum = createSelector(

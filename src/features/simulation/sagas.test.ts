@@ -1,6 +1,7 @@
 import { HandlerType } from '@metamask/snaps-utils';
 import { expectSaga } from 'redux-saga-test-plan';
 
+import { DEFAULT_SRP } from '../configuration';
 import {
   ALL_APIS,
   DEFAULT_SNAP_ID,
@@ -19,7 +20,9 @@ import { MockExecutionService } from './test/mockExecutionService';
 describe('initSaga', () => {
   it('initializes the execution environment', async () => {
     await expectSaga(initSaga)
-      .withState({})
+      .withState({
+        configuration: { srp: DEFAULT_SRP },
+      })
       .put.actionType(setExecutionService.type)
       .silentRun();
   });

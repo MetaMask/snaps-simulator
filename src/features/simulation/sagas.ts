@@ -1,16 +1,28 @@
 import { ControllerMessenger } from '@metamask/base-controller';
+import { mnemonicPhraseToBytes } from '@metamask/key-tree/dist/utils';
+import {
+  GenericPermissionController,
+  PermissionController,
+} from '@metamask/permission-controller';
 import { serializeError } from '@metamask/rpc-errors';
+import { caveatSpecifications as snapsCaveatsSpecifications } from '@metamask/rpc-methods';
 import {
   IframeExecutionService,
   setupMultiplex,
+  endowmentCaveatSpecifications as snapsEndowmentCaveatSpecifications,
 } from '@metamask/snaps-controllers';
-import { DEFAULT_ENDOWMENTS, SnapRpcHookArgs } from '@metamask/snaps-utils';
+import {
+  DEFAULT_ENDOWMENTS,
+  SnapManifest,
+  SnapRpcHookArgs,
+} from '@metamask/snaps-utils';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { JsonRpcEngine } from 'json-rpc-engine';
 import { createEngineStream } from 'json-rpc-middleware-stream';
 import pump from 'pump';
 import { all, call, put, select, takeLatest } from 'redux-saga/effects';
 
+import { getSrp } from '../configuration';
 import { createMiscMethodMiddleware } from './middleware';
 import {
   getExecutionService,
@@ -20,7 +32,16 @@ import {
   captureResponse,
   SnapStatus,
   setStatus,
+  getPermissionController,
+  setManifest,
+  setPermissionController,
 } from './slice';
+import {
+  buildSnapEndowmentSpecifications,
+  buildSnapRestrictedMethodSpecifications,
+  processSnapPermissions,
+  unrestrictedMethods,
+} from './snap-permissions';
 
 // TODO: Use actual snap ID
 export const DEFAULT_SNAP_ID = 'simulated-snap';
@@ -36,28 +57,49 @@ export const ALL_APIS = [...DEFAULT_ENDOWMENTS, 'fetch', 'WebAssembly'];
 export function* initSaga() {
   const controllerMessenger = new ControllerMessenger();
 
-  /**
-   * const permissionController = new PermissionController({
-   * messenger: controllerMessenger.getRestricted({
-   * name: 'PermissionController',
-   * allowedActions: [
-   * `ApprovalController:addRequest`,
-   * `ApprovalController:hasRequest`,
-   * `ApprovalController:acceptRequest`,
-   * `ApprovalController:rejectRequest`,
-   * `SnapController:getPermitted`,
-   * `SnapController:install`,
-   * `SubjectMetadataController:getSubjectMetadata`,
-   * ],
-   * }),
-   * });*
-   */
+  const srp: string = yield select(getSrp);
+
+  const permissionSpecifications = {
+    ...buildSnapEndowmentSpecifications(),
+    ...buildSnapRestrictedMethodSpecifications({
+      // TODO: Add all the hooks required
+      getUnlockPromise: async () => Promise.resolve(true),
+      getMnemonic: async () => mnemonicPhraseToBytes(srp),
+    }),
+  };
+
+  const permissionController = new PermissionController({
+    messenger: controllerMessenger.getRestricted({
+      name: 'PermissionController',
+      allowedActions: [
+        `ApprovalController:addRequest`,
+        `ApprovalController:hasRequest`,
+        `ApprovalController:acceptRequest`,
+        `ApprovalController:rejectRequest`,
+        `SnapController:getPermitted`,
+        `SnapController:install`,
+        `SubjectMetadataController:getSubjectMetadata`,
+      ] as any,
+    }),
+    caveatSpecifications: {
+      ...snapsCaveatsSpecifications,
+      ...snapsEndowmentCaveatSpecifications,
+    },
+    permissionSpecifications,
+    // @ts-expect-error Type mismatch
+    unrestrictedMethods,
+  });
 
   const engine = new JsonRpcEngine();
 
   engine.push(createMiscMethodMiddleware());
 
-  // TODO: Add PermissionController middleware
+  engine.push(
+    permissionController.createPermissionMiddleware({
+      origin: DEFAULT_SNAP_ID,
+    }),
+  );
+
   // TODO: Add middleware for passing node calls to node
 
   const executionService = new IframeExecutionService({
@@ -76,6 +118,7 @@ export function* initSaga() {
   });
 
   yield put(setExecutionService(executionService));
+  yield put(setPermissionController(permissionController));
 }
 
 /**
@@ -130,6 +173,23 @@ export function* requestSaga({ payload }: PayloadAction<SnapRpcHookArgs>) {
   }
 }
 
+export function* permissionsSaga({ payload }: PayloadAction<SnapManifest>) {
+  const permissionController: GenericPermissionController = yield select(
+    getPermissionController,
+  );
+
+  // TODO: Verify these
+  const approvedPermissions = processSnapPermissions(
+    payload.initialPermissions,
+  );
+
+  // Grant all permissions
+  permissionController.grantPermissions({
+    approvedPermissions,
+    subject: { origin: DEFAULT_SNAP_ID },
+  });
+}
+
 /**
  * The root simulation saga which runs all sagas in this file.
  *
@@ -140,5 +200,6 @@ export function* simulationSaga() {
     initSaga(),
     takeLatest(setSourceCode.type, rebootSaga),
     takeLatest(sendRequest.type, requestSaga),
+    takeLatest(setManifest, permissionsSaga),
   ]);
 }
