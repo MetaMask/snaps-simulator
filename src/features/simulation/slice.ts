@@ -17,7 +17,7 @@ type SimulationState = {
   response: unknown | null;
 };
 
-const INITIAL_STATE: SimulationState = {
+export const INITIAL_STATE: SimulationState = {
   status: SnapStatus.Loading,
   executionService: null,
   manifest: null,

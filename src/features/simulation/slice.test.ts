@@ -10,6 +10,7 @@ import {
   setManifest,
   setSourceCode,
   setStatus,
+  INITIAL_STATE,
 } from './slice';
 import { MockExecutionService } from './test/mockExecutionService';
 import { MOCK_MANIFEST } from './test/mockManifest';
@@ -17,17 +18,7 @@ import { MOCK_MANIFEST } from './test/mockManifest';
 describe('simulation slice', () => {
   describe('setStatus', () => {
     it('sets the snap status', () => {
-      const result = reducer(
-        {
-          status: SnapStatus.Loading,
-          executionService: null,
-          sourceCode: '',
-          manifest: null,
-          request: null,
-          response: null,
-        },
-        setStatus(SnapStatus.Ok),
-      );
+      const result = reducer(INITIAL_STATE, setStatus(SnapStatus.Ok));
 
       expect(result.status).toStrictEqual(SnapStatus.Ok);
     });
@@ -38,14 +29,7 @@ describe('simulation slice', () => {
       const executionService =
         new MockExecutionService() as unknown as IframeExecutionService;
       const result = reducer(
-        {
-          status: SnapStatus.Loading,
-          executionService: null,
-          sourceCode: '',
-          manifest: null,
-          request: null,
-          response: null,
-        },
+        INITIAL_STATE,
         setExecutionService(executionService),
       );
 
@@ -55,18 +39,7 @@ describe('simulation slice', () => {
 
   describe('setSourceCode', () => {
     it('sets the source code', () => {
-      const result = reducer(
-        {
-          status: SnapStatus.Loading,
-          executionService:
-            new MockExecutionService() as unknown as IframeExecutionService,
-          sourceCode: '',
-          manifest: null,
-          request: null,
-          response: null,
-        },
-        setSourceCode('foo'),
-      );
+      const result = reducer(INITIAL_STATE, setSourceCode('foo'));
 
       expect(result.sourceCode).toBe('foo');
     });
@@ -74,18 +47,7 @@ describe('simulation slice', () => {
 
   describe('setManifest', () => {
     it('sets the manifest', () => {
-      const result = reducer(
-        {
-          status: SnapStatus.Loading,
-          executionService:
-            new MockExecutionService() as unknown as IframeExecutionService,
-          sourceCode: '',
-          manifest: null,
-          request: null,
-          response: null,
-        },
-        setManifest(MOCK_MANIFEST),
-      );
+      const result = reducer(INITIAL_STATE, setManifest(MOCK_MANIFEST));
 
       expect(result.manifest).toBe(MOCK_MANIFEST);
     });
@@ -98,18 +60,7 @@ describe('simulation slice', () => {
         handler: HandlerType.OnRpcRequest,
         request: { jsonrpc: '2.0', method: 'foo', params: [] },
       };
-      const result = reducer(
-        {
-          status: SnapStatus.Ok,
-          executionService:
-            new MockExecutionService() as unknown as IframeExecutionService,
-          sourceCode: '',
-          manifest: null,
-          request: null,
-          response: null,
-        },
-        sendRequest(request),
-      );
+      const result = reducer(INITIAL_STATE, sendRequest(request));
 
       expect(result.request).toStrictEqual(request);
     });
@@ -117,18 +68,7 @@ describe('simulation slice', () => {
 
   describe('captureResponse', () => {
     it('sets the response', () => {
-      const result = reducer(
-        {
-          status: SnapStatus.Ok,
-          executionService:
-            new MockExecutionService() as unknown as IframeExecutionService,
-          sourceCode: '',
-          manifest: null,
-          request: null,
-          response: null,
-        },
-        captureResponse({ result: 'foo' }),
-      );
+      const result = reducer(INITIAL_STATE, captureResponse({ result: 'foo' }));
 
       expect(result.response).toStrictEqual({ result: 'foo' });
     });

@@ -36,6 +36,7 @@ export const theme = extendTheme({
       alternative: '#535A61',
       success: '#579F6E',
       error: '#D34C46',
+      muted: '#BBC0C5',
     },
     info: {
       default: '#0376C9',

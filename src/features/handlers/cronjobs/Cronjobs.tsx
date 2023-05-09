@@ -53,7 +53,12 @@ export const Cronjobs: FunctionComponent = () => (
             <Tab>History</Tab>
           </TabList>
           <TabPanels display="flex" flexDirection="column" flex="1">
-            <TabPanel display="flex" flexDirection="column" flex="1">
+            <TabPanel
+              display="flex"
+              flexDirection="column"
+              flex="1"
+              padding="0"
+            >
               <Response />
             </TabPanel>
             <TabPanel>Bar</TabPanel>
