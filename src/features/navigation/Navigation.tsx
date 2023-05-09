@@ -30,7 +30,7 @@ export const Navigation: FunctionComponent = () => {
                   </Box>{' '}
                   <Tag variant="code">{tag}</Tag>
                 </Text>
-                <Text fontSize="sm" marginTop="1">
+                <Text fontSize="xs" marginTop="1">
                   {description}
                 </Text>
               </Item>
