@@ -12,7 +12,6 @@ import {
   requestSaga,
 } from './sagas';
 import {
-  captureResponse,
   sendRequest,
   setExecutionService,
   setManifest,
@@ -67,8 +66,15 @@ describe('requestSaga', () => {
       .withState({
         simulation: { sourceCode, executionService },
       })
+      .put({
+        type: `${HandlerType.OnRpcRequest}/setRequest`,
+        payload: request,
+      })
       .call([executionService, 'handleRpcRequest'], DEFAULT_SNAP_ID, request)
-      .put(captureResponse({ result: 'foobar' }))
+      .put({
+        type: `${HandlerType.OnRpcRequest}/setResponse`,
+        payload: 'foobar',
+      })
       .silentRun();
   });
 });

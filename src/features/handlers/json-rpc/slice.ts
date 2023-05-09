@@ -11,15 +11,17 @@ type Request = {
 
 type Response = string;
 
+export const INITIAL_STATE = {
+  request: {
+    origin: '',
+  },
+  response: null,
+  history: [],
+};
+
 const slice = createHandlerSlice<Request, Response>({
   name: HandlerType.OnRpcRequest,
-  initialState: {
-    request: {
-      origin: '',
-    },
-    response: null,
-    history: [],
-  },
+  initialState: INITIAL_STATE,
 });
 
 export const jsonRpc = slice.reducer;
