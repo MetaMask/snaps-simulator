@@ -2,6 +2,7 @@ import { IframeExecutionService } from '@metamask/snaps-controllers';
 import { HandlerType } from '@metamask/snaps-utils';
 
 import {
+  SnapStatus,
   captureResponse,
   simulation as reducer,
   sendRequest,
@@ -19,6 +20,7 @@ describe('simulation slice', () => {
         new MockExecutionService() as unknown as IframeExecutionService;
       const result = reducer(
         {
+          status: SnapStatus.Loading,
           executionService: null,
           sourceCode: '',
           manifest: null,
@@ -36,6 +38,7 @@ describe('simulation slice', () => {
     it('sets the source code', () => {
       const result = reducer(
         {
+          status: SnapStatus.Loading,
           executionService:
             new MockExecutionService() as unknown as IframeExecutionService,
           sourceCode: '',
@@ -54,6 +57,7 @@ describe('simulation slice', () => {
     it('sets the manifest', () => {
       const result = reducer(
         {
+          status: SnapStatus.Loading,
           executionService:
             new MockExecutionService() as unknown as IframeExecutionService,
           sourceCode: '',
@@ -77,6 +81,7 @@ describe('simulation slice', () => {
       };
       const result = reducer(
         {
+          status: SnapStatus.OK,
           executionService:
             new MockExecutionService() as unknown as IframeExecutionService,
           sourceCode: '',
@@ -95,6 +100,7 @@ describe('simulation slice', () => {
     it('sets the response', () => {
       const result = reducer(
         {
+          status: SnapStatus.OK,
           executionService:
             new MockExecutionService() as unknown as IframeExecutionService,
           sourceCode: '',

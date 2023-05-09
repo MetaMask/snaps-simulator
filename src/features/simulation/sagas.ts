@@ -18,6 +18,8 @@ import {
   setSourceCode,
   sendRequest,
   captureResponse,
+  SnapStatus,
+  setStatus,
 } from './slice';
 
 // TODO: Use actual snap ID
@@ -89,12 +91,18 @@ export function* rebootSaga({ payload }: PayloadAction<string>) {
     getExecutionService,
   );
 
-  yield call([executionService, 'terminateAllSnaps']);
-  yield call([executionService, 'executeSnap'], {
-    snapId: DEFAULT_SNAP_ID,
-    sourceCode: payload,
-    endowments: ALL_APIS,
-  });
+  try {
+    yield call([executionService, 'terminateAllSnaps']);
+    yield call([executionService, 'executeSnap'], {
+      snapId: DEFAULT_SNAP_ID,
+      sourceCode: payload,
+      endowments: ALL_APIS,
+    });
+    yield put(setStatus(SnapStatus.OK));
+  } catch (error) {
+    console.error(error);
+    yield put(setStatus(SnapStatus.Error));
+  }
 }
 
 /**
