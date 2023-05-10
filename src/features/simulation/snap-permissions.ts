@@ -25,7 +25,9 @@ export const buildSnapEndowmentSpecifications = () =>
     {},
   );
 
-export const buildSnapRestrictedMethodSpecifications = (hooks: any) =>
+export const buildSnapRestrictedMethodSpecifications = (
+  hooks: Record<string, unknown>,
+) =>
   Object.values(restrictedMethodPermissionBuilders).reduce(
     (specifications, { targetKey, specificationBuilder, methodHooks }) => {
       // @ts-expect-error Ignore for now

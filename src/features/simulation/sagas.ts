@@ -86,7 +86,7 @@ export function* initSaga() {
       ...snapsEndowmentCaveatSpecifications,
     },
     permissionSpecifications,
-    // @ts-expect-error Type mismatch
+    // @ts-expect-error PermissionController expects a mutable string array here, but is not given it in the extension either.
     unrestrictedMethods,
   });
 
@@ -173,6 +173,14 @@ export function* requestSaga({ payload }: PayloadAction<SnapRpcHookArgs>) {
   }
 }
 
+/**
+ * The permissions saga, which should run when the setManifest action is emitted.
+ * This saga will automatically grant the active snap all permissions defined in the snap manifest.
+ *
+ * @param action - The action itself.
+ * @param action.payload - The payload of the action, in this case a snap manifest.
+ * @yields Selects the permission controller
+ */
 export function* permissionsSaga({ payload }: PayloadAction<SnapManifest>) {
   const permissionController: GenericPermissionController = yield select(
     getPermissionController,
@@ -184,9 +192,10 @@ export function* permissionsSaga({ payload }: PayloadAction<SnapManifest>) {
   );
 
   // Grant all permissions
-  permissionController.grantPermissions({
+  yield call([permissionController, 'grantPermissions'], {
     approvedPermissions,
     subject: { origin: DEFAULT_SNAP_ID },
+    preserveExistingPermissions: false,
   });
 }
 
