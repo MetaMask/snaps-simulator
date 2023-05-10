@@ -27,6 +27,7 @@ const slice = createHandlerSlice<Request, Response>({
 export const cronjob = slice.reducer;
 export const {
   setRequest: setCronjobRequest,
+  setRequestFromHistory: setCronjobRequestFromHistory,
   setResponse: setCronjobResponse,
 } = slice.actions;
 

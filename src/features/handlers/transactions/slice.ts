@@ -27,6 +27,7 @@ const slice = createHandlerSlice<Request, Response>({
 export const transactions = slice.reducer;
 export const {
   setRequest: setTransactionRequest,
+  setRequestFromHistory: setTransactionRequestFromHistory,
   setResponse: setTransactionResponse,
 } = slice.actions;
 

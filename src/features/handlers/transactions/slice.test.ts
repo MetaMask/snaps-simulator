@@ -3,6 +3,7 @@ import {
   setTransactionRequest,
   INITIAL_STATE,
   setTransactionResponse,
+  setTransactionRequestFromHistory,
 } from './slice';
 
 describe('transactions', () => {
@@ -25,6 +26,26 @@ describe('transactions', () => {
       expect(result.history).toStrictEqual([
         { date: expect.any(Date), request: { origin: 'foo' } },
       ]);
+    });
+  });
+
+  describe('setTransactionRequestFromHistory', () => {
+    it('sets the request', () => {
+      const result = reducer(
+        INITIAL_STATE,
+        setTransactionRequestFromHistory({ origin: 'foo' }),
+      );
+
+      expect(result.request).toStrictEqual({ origin: 'foo' });
+    });
+
+    it('does not push to history', () => {
+      const result = reducer(
+        INITIAL_STATE,
+        setTransactionRequestFromHistory({ origin: 'foo' }),
+      );
+
+      expect(result.history).toStrictEqual([]);
     });
   });
 
