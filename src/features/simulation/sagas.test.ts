@@ -35,9 +35,13 @@ describe('rebootSaga', () => {
   it('reboots the execution environment when source code changes', async () => {
     const sourceCode = 'foo';
     const executionService = new MockExecutionService();
+    const permissionController = {
+      hasPermission: jest.fn().mockImplementation(() => true),
+      getEndowments: jest.fn().mockResolvedValue([]),
+    } as unknown as GenericPermissionController;
     await expectSaga(rebootSaga, setSourceCode(sourceCode))
       .withState({
-        simulation: { executionService },
+        simulation: { executionService, permissionController },
       })
       .call([executionService, 'terminateAllSnaps'])
       .call([executionService, 'executeSnap'], {
