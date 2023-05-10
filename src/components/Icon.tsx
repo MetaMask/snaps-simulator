@@ -5,9 +5,12 @@ import alertIcon from '../assets/icons/alert.svg';
 import arrowRightIcon from '../assets/icons/arrow-right.svg';
 import computerIcon from '../assets/icons/computer.svg';
 import configurationIcon from '../assets/icons/configuration.svg';
+import copiedIcon from '../assets/icons/copied.svg';
+import copyIcon from '../assets/icons/copy.svg';
 import dotIcon from '../assets/icons/dot.svg';
 import errorTriangleIcon from '../assets/icons/error-triangle.svg';
 import playIcon from '../assets/icons/play.svg';
+import snapIcon from '../assets/icons/snap.svg';
 import textBubbleIcon from '../assets/icons/text-bubble.svg';
 
 const DEFAULT_ICONS = {
@@ -42,6 +45,18 @@ const DEFAULT_ICONS = {
   computer: {
     alt: 'Computer',
     src: computerIcon,
+  },
+  snap: {
+    alt: 'Snap',
+    src: snapIcon,
+  },
+  copy: {
+    alt: 'Copy',
+    src: copyIcon,
+  },
+  copied: {
+    alt: 'Copied',
+    src: copiedIcon,
   },
 };
 
