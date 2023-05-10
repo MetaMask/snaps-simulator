@@ -1,6 +1,7 @@
-import { List } from '@chakra-ui/react';
+import { Center, Heading, List, Text } from '@chakra-ui/react';
 import { FunctionComponent } from 'react';
 
+import { Icon } from '../../../components';
 import { useHandler, useSelector } from '../../../hooks';
 import { HistoryItem } from './HistoryItem';
 
@@ -12,7 +13,29 @@ export const History: FunctionComponent = () => {
   );
 
   if (sortedHistory.length === 0) {
-    return null;
+    return (
+      <Center
+        background="background.alternative"
+        flex="1"
+        flexDirection="column"
+      >
+        <Icon icon="moon" width="34px" height="auto" marginBottom="1.5" />
+        <Heading
+          as="h3"
+          fontSize="sm"
+          fontWeight="700"
+          color="text.muted"
+          marginBottom="1"
+        >
+          No history yet
+        </Heading>
+        <Text fontSize="xs" textAlign="center" color="text.muted">
+          Create a request via the
+          <br />
+          request tab to get started.
+        </Text>
+      </Center>
+    );
   }
 
   return (
