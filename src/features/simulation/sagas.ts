@@ -21,6 +21,7 @@ import { all, call, put, select, takeLatest } from 'redux-saga/effects';
 
 import { runSaga } from '../../store/middleware';
 import { getSrp } from '../configuration';
+import { logError } from '../console';
 import {
   getSnapState,
   showDialog,
@@ -176,8 +177,9 @@ export function* rebootSaga({ payload }: PayloadAction<string>) {
       endowments,
     });
     yield put(setStatus(SnapStatus.Ok));
-  } catch (error) {
+  } catch (error: any) {
     console.error(error);
+    yield put(logError(error));
     yield put(setStatus(SnapStatus.Error));
   }
 }

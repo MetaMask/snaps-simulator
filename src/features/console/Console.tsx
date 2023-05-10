@@ -1,6 +1,8 @@
 import { Box, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
 import { FunctionComponent } from 'react';
 
+import { ConsoleContent } from './ConsoleContent';
+
 /**
  * Console component.
  *
@@ -11,11 +13,11 @@ export const Console: FunctionComponent = () => (
     <Tabs>
       <TabList>
         <Tab>Console</Tab>
-        <Tab>History</Tab>
       </TabList>
       <TabPanels>
-        <TabPanel>Console</TabPanel>
-        <TabPanel>History</TabPanel>
+        <TabPanel overflowY="scroll">
+          <ConsoleContent />
+        </TabPanel>
       </TabPanels>
     </Tabs>
   </Box>
