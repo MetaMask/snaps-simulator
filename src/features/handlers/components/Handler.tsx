@@ -74,7 +74,12 @@ export const Handler: FunctionComponent = () => {
           borderLeft="1px solid"
           borderColor="border.default"
         >
-          <Tabs display="flex" flexDirection="column" flex="1">
+          <Tabs
+            display="flex"
+            flexDirection="column"
+            flex="1"
+            overflow="hidden"
+          >
             <ResetTab />
             <ResetUserInterfaceTab />
 
@@ -82,7 +87,12 @@ export const Handler: FunctionComponent = () => {
               <Tab>Response</Tab>
               {userInterface && <Tab>UI</Tab>}
             </TabList>
-            <TabPanels display="flex" flexDirection="column" flex="1">
+            <TabPanels
+              display="flex"
+              flexDirection="column"
+              flex="1"
+              overflow="hidden"
+            >
               <TabPanel
                 display="flex"
                 flexDirection="column"
@@ -92,7 +102,7 @@ export const Handler: FunctionComponent = () => {
                 <Response />
               </TabPanel>
               {userInterface && (
-                <TabPanel>
+                <TabPanel overflowY="auto">
                   <UserInterface />
                 </TabPanel>
               )}
