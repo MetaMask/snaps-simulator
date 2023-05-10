@@ -5,10 +5,11 @@ import { FunctionComponent } from 'react';
 import ReactMarkdown from 'react-markdown';
 
 export type TextProps = {
+  id: string;
   node: unknown;
 };
 
-export const Text: FunctionComponent<TextProps> = ({ node }) => {
+export const Text: FunctionComponent<TextProps> = ({ node, id }) => {
   assert(isComponent(node), 'Expected value to be a valid UI component.');
   assert(node.type === 'text', 'Expected value to be a text component.');
 
@@ -22,6 +23,7 @@ export const Text: FunctionComponent<TextProps> = ({ node }) => {
           </ChakraText>
         ),
       }}
+      key={`${id}-text`}
     >
       {node.value}
     </ReactMarkdown>

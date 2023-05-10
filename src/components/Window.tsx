@@ -10,12 +10,12 @@ type WindowProps = {
 };
 
 /**
- * A MetaMask-like window, with a snap authorship pill and delineator.
+ * A MetaMask-like window, with a snap authorship pill.
  *
  * @param props - The props.
  * @param props.snapName - The name of the snap.
  * @param props.snapId - The ID of the snap.
- * @param props.children - The children to render inside the delineator.
+ * @param props.children - The children to render inside the window.
  * @returns The window component.
  */
 export const Window: FunctionComponent<WindowProps> = ({

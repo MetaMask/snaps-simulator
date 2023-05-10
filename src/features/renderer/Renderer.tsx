@@ -5,7 +5,7 @@ import { Copyable, Panel, Text, Divider, Heading, Spinner } from './components';
 
 export const components: Record<
   NodeType,
-  FunctionComponent<{ node: unknown }>
+  FunctionComponent<{ id: string; node: unknown }>
 > = {
   [NodeType.Copyable]: Copyable,
   [NodeType.Divider]: Divider,
@@ -17,6 +17,7 @@ export const components: Record<
 
 type RendererProps = {
   node: Component;
+  id?: string;
 };
 
 /**
@@ -24,14 +25,19 @@ type RendererProps = {
  *
  * @param props - The component props.
  * @param props.node - The component to render.
+ * @param props.id - The component ID, to be used as a prefix for component
+ * keys.
  * @returns The renderer component.
  */
-export const Renderer: FunctionComponent<RendererProps> = ({ node }) => {
+export const Renderer: FunctionComponent<RendererProps> = ({
+  node,
+  id = 'root',
+}) => {
   const ReactComponent = components[node.type];
 
   if (!ReactComponent) {
     throw new Error(`Unknown component type: ${node.type}.`);
   }
 
-  return <ReactComponent node={node}></ReactComponent>;
+  return <ReactComponent id={id} node={node} />;
 };

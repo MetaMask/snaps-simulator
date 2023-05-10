@@ -6,10 +6,11 @@ import { FunctionComponent, useEffect, useState } from 'react';
 import { Icon } from '../../../components';
 
 export type CopyableProps = {
+  id: string;
   node: unknown;
 };
 
-export const Copyable: FunctionComponent<CopyableProps> = ({ node }) => {
+export const Copyable: FunctionComponent<CopyableProps> = ({ node, id }) => {
   const [copied, setCopied] = useState(false);
 
   assert(isComponent(node), 'Expected value to be a valid UI component.');
@@ -47,6 +48,7 @@ export const Copyable: FunctionComponent<CopyableProps> = ({ node }) => {
       background="background.alternative"
       justifyContent="space-between"
       marginBottom="1"
+      key={`${id}-copyable`}
     >
       <Text
         fontFamily="custom"
