@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   Flex,
   Tab,
   TabList,
@@ -11,8 +10,8 @@ import {
 import { FunctionComponent, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 
-import { Icon } from '../../../components';
 import { History } from './History';
+import { PlayButton } from './PlayButton';
 import { Response } from './Response';
 import { UserInterface } from './UserInterface';
 
@@ -36,14 +35,7 @@ export const Handler: FunctionComponent = () => {
               <Tab>History</Tab>
               {tab === 0 && (
                 <Box marginLeft="auto">
-                  <Button
-                    variant="unstyled"
-                    type="submit"
-                    minWidth="0"
-                    form="request-form"
-                  >
-                    <Icon icon="play" width="24px" />
-                  </Button>
+                  <PlayButton />
                 </Box>
               )}
             </TabList>

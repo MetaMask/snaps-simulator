@@ -10,6 +10,9 @@ import copiedIcon from '../assets/icons/copied.svg';
 import copyIcon from '../assets/icons/copy.svg';
 import dotIcon from '../assets/icons/dot.svg';
 import errorTriangleIcon from '../assets/icons/error-triangle.svg';
+import playErrorIcon from '../assets/icons/play-error.svg';
+import playMutedIcon from '../assets/icons/play-muted.svg';
+import playSuccessIcon from '../assets/icons/play-success.svg';
 import playIcon from '../assets/icons/play.svg';
 import snapIcon from '../assets/icons/snap.svg';
 import textBubbleIcon from '../assets/icons/text-bubble.svg';
@@ -38,6 +41,18 @@ const DEFAULT_ICONS = {
   play: {
     alt: 'Play',
     src: playIcon,
+  },
+  playMuted: {
+    alt: 'Play',
+    src: playMutedIcon,
+  },
+  playSuccess: {
+    alt: 'Success',
+    src: playSuccessIcon,
+  },
+  playError: {
+    alt: 'Error',
+    src: playErrorIcon,
   },
   dot: {
     alt: 'OK',
