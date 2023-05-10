@@ -1,4 +1,4 @@
-import { Box, Text } from '@chakra-ui/react';
+import { Text } from '@chakra-ui/react';
 
 import { useSelector } from '../../hooks';
 import { ConsoleEntryType, getConsoleEntries } from './slice';
@@ -12,12 +12,12 @@ export const ConsoleContent = () => {
   };
 
   return (
-    <Box>
+    <>
       {entries.map((entry) => (
         <Text textColor={colors[entry.type]} fontFamily="code" key={entry.date}>
           {entry.message}
         </Text>
       ))}
-    </Box>
+    </>
   );
 };
