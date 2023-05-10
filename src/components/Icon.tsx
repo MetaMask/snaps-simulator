@@ -3,6 +3,7 @@ import { FunctionComponent } from 'react';
 
 import alertIcon from '../assets/icons/alert.svg';
 import arrowRightIcon from '../assets/icons/arrow-right.svg';
+import arrowTopRightIcon from '../assets/icons/arrow-top-right.svg';
 import computerIcon from '../assets/icons/computer.svg';
 import configurationIcon from '../assets/icons/configuration.svg';
 import copiedIcon from '../assets/icons/copied.svg';
@@ -21,6 +22,10 @@ const DEFAULT_ICONS = {
   arrowRight: {
     alt: 'Arrow pointing right',
     src: arrowRightIcon,
+  },
+  arrowTopRight: {
+    alt: 'Arrow pointing top right',
+    src: arrowTopRightIcon,
   },
   textBubble: {
     alt: 'Text bubble',

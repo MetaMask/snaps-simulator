@@ -59,6 +59,7 @@
     "@metamask/snaps-utils": "^0.32.2",
     "@metamask/utils": "^5.0.2",
     "@reduxjs/toolkit": "^1.9.5",
+    "date-fns": "^2.30.0",
     "framer-motion": "^10.12.8",
     "json-rpc-engine": "^6.1.0",
     "json-rpc-middleware-stream": "^4.2.1",

@@ -12,16 +12,24 @@ import { FunctionComponent } from 'react';
 import { Outlet } from 'react-router-dom';
 
 import { Icon } from '../../../components';
+import { History } from './History';
 import { Response } from './Response';
 import { UserInterface } from './UserInterface';
 
 export const Handler: FunctionComponent = () => (
-  <Flex width="100%" direction="column">
-    <Flex direction="row" flex="1">
-      <Flex direction="column" flex="1" width="50%">
-        <Tabs display="flex" flexDirection="column" flex="1">
+  <Flex width="100%" direction="column" overflow="hidden">
+    <Flex direction="row" flex="1" overflow="hidden">
+      <Flex direction="column" flex="1" width="50%" overflow="hidden">
+        <Tabs
+          display="flex"
+          flexDirection="column"
+          flex="1"
+          overflow="hidden"
+          isLazy={true}
+        >
           <TabList alignItems="center">
             <Tab>Request</Tab>
+            <Tab>History</Tab>
             <Box marginLeft="auto">
               <Button
                 variant="unstyled"
@@ -33,9 +41,17 @@ export const Handler: FunctionComponent = () => (
               </Button>
             </Box>
           </TabList>
-          <TabPanels display="flex" flexDirection="column" flex="1">
+          <TabPanels
+            display="flex"
+            flexDirection="column"
+            flex="1"
+            overflow="hidden"
+          >
             <TabPanel display="flex" flexDirection="column" flex="1">
               <Outlet />
+            </TabPanel>
+            <TabPanel padding="0" overflowY="auto">
+              <History />
             </TabPanel>
           </TabPanels>
         </Tabs>

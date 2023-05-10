@@ -40,6 +40,10 @@ export function createHandlerSlice<Request, Response>({
           request: action.payload as Draft<Request>,
         });
       },
+      setRequestFromHistory: (state, action: PayloadAction<Request>) => {
+        // `immer` does not work well with generic types, so we have to cast.
+        state.request = action.payload as Draft<Request>;
+      },
       setResponse: (state, action: PayloadAction<Response>) => {
         // `immer` does not work well with generic types, so we have to cast.
         state.response = action.payload as Draft<Response>;

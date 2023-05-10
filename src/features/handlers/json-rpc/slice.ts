@@ -27,6 +27,7 @@ const slice = createHandlerSlice<Request, Response>({
 export const jsonRpc = slice.reducer;
 export const {
   setRequest: setJsonRpcRequest,
+  setRequestFromHistory: setJsonRpcRequestFromHistory,
   setResponse: setJsonRpcResponse,
 } = slice.actions;
 
