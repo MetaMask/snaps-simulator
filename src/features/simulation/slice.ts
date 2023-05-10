@@ -1,7 +1,12 @@
 import { GenericPermissionController } from '@metamask/permission-controller';
 import { IframeExecutionService } from '@metamask/snaps-controllers';
 import { SnapManifest, SnapRpcHookArgs } from '@metamask/snaps-utils';
-import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import {
+  createAction,
+  createSelector,
+  createSlice,
+  PayloadAction,
+} from '@reduxjs/toolkit';
 
 export enum SnapStatus {
   Ok,
@@ -15,8 +20,6 @@ type SimulationState = {
   permissionController: GenericPermissionController | null;
   manifest: SnapManifest | null;
   sourceCode: string;
-  request: SnapRpcHookArgs | null;
-  response: unknown | null;
 };
 
 export const INITIAL_STATE: SimulationState = {
@@ -25,8 +28,6 @@ export const INITIAL_STATE: SimulationState = {
   permissionController: null,
   manifest: null,
   sourceCode: '',
-  request: null,
-  response: null,
 };
 
 const slice = createSlice({
@@ -52,14 +53,12 @@ const slice = createSlice({
     setSourceCode(state, action: PayloadAction<string>) {
       state.sourceCode = action.payload;
     },
-    sendRequest(state, action: PayloadAction<SnapRpcHookArgs>) {
-      state.request = action.payload;
-    },
-    captureResponse(state, action: PayloadAction<unknown>) {
-      state.response = action.payload;
-    },
   },
 });
+
+export const sendRequest = createAction<SnapRpcHookArgs>(
+  `${slice.name}/sendRequest`,
+);
 
 export const {
   setStatus,
@@ -67,9 +66,8 @@ export const {
   setPermissionController,
   setManifest,
   setSourceCode,
-  sendRequest,
-  captureResponse,
 } = slice.actions;
+
 export const simulation = slice.reducer;
 
 export const getStatus = createSelector(
@@ -90,9 +88,4 @@ export const getPermissionController = createSelector(
 export const getChecksum = createSelector(
   (state: { simulation: typeof INITIAL_STATE }) => state.simulation,
   (state) => state.manifest?.source.shasum,
-);
-
-export const getResponse = createSelector(
-  (state: { simulation: typeof INITIAL_STATE }) => state.simulation,
-  (state) => state.response,
 );

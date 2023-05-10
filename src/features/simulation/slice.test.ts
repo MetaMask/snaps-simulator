@@ -1,11 +1,8 @@
 import { IframeExecutionService } from '@metamask/snaps-controllers';
-import { HandlerType } from '@metamask/snaps-utils';
 
 import {
   SnapStatus,
-  captureResponse,
   simulation as reducer,
-  sendRequest,
   setExecutionService,
   setManifest,
   setSourceCode,
@@ -50,27 +47,6 @@ describe('simulation slice', () => {
       const result = reducer(INITIAL_STATE, setManifest(MOCK_MANIFEST));
 
       expect(result.manifest).toBe(MOCK_MANIFEST);
-    });
-  });
-
-  describe('sendRequest', () => {
-    it('sets the request', () => {
-      const request = {
-        origin: 'Snaps Simulator',
-        handler: HandlerType.OnRpcRequest,
-        request: { jsonrpc: '2.0', method: 'foo', params: [] },
-      };
-      const result = reducer(INITIAL_STATE, sendRequest(request));
-
-      expect(result.request).toStrictEqual(request);
-    });
-  });
-
-  describe('captureResponse', () => {
-    it('sets the response', () => {
-      const result = reducer(INITIAL_STATE, captureResponse({ result: 'foo' }));
-
-      expect(result.response).toStrictEqual({ result: 'foo' });
     });
   });
 });
