@@ -38,7 +38,7 @@ export const PlayButton = () => {
     if (state === PlayButtonState.Success || state === PlayButtonState.Error) {
       const timeout = setTimeout(() => {
         setState(PlayButtonState.Ready);
-      }, 500);
+      }, 1500);
 
       return () => clearTimeout(timeout);
     }
