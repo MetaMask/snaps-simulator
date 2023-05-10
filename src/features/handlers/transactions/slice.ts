@@ -1,20 +1,18 @@
 import { HandlerType } from '@metamask/snaps-utils';
-import { JsonRpcRequest } from '@metamask/utils';
 import { createSelector } from '@reduxjs/toolkit';
 
 import { createHandlerSlice } from '../slice';
 
 type Request = {
-  origin: string;
-  request?: JsonRpcRequest;
+  chainId: string;
+  transaction: string;
+  transactionOrigin?: string;
 };
 
 type Response = string;
 
 export const INITIAL_STATE = {
-  request: {
-    origin: '',
-  },
+  request: { chainId: '', transaction: '', transactionOrigin: '' },
   response: null,
   history: [],
 };

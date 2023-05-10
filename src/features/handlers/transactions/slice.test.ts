@@ -11,7 +11,7 @@ describe('transactions', () => {
     it('sets the request', () => {
       const result = reducer(
         INITIAL_STATE,
-        setTransactionRequest({ origin: 'foo' }),
+        setTransactionRequest({ chainId: 'bar', transaction: 'foo' }),
       );
 
       expect(result.request).toStrictEqual({ origin: 'foo' });
@@ -20,7 +20,7 @@ describe('transactions', () => {
     it('pushes the request to history', () => {
       const result = reducer(
         INITIAL_STATE,
-        setTransactionRequest({ origin: 'foo' }),
+        setTransactionRequest({ chainId: 'bar', transaction: 'foo' }),
       );
 
       expect(result.history).toStrictEqual([
@@ -33,7 +33,10 @@ describe('transactions', () => {
     it('sets the request', () => {
       const result = reducer(
         INITIAL_STATE,
-        setTransactionRequestFromHistory({ origin: 'foo' }),
+        setTransactionRequestFromHistory({
+          chainId: 'bar',
+          transaction: 'foo',
+        }),
       );
 
       expect(result.request).toStrictEqual({ origin: 'foo' });
@@ -42,7 +45,10 @@ describe('transactions', () => {
     it('does not push to history', () => {
       const result = reducer(
         INITIAL_STATE,
-        setTransactionRequestFromHistory({ origin: 'foo' }),
+        setTransactionRequestFromHistory({
+          chainId: 'bar',
+          transaction: 'foo',
+        }),
       );
 
       expect(result.history).toStrictEqual([]);

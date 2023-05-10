@@ -1,11 +1,15 @@
-import { Center, Heading, Text } from '@chakra-ui/react';
+import { Center, Heading, Text, Box } from '@chakra-ui/react';
+import { HandlerType } from '@metamask/snaps-utils';
 
-import { Editor, Icon } from '../../../components';
+import { Delineator, Editor, Icon } from '../../../components';
 import { useSelector, useHandler } from '../../../hooks';
+import { Renderer } from '../../renderer';
+import { getSnapName } from '../../simulation';
 
 export const Response = () => {
   const handler = useHandler();
   const response = useSelector((state) => state[handler].response);
+  const snapName = useSelector(getSnapName);
 
   if (!response) {
     return (
@@ -30,6 +34,16 @@ export const Response = () => {
           left-side config to get started.
         </Text>
       </Center>
+    );
+  }
+
+  if (handler === HandlerType.OnTransaction && response.result?.content) {
+    return (
+      <Box margin="4" flex="1">
+        <Delineator snapName={snapName}>
+          <Renderer node={response.result.content} />
+        </Delineator>
+      </Box>
     );
   }
 
