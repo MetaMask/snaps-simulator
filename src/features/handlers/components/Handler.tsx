@@ -10,13 +10,18 @@ import {
 import { FunctionComponent, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 
+import { useSelector } from '../../../hooks';
+import { getUserInterface } from '../../simulation';
 import { History } from './History';
 import { PlayButton } from './PlayButton';
+import { ResetTab } from './ResetTab';
+import { ResetUserInterfaceTab } from './ResetUserInterfaceTab';
 import { Response } from './Response';
 import { UserInterface } from './UserInterface';
 
 export const Handler: FunctionComponent = () => {
   const [tab, setTab] = useState(0);
+  const userInterface = useSelector(getUserInterface);
 
   return (
     <Flex width="100%" direction="column" overflow="hidden">
@@ -30,6 +35,7 @@ export const Handler: FunctionComponent = () => {
             isLazy={true}
             onChange={setTab}
           >
+            <ResetTab />
             <TabList alignItems="center">
               <Tab>Request</Tab>
               <Tab>History</Tab>
@@ -68,12 +74,25 @@ export const Handler: FunctionComponent = () => {
           borderLeft="1px solid"
           borderColor="border.default"
         >
-          <Tabs display="flex" flexDirection="column" flex="1">
+          <Tabs
+            display="flex"
+            flexDirection="column"
+            flex="1"
+            overflow="hidden"
+          >
+            <ResetTab />
+            <ResetUserInterfaceTab />
+
             <TabList>
               <Tab>Response</Tab>
-              <Tab>UI</Tab>
+              {userInterface && <Tab>UI</Tab>}
             </TabList>
-            <TabPanels display="flex" flexDirection="column" flex="1">
+            <TabPanels
+              display="flex"
+              flexDirection="column"
+              flex="1"
+              overflow="hidden"
+            >
               <TabPanel
                 display="flex"
                 flexDirection="column"
@@ -82,9 +101,11 @@ export const Handler: FunctionComponent = () => {
               >
                 <Response />
               </TabPanel>
-              <TabPanel>
-                <UserInterface />
-              </TabPanel>
+              {userInterface && (
+                <TabPanel overflowY="auto">
+                  <UserInterface />
+                </TabPanel>
+              )}
             </TabPanels>
           </Tabs>
         </Box>

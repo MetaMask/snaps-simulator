@@ -1,5 +1,6 @@
+import { useTabsContext } from '@chakra-ui/react';
 import { DialogType } from '@metamask/rpc-methods';
-import { FunctionComponent } from 'react';
+import { FunctionComponent, useEffect } from 'react';
 
 import {
   AlertDialog,
@@ -12,6 +13,12 @@ import { getUserInterface, resolveUserInterface } from '../../simulation';
 export const UserInterface: FunctionComponent = () => {
   const dispatch = useDispatch();
   const ui = useSelector(getUserInterface);
+  const tab = useTabsContext();
+
+  useEffect(() => {
+    tab.setSelectedIndex(1);
+  }, []);
+
   if (!ui) {
     return null;
   }
