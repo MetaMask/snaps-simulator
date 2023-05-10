@@ -13,8 +13,6 @@ export type SnapIconProps = {
  * A Snap icon, which renders the icon defined in the snap's manifest, or a
  * fallback icon if the snap doesn't define one.
  *
- * TODO: Actually fetch the snap's icon from the manifest.
- *
  * @param props - The props.
  * @param props.snapName - The name of the snap.
  * @returns The Snap icon component.
