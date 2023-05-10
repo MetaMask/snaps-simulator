@@ -14,7 +14,13 @@ export const ConsoleContent = () => {
   return (
     <>
       {entries.map((entry) => (
-        <Text textColor={colors[entry.type]} fontFamily="code" key={entry.date}>
+        <Text
+          textColor={colors[entry.type]}
+          fontFamily="code"
+          fontSize="xs"
+          key={entry.date}
+          whiteSpace="pre-wrap"
+        >
           {entry.message}
         </Text>
       ))}

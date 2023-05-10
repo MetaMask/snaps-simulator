@@ -21,18 +21,23 @@ export const Console: FunctionComponent = () => (
     borderColor="border.default"
     height="266px"
     flexDirection="column"
-    flex="1"
+    overflow="hidden"
   >
-    <Tabs display="flex" flexDirection="column" flex="1">
+    <Tabs display="flex" flexDirection="column" flex="1" overflow="hidden">
       <TabList>
         <Tab>Console</Tab>
       </TabList>
-      <TabPanels display="flex" flexDirection="column" flex="1">
+      <TabPanels
+        display="flex"
+        flexDirection="column"
+        flex="1"
+        overflow="hidden"
+      >
         <TabPanel
           display="flex"
           flexDirection="column"
           flex="1"
-          overflowY="scroll"
+          overflowY="auto"
         >
           <ConsoleContent />
         </TabPanel>
