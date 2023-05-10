@@ -1,10 +1,9 @@
 import { GenericPermissionController } from '@metamask/permission-controller';
-import { HandlerType } from '@metamask/snaps-utils';
+import { DEFAULT_ENDOWMENTS, HandlerType } from '@metamask/snaps-utils';
 import { expectSaga } from 'redux-saga-test-plan';
 
 import { DEFAULT_SRP } from '../configuration';
 import {
-  ALL_APIS,
   DEFAULT_SNAP_ID,
   initSaga,
   permissionsSaga,
@@ -36,15 +35,19 @@ describe('rebootSaga', () => {
   it('reboots the execution environment when source code changes', async () => {
     const sourceCode = 'foo';
     const executionService = new MockExecutionService();
+    const permissionController = {
+      hasPermission: jest.fn().mockImplementation(() => true),
+      getEndowments: jest.fn().mockResolvedValue([]),
+    } as unknown as GenericPermissionController;
     await expectSaga(rebootSaga, setSourceCode(sourceCode))
       .withState({
-        simulation: { executionService },
+        simulation: { executionService, permissionController },
       })
       .call([executionService, 'terminateAllSnaps'])
       .call([executionService, 'executeSnap'], {
         snapId: DEFAULT_SNAP_ID,
         sourceCode,
-        endowments: ALL_APIS,
+        endowments: DEFAULT_ENDOWMENTS,
       })
       .silentRun();
   });
