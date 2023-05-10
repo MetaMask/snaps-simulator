@@ -1,5 +1,7 @@
 import { GenericPermissionController } from '@metamask/permission-controller';
+import { DialogType } from '@metamask/rpc-methods/dist/restricted/dialog';
 import { IframeExecutionService } from '@metamask/snaps-controllers';
+import { Component } from '@metamask/snaps-ui';
 import { SnapManifest, SnapRpcHookArgs } from '@metamask/snaps-utils';
 import {
   createAction,
@@ -14,12 +16,20 @@ export enum SnapStatus {
   Error,
 }
 
+export type HandlerUserInterface = {
+  type: DialogType;
+  snapId: string;
+  snapName: string;
+  node: Component;
+};
+
 type SimulationState = {
   status: SnapStatus;
   executionService: IframeExecutionService | null;
   permissionController: GenericPermissionController | null;
   manifest: SnapManifest | null;
   sourceCode: string;
+  ui?: HandlerUserInterface | null;
 };
 
 export const INITIAL_STATE: SimulationState = {
@@ -53,11 +63,21 @@ const slice = createSlice({
     setSourceCode(state, action: PayloadAction<string>) {
       state.sourceCode = action.payload;
     },
+    showUserInterface: (state, action: PayloadAction<HandlerUserInterface>) => {
+      state.ui = action.payload;
+    },
+    closeUserInterface: (state) => {
+      state.ui = null;
+    },
   },
 });
 
 export const sendRequest = createAction<SnapRpcHookArgs>(
   `${slice.name}/sendRequest`,
+);
+
+export const resolveUserInterface = createAction<unknown>(
+  `${slice.name}/resolveUserInterface`,
 );
 
 export const {
@@ -66,6 +86,8 @@ export const {
   setPermissionController,
   setManifest,
   setSourceCode,
+  showUserInterface,
+  closeUserInterface,
 } = slice.actions;
 
 export const simulation = slice.reducer;
@@ -85,7 +107,17 @@ export const getPermissionController = createSelector(
   (state) => state.permissionController,
 );
 
+export const getSnapName = createSelector(
+  (state: { simulation: typeof INITIAL_STATE }) => state.simulation,
+  (state) => state.manifest?.proposedName,
+);
+
 export const getChecksum = createSelector(
   (state: { simulation: typeof INITIAL_STATE }) => state.simulation,
   (state) => state.manifest?.source.shasum,
+);
+
+export const getUserInterface = createSelector(
+  (state: { simulation: typeof INITIAL_STATE }) => state.simulation,
+  (state) => state.ui,
 );
