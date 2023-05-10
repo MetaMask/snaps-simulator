@@ -7,10 +7,12 @@ import {
   jsonRpc,
   cronjob,
   transactions,
+  notifications,
 } from '../features';
 
 export const reducer = combineReducers({
   configuration,
+  notifications,
   simulation,
   [HandlerType.OnRpcRequest]: jsonRpc,
   [HandlerType.OnCronjob]: cronjob,

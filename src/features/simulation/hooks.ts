@@ -1,8 +1,9 @@
-import { DialogType } from '@metamask/rpc-methods';
+import { DialogType, NotificationArgs } from '@metamask/rpc-methods';
 import { Component } from '@metamask/snaps-ui';
 import { SagaIterator } from 'redux-saga';
-import { put, select, take } from 'redux-saga/effects';
+import { call, put, select, take } from 'redux-saga/effects';
 
+import { addNotification } from '../notifications/slice';
 import {
   closeUserInterface,
   getSnapName,
@@ -42,4 +43,66 @@ export function* showDialog(
   yield put(closeUserInterface());
 
   return payload;
+}
+
+/**
+ * Show a native notification to the user.
+ *
+ * @param _snapId - The ID of the Snap that created the alert.
+ * @param args - The arguments to pass to the notification.
+ * @param args.message - The message to show in the notification.
+ * @yields Calls the Notification API.
+ * @returns `null`.
+ */
+export function* showNativeNotification(
+  _snapId: string,
+  { message }: NotificationArgs,
+): SagaIterator {
+  const snapName = yield select(getSnapName);
+
+  if (Notification.permission === 'default') {
+    const permission = yield call([Notification, 'requestPermission']);
+    if (permission === 'denied') {
+      // Show notification permission denied error.
+      yield put(
+        addNotification(
+          'Unable to show browser notification. Make sure notifications are enabled in your browser settings.',
+        ),
+      );
+    }
+  }
+
+  if (Notification.permission === 'denied') {
+    // Show notification permission denied error.
+    yield put(
+      addNotification(
+        'Unable to show browser notification. Make sure notifications are enabled in your browser settings.',
+      ),
+    );
+  }
+
+  // eslint-disable-next-line no-new
+  new Notification(snapName, {
+    body: message,
+  });
+
+  return null;
+}
+
+/**
+ * Show an in-app notification to the user.
+ *
+ * @param _snapId - The ID of the Snap that created the alert.
+ * @param args - The arguments to pass to the notification.
+ * @param args.message - The message to show in the notification.
+ * @yields Adds a notification to the notification list.
+ * @returns `null`.
+ */
+export function* showInAppNotification(
+  _snapId: string,
+  { message }: NotificationArgs,
+): SagaIterator {
+  yield put(addNotification(message));
+
+  return null;
 }

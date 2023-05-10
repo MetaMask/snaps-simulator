@@ -24,7 +24,11 @@ import { all, call, put, select, takeLatest } from 'redux-saga/effects';
 
 import { runSaga } from '../../store/middleware';
 import { getSrp } from '../configuration';
-import { showDialog } from './hooks';
+import {
+  showDialog,
+  showInAppNotification,
+  showNativeNotification,
+} from './hooks';
 import { createMiscMethodMiddleware } from './middleware';
 import {
   getExecutionService,
@@ -68,6 +72,12 @@ export function* initSaga() {
       getMnemonic: async () => mnemonicPhraseToBytes(srp),
       showDialog: async (...args: Parameters<typeof showDialog>) =>
         await runSaga(showDialog, ...args).toPromise(),
+      showNativeNotification: async (
+        ...args: Parameters<typeof showNativeNotification>
+      ) => await runSaga(showNativeNotification, ...args).toPromise(),
+      showInAppNotification: async (
+        ...args: Parameters<typeof showInAppNotification>
+      ) => await runSaga(showInAppNotification, ...args).toPromise(),
     }),
   };
 

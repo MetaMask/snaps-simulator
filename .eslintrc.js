@@ -43,6 +43,7 @@ module.exports = {
         '@metamask/eslint-config-nodejs',
       ],
       rules: {
+        'no-restricted-globals': 'off',
         'jest/expect-expect': [
           'error',
           {
