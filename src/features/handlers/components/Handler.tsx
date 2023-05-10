@@ -13,6 +13,7 @@ import { Outlet } from 'react-router-dom';
 
 import { Icon } from '../../../components';
 import { Response } from './Response';
+import { UserInterface } from './UserInterface';
 
 export const Handler: FunctionComponent = () => (
   <Flex width="100%" direction="column">
@@ -61,7 +62,9 @@ export const Handler: FunctionComponent = () => (
             >
               <Response />
             </TabPanel>
-            <TabPanel>Bar</TabPanel>
+            <TabPanel>
+              <UserInterface />
+            </TabPanel>
           </TabPanels>
         </Tabs>
       </Box>

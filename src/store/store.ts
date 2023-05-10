@@ -1,7 +1,8 @@
 import { configureStore, createAction } from '@reduxjs/toolkit';
-import createSagaMiddleware, { SagaIterator, Saga } from 'redux-saga';
+import { SagaIterator, Saga } from 'redux-saga';
 import { cancel, fork, take } from 'redux-saga/effects';
 
+import { sagaMiddleware } from './middleware';
 import { reducer } from './reducer';
 import { rootSaga } from './sagas';
 
@@ -31,8 +32,6 @@ export function createAbortableSaga(saga: Saga) {
  * @returns A Redux store.
  */
 export function createStore() {
-  const sagaMiddleware = createSagaMiddleware();
-
   const store = configureStore({
     reducer,
     middleware: (getDefaultMiddleware) =>
