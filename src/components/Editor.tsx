@@ -14,9 +14,13 @@ export type EditorProps = MonacoEditorProps & BoxProps;
  * Editor component. This uses Monaco Editor to provide a JSON editor.
  *
  * @param props - The props.
+ * @param props.border - The border.
  * @returns The editor component.
  */
-export const Editor: FunctionComponent<EditorProps> = (props) => {
+export const Editor: FunctionComponent<EditorProps> = ({
+  border = '1px solid',
+  ...props
+}) => {
   const handleMount = (editor: typeof monaco) => {
     editor.languages.json?.jsonDefaults.setDiagnosticsOptions({
       validate: true,
@@ -34,8 +38,7 @@ export const Editor: FunctionComponent<EditorProps> = (props) => {
     <Box
       width="100%"
       padding="4"
-      borderWidth="1px"
-      borderStyle="solid"
+      border={border}
       borderColor="gray.muted"
       flex="1"
     >

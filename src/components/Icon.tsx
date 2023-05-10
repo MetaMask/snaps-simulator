@@ -3,6 +3,7 @@ import { FunctionComponent } from 'react';
 
 import alertIcon from '../assets/icons/alert.svg';
 import arrowRightIcon from '../assets/icons/arrow-right.svg';
+import computerIcon from '../assets/icons/computer.svg';
 import configurationIcon from '../assets/icons/configuration.svg';
 import dotIcon from '../assets/icons/dot.svg';
 import errorTriangleIcon from '../assets/icons/error-triangle.svg';
@@ -37,6 +38,10 @@ const DEFAULT_ICONS = {
   errorTriangle: {
     alt: 'Error',
     src: errorTriangleIcon,
+  },
+  computer: {
+    alt: 'Computer',
+    src: computerIcon,
   },
 };
 
