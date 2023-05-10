@@ -142,3 +142,13 @@ export const getSnapStateSelector = createSelector(
   (state: { simulation: typeof INITIAL_STATE }) => state.simulation,
   (state) => state.snapState,
 );
+
+export const getSnapManifest = createSelector(
+  (state: { simulation: typeof INITIAL_STATE }) => state.simulation,
+  (state) => state.manifest,
+);
+
+export const getSourceCode = createSelector(
+  (state: { simulation: typeof INITIAL_STATE }) => state.simulation,
+  (state) => state.sourceCode,
+);

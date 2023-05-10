@@ -6,8 +6,14 @@ import {
   Route,
 } from 'react-router-dom';
 
-import { Cronjobs, JsonRpc, Layout, Transactions } from './features';
-import { Handler } from './features/handlers/components';
+import {
+  Cronjobs,
+  JsonRpc,
+  Layout,
+  Transactions,
+  Handler,
+  Manifest,
+} from './features';
 
 export const router = createHashRouter(
   createRoutesFromElements(
@@ -21,6 +27,7 @@ export const router = createHashRouter(
           />
         }
       />
+      <Route path="/manifest" element={<Manifest />} />
       <Route path="/handler" element={<Handler />}>
         <Route
           path={`/handler/${HandlerType.OnRpcRequest}`}
