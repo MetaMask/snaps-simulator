@@ -1,3 +1,4 @@
+import { HandlerType } from '@metamask/snaps-utils';
 import {
   createHashRouter,
   createRoutesFromElements,
@@ -13,12 +14,26 @@ export const router = createHashRouter(
     <Route element={<Layout />}>
       <Route
         path="/"
-        element={<Navigate to="/handler/json-rpc" replace={true} />}
+        element={
+          <Navigate
+            to={`/handler/${HandlerType.OnRpcRequest}`}
+            replace={true}
+          />
+        }
       />
       <Route path="/handler" element={<Handler />}>
-        <Route path="/handler/json-rpc" element={<JsonRpc />} />
-        <Route path="/handler/cronjobs" element={<Cronjobs />} />
-        <Route path="/handler/transactions" element={<Transactions />} />
+        <Route
+          path={`/handler/${HandlerType.OnRpcRequest}`}
+          element={<JsonRpc />}
+        />
+        <Route
+          path={`/handler/${HandlerType.OnCronjob}`}
+          element={<Cronjobs />}
+        />
+        <Route
+          path={`/handler/${HandlerType.OnTransaction}`}
+          element={<Transactions />}
+        />
       </Route>
     </Route>,
   ),

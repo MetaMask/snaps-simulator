@@ -29,7 +29,7 @@
     "lint:misc": "prettier '**/*.json' '**/*.md' '!CHANGELOG.md' '**/*.yml' '**/*.html' '!.yarnrc.yml' --ignore-path .gitignore --no-error-on-unmatched-pattern",
     "prepack": "./scripts/prepack.sh",
     "start": "webpack serve --mode development",
-    "test": "jest && jest-it-up",
+    "test": "jest && jest-it-up --margin 0.5",
     "test:watch": "jest --watch"
   },
   "simple-git-hooks": {

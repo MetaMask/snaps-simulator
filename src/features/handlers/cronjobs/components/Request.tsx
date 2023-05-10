@@ -10,9 +10,10 @@ import { FunctionComponent } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
 import { Editor } from '../../../../components';
-import { useDispatch } from '../../../../hooks';
+import { useDispatch, useSelector } from '../../../../hooks';
 import { sendRequest } from '../../../simulation';
 import { SAMPLE_JSON_RPC_REQUEST } from '../../json-rpc/schema';
+import { getCronjobRequest } from '../slice';
 
 type CronjobFormData = {
   origin: string;
@@ -20,6 +21,7 @@ type CronjobFormData = {
 };
 
 export const Request: FunctionComponent = () => {
+  const { request, origin } = useSelector(getCronjobRequest);
   const {
     handleSubmit,
     register,
@@ -27,8 +29,10 @@ export const Request: FunctionComponent = () => {
     formState: { errors },
   } = useForm<CronjobFormData>({
     defaultValues: {
-      origin: '',
-      request: SAMPLE_JSON_RPC_REQUEST,
+      origin: origin ?? '',
+      request: request
+        ? JSON.stringify(request, null, 2)
+        : SAMPLE_JSON_RPC_REQUEST,
     },
   });
 
