@@ -39,7 +39,7 @@ export function* fetchingSaga() {
 
   yield put(setManifest(manifest.result));
 
-  yield put(logDefault('Snap changed, rebooting..'));
+  yield put(logDefault('Snap changed, rebooting...'));
 
   const bundlePath = manifest.result.source.location.npm.filePath;
 
