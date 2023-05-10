@@ -2,6 +2,7 @@ import { ChakraProvider } from '@chakra-ui/react';
 import { FunctionComponent, ReactElement, StrictMode } from 'react';
 import { Provider } from 'react-redux';
 
+import { Notifications } from '../features/notifications/Notifications';
 import type { createStore } from '../store';
 import { theme } from '../theme';
 
@@ -22,7 +23,10 @@ export type RootProps = {
 export const Root: FunctionComponent<RootProps> = ({ store, children }) => (
   <StrictMode>
     <Provider store={store}>
-      <ChakraProvider theme={theme}>{children}</ChakraProvider>
+      <ChakraProvider theme={theme}>
+        <Notifications />
+        {children}
+      </ChakraProvider>
     </Provider>
   </StrictMode>
 );

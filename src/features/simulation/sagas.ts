@@ -5,16 +5,12 @@ import {
   PermissionController,
 } from '@metamask/permission-controller';
 import { serializeError } from '@metamask/rpc-errors';
-import {
-  caveatSpecifications as snapsCaveatsSpecifications,
-  DialogType,
-} from '@metamask/rpc-methods';
+import { caveatSpecifications as snapsCaveatsSpecifications } from '@metamask/rpc-methods';
 import {
   IframeExecutionService,
   setupMultiplex,
   endowmentCaveatSpecifications as snapsEndowmentCaveatSpecifications,
 } from '@metamask/snaps-controllers';
-import { Component } from '@metamask/snaps-ui';
 import {
   DEFAULT_ENDOWMENTS,
   SnapManifest,
@@ -24,11 +20,15 @@ import { PayloadAction } from '@reduxjs/toolkit';
 import { JsonRpcEngine } from 'json-rpc-engine';
 import { createEngineStream } from 'json-rpc-middleware-stream';
 import pump from 'pump';
-import { SagaIterator } from 'redux-saga';
-import { all, call, put, select, take, takeLatest } from 'redux-saga/effects';
+import { all, call, put, select, takeLatest } from 'redux-saga/effects';
 
 import { runSaga } from '../../store/middleware';
 import { getSrp } from '../configuration';
+import {
+  showDialog,
+  showInAppNotification,
+  showNativeNotification,
+} from './hooks';
 import { createMiscMethodMiddleware } from './middleware';
 import {
   getExecutionService,
@@ -40,10 +40,6 @@ import {
   getPermissionController,
   setManifest,
   setPermissionController,
-  showUserInterface,
-  getSnapName,
-  resolveUserInterface,
-  closeUserInterface,
 } from './slice';
 import {
   buildSnapEndowmentSpecifications,
@@ -56,40 +52,6 @@ import {
 export const DEFAULT_SNAP_ID = 'simulated-snap';
 
 export const ALL_APIS = [...DEFAULT_ENDOWMENTS, 'fetch', 'WebAssembly'];
-
-/**
- * Show a dialog to the user.
- *
- * @param snapId - The ID of the Snap that created the alert.
- * @param type - The type of dialog to show.
- * @param content - The content to show in the dialog.
- * @param _placeholder - The placeholder text to show in the dialog.
- * @yields Selects the current state.
- * @returns True if the dialog was shown, false otherwise.
- */
-export function* showDialog(
-  snapId: string,
-  type: DialogType,
-  content: Component,
-  _placeholder?: string,
-): SagaIterator {
-  const snapName = yield select(getSnapName);
-
-  // TODO: Support placeholder.
-  yield put(
-    showUserInterface({
-      snapId,
-      snapName: snapName ?? snapId,
-      type,
-      node: content,
-    }),
-  );
-
-  const { payload } = yield take(resolveUserInterface.type);
-  yield put(closeUserInterface());
-
-  return payload;
-}
 
 /**
  * The initialization saga is run on page load and initializes the snaps execution environment.
@@ -110,6 +72,12 @@ export function* initSaga() {
       getMnemonic: async () => mnemonicPhraseToBytes(srp),
       showDialog: async (...args: Parameters<typeof showDialog>) =>
         await runSaga(showDialog, ...args).toPromise(),
+      showNativeNotification: async (
+        ...args: Parameters<typeof showNativeNotification>
+      ) => await runSaga(showNativeNotification, ...args).toPromise(),
+      showInAppNotification: async (
+        ...args: Parameters<typeof showInAppNotification>
+      ) => await runSaga(showInAppNotification, ...args).toPromise(),
     }),
   };
 
