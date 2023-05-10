@@ -130,7 +130,7 @@ export function* updateSnapState(
  * @returns The snap state.
  * @yields Selects the snap state from the simulation slice.
  */
-export function* getSnapState(): SagaIterator {
+export function* getSnapState(_snapId: string): SagaIterator {
   const state: string = yield select(getSnapStateSelector);
   return state;
 }
