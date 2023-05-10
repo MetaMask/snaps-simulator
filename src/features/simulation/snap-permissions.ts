@@ -1,4 +1,7 @@
-import { PermissionConstraint } from '@metamask/permission-controller';
+import {
+  GenericPermissionController,
+  PermissionConstraint,
+} from '@metamask/permission-controller';
 import {
   caveatMappers,
   restrictedMethodPermissionBuilders,
@@ -8,7 +11,7 @@ import {
   endowmentCaveatMappers,
   endowmentPermissionBuilders,
 } from '@metamask/snaps-controllers';
-import { SnapPermissions } from '@metamask/snaps-utils';
+import { DEFAULT_ENDOWMENTS, SnapPermissions } from '@metamask/snaps-utils';
 import { hasProperty } from '@metamask/utils';
 
 export const ExcludedSnapEndowments = Object.freeze(['endowment:keyring']);
@@ -131,4 +134,26 @@ export const processSnapPermissions = (
       ];
     }),
   );
+};
+
+export const getEndowments = async (
+  permissionController: GenericPermissionController,
+  snapId: string,
+) => {
+  let allEndowments: string[] = [];
+
+  for (const permissionName of Object.keys(endowmentPermissionBuilders)) {
+    if (permissionController.hasPermission(snapId, permissionName)) {
+      const endowments = await permissionController.getEndowments(
+        snapId,
+        permissionName,
+      );
+
+      if (endowments) {
+        allEndowments = allEndowments.concat(endowments as string[]);
+      }
+    }
+  }
+
+  return [...new Set([...DEFAULT_ENDOWMENTS, ...allEndowments])];
 };

@@ -1,4 +1,5 @@
 import { ControllerMessenger } from '@metamask/base-controller';
+import { createFetchMiddleware } from '@metamask/eth-json-rpc-middleware/dist/fetch';
 import { mnemonicPhraseToBytes } from '@metamask/key-tree/dist/utils';
 import {
   GenericPermissionController,
@@ -11,11 +12,7 @@ import {
   setupMultiplex,
   endowmentCaveatSpecifications as snapsEndowmentCaveatSpecifications,
 } from '@metamask/snaps-controllers';
-import {
-  DEFAULT_ENDOWMENTS,
-  SnapManifest,
-  SnapRpcHookArgs,
-} from '@metamask/snaps-utils';
+import { SnapManifest, SnapRpcHookArgs } from '@metamask/snaps-utils';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { JsonRpcEngine } from 'json-rpc-engine';
 import { createEngineStream } from 'json-rpc-middleware-stream';
@@ -46,14 +43,13 @@ import {
 import {
   buildSnapEndowmentSpecifications,
   buildSnapRestrictedMethodSpecifications,
+  getEndowments,
   processSnapPermissions,
   unrestrictedMethods,
 } from './snap-permissions';
 
 // TODO: Use actual snap ID
 export const DEFAULT_SNAP_ID = 'simulated-snap';
-
-export const ALL_APIS = [...DEFAULT_ENDOWMENTS, 'fetch', 'WebAssembly'];
 
 /**
  * The initialization saga is run on page load and initializes the snaps execution environment.
@@ -121,7 +117,14 @@ export function* initSaga() {
     }),
   );
 
-  // TODO: Add middleware for passing node calls to node
+  engine.push(
+    createFetchMiddleware({
+      btoa: globalThis.btoa,
+      fetch: globalThis.fetch,
+      // TODO: Use something else?
+      rpcUrl: 'https://cloudflare-eth.com',
+    }),
+  );
 
   const executionService = new IframeExecutionService({
     iframeUrl: new URL('https://execution.metamask.io/0.15.1/index.html'),
@@ -155,12 +158,22 @@ export function* rebootSaga({ payload }: PayloadAction<string>) {
     getExecutionService,
   );
 
+  const permissionController: GenericPermissionController = yield select(
+    getPermissionController,
+  );
+
+  const endowments: string[] = yield call(
+    getEndowments,
+    permissionController,
+    DEFAULT_SNAP_ID,
+  );
+
   try {
     yield call([executionService, 'terminateAllSnaps']);
     yield call([executionService, 'executeSnap'], {
       snapId: DEFAULT_SNAP_ID,
       sourceCode: payload,
-      endowments: ALL_APIS,
+      endowments,
     });
     yield put(setStatus(SnapStatus.Ok));
   } catch (error) {

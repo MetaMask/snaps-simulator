@@ -1,10 +1,9 @@
 import { GenericPermissionController } from '@metamask/permission-controller';
-import { HandlerType } from '@metamask/snaps-utils';
+import { DEFAULT_ENDOWMENTS, HandlerType } from '@metamask/snaps-utils';
 import { expectSaga } from 'redux-saga-test-plan';
 
 import { DEFAULT_SRP } from '../configuration';
 import {
-  ALL_APIS,
   DEFAULT_SNAP_ID,
   initSaga,
   permissionsSaga,
@@ -44,7 +43,7 @@ describe('rebootSaga', () => {
       .call([executionService, 'executeSnap'], {
         snapId: DEFAULT_SNAP_ID,
         sourceCode,
-        endowments: ALL_APIS,
+        endowments: DEFAULT_ENDOWMENTS,
       })
       .silentRun();
   });
