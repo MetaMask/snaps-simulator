@@ -1,8 +1,11 @@
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+export const DEFAULT_SRP =
+  'test test test test test test test test test test test ball';
+
 const INITIAL_STATE = {
   snapUrl: 'http://localhost:8080',
-  srp: 'test test test test test test test test test test test ball',
+  srp: DEFAULT_SRP,
   sesEnabled: true,
 };
 

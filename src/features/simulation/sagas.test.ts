@@ -1,10 +1,13 @@
+import { GenericPermissionController } from '@metamask/permission-controller';
 import { HandlerType } from '@metamask/snaps-utils';
 import { expectSaga } from 'redux-saga-test-plan';
 
+import { DEFAULT_SRP } from '../configuration';
 import {
   ALL_APIS,
   DEFAULT_SNAP_ID,
   initSaga,
+  permissionsSaga,
   rebootSaga,
   requestSaga,
 } from './sagas';
@@ -12,14 +15,19 @@ import {
   captureResponse,
   sendRequest,
   setExecutionService,
+  setManifest,
   setSourceCode,
 } from './slice';
+import { processSnapPermissions } from './snap-permissions';
 import { MockExecutionService } from './test/mockExecutionService';
+import { MOCK_MANIFEST } from './test/mockManifest';
 
 describe('initSaga', () => {
   it('initializes the execution environment', async () => {
     await expectSaga(initSaga)
-      .withState({})
+      .withState({
+        configuration: { srp: DEFAULT_SRP },
+      })
       .put.actionType(setExecutionService.type)
       .silentRun();
   });
@@ -61,6 +69,28 @@ describe('requestSaga', () => {
       })
       .call([executionService, 'handleRpcRequest'], DEFAULT_SNAP_ID, request)
       .put(captureResponse({ result: 'foobar' }))
+      .silentRun();
+  });
+});
+
+describe('permissionsSaga', () => {
+  it('grants permissions based on the manifest payload', async () => {
+    const grantPermissions = jest.fn();
+    const permissionController = {
+      grantPermissions,
+    } as unknown as GenericPermissionController;
+    const approvedPermissions = processSnapPermissions(
+      MOCK_MANIFEST.initialPermissions,
+    );
+    await expectSaga(permissionsSaga, setManifest(MOCK_MANIFEST))
+      .withState({
+        simulation: { permissionController },
+      })
+      .call([permissionController, 'grantPermissions'], {
+        approvedPermissions,
+        subject: { origin: DEFAULT_SNAP_ID },
+        preserveExistingPermissions: false,
+      })
       .silentRun();
   });
 });

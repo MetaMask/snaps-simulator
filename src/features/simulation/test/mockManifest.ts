@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { SemVerVersion } from '@metamask/utils';
 
 export const MOCK_MANIFEST = {
@@ -20,8 +21,13 @@ export const MOCK_MANIFEST = {
     },
   },
   initialPermissions: {
-    // eslint-disable-next-line @typescript-eslint/naming-convention
     'endowment:rpc': { snaps: false, dapps: true },
+    snap_getBip44Entropy: [
+      {
+        coinType: 1,
+      },
+    ],
+    snap_dialog: {},
   },
   manifestVersion: '0.1' as const,
 };
