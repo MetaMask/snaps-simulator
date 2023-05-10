@@ -48,7 +48,13 @@ export const Handler: FunctionComponent = () => {
               <TabPanel display="flex" flexDirection="column" flex="1">
                 <Outlet />
               </TabPanel>
-              <TabPanel padding="0" overflowY="auto">
+              <TabPanel
+                padding="0"
+                display="flex"
+                flexDirection="column"
+                flex="1"
+                overflowY="auto"
+              >
                 <History />
               </TabPanel>
             </TabPanels>
