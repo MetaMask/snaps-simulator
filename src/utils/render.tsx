@@ -11,14 +11,17 @@ import { createStore } from '../store';
  * it would have in the app.
  *
  * @param component - The component to render.
+ * @param route - The route to render the component at. Defaults to `/`.
  * @returns The rendered component.
  */
-export function render(component: ReactElement) {
+export function render(component: ReactElement, route = '/') {
   const store = createStore();
   return testingLibraryRender(component, {
     wrapper: ({ children }) => (
       <Root store={store}>
-        <MemoryRouter>{children}</MemoryRouter>
+        <MemoryRouter initialEntries={[route]} initialIndex={0}>
+          {children}
+        </MemoryRouter>
       </Root>
     ),
   });
