@@ -1,7 +1,7 @@
 import { Image } from '@chakra-ui/react';
 import { FunctionComponent } from 'react';
 
-import logo from '../assets/metamask.svg';
+import logo from '../assets/logo.svg';
 
 /**
  * Render the MetaMask logo.
