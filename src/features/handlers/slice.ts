@@ -14,6 +14,7 @@ export type HandlerState<Request, Response> = {
   request: Request;
   response: Response | null;
   history: HistoryEntry<Request>[];
+  pending?: boolean;
 };
 
 /**
@@ -39,6 +40,7 @@ export function createHandlerSlice<Request, Response>({
           date: new Date(),
           request: action.payload as Draft<Request>,
         });
+        state.pending = true;
       },
       setRequestFromHistory: (state, action: PayloadAction<Request>) => {
         // `immer` does not work well with generic types, so we have to cast.
@@ -47,6 +49,7 @@ export function createHandlerSlice<Request, Response>({
       setResponse: (state, action: PayloadAction<Response>) => {
         // `immer` does not work well with generic types, so we have to cast.
         state.response = action.payload as Draft<Response>;
+        state.pending = false;
       },
     },
   });

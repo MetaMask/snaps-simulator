@@ -37,7 +37,7 @@ export const Response = () => {
     <Editor
       border="none"
       value={JSON.stringify(response, null, 2)}
-      options={{ readOnly: true }}
+      options={{ readOnly: true, wordWrap: 'on' }}
     />
   );
 };
