@@ -3,7 +3,13 @@ import { SnapManifest, VirtualFile } from '@metamask/snaps-utils';
 import { call, delay, put, all, select, takeLatest } from 'redux-saga/effects';
 
 import { getSnapUrl, setSnapUrl } from '../configuration';
-import { getChecksum, setManifest, setSourceCode } from '../simulation';
+import {
+  SnapStatus,
+  getChecksum,
+  setManifest,
+  setSourceCode,
+  setStatus,
+} from '../simulation';
 
 /**
  * The fetching saga, fetches the snap manifest from the selected snap URL and checks if the checksum matches the cached value.
@@ -28,6 +34,8 @@ export function* fetchingSaga() {
     return;
   }
 
+  yield put(setStatus(SnapStatus.Loading));
+
   yield put(setManifest(manifest.result));
 
   const bundlePath = manifest.result.source.location.npm.filePath;
@@ -49,6 +57,7 @@ export function* pollingSaga() {
       yield delay(500);
     } catch (error) {
       console.error(error);
+      yield put(setStatus(SnapStatus.Error));
       break;
     }
   }

@@ -2,23 +2,44 @@ import { IframeExecutionService } from '@metamask/snaps-controllers';
 import { HandlerType } from '@metamask/snaps-utils';
 
 import {
+  SnapStatus,
   captureResponse,
   simulation as reducer,
   sendRequest,
   setExecutionService,
   setManifest,
   setSourceCode,
+  setStatus,
 } from './slice';
 import { MockExecutionService } from './test/mockExecutionService';
 import { MOCK_MANIFEST } from './test/mockManifest';
 
 describe('simulation slice', () => {
+  describe('setStatus', () => {
+    it('sets the snap status', () => {
+      const result = reducer(
+        {
+          status: SnapStatus.Loading,
+          executionService: null,
+          sourceCode: '',
+          manifest: null,
+          request: null,
+          response: null,
+        },
+        setStatus(SnapStatus.Ok),
+      );
+
+      expect(result.status).toStrictEqual(SnapStatus.Ok);
+    });
+  });
+
   describe('setExecutionService', () => {
     it('sets execution service', () => {
       const executionService =
         new MockExecutionService() as unknown as IframeExecutionService;
       const result = reducer(
         {
+          status: SnapStatus.Loading,
           executionService: null,
           sourceCode: '',
           manifest: null,
@@ -36,6 +57,7 @@ describe('simulation slice', () => {
     it('sets the source code', () => {
       const result = reducer(
         {
+          status: SnapStatus.Loading,
           executionService:
             new MockExecutionService() as unknown as IframeExecutionService,
           sourceCode: '',
@@ -54,6 +76,7 @@ describe('simulation slice', () => {
     it('sets the manifest', () => {
       const result = reducer(
         {
+          status: SnapStatus.Loading,
           executionService:
             new MockExecutionService() as unknown as IframeExecutionService,
           sourceCode: '',
@@ -77,6 +100,7 @@ describe('simulation slice', () => {
       };
       const result = reducer(
         {
+          status: SnapStatus.Ok,
           executionService:
             new MockExecutionService() as unknown as IframeExecutionService,
           sourceCode: '',
@@ -95,6 +119,7 @@ describe('simulation slice', () => {
     it('sets the response', () => {
       const result = reducer(
         {
+          status: SnapStatus.Ok,
           executionService:
             new MockExecutionService() as unknown as IframeExecutionService,
           sourceCode: '',
