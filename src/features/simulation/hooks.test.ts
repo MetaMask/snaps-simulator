@@ -4,15 +4,19 @@ import { expectSaga } from 'redux-saga-test-plan';
 
 import { addNotification } from '../notifications';
 import {
+  getSnapState,
   showDialog,
   showInAppNotification,
   showNativeNotification,
+  updateSnapState,
 } from './hooks';
 import { DEFAULT_SNAP_ID } from './sagas';
 import {
   closeUserInterface,
   getSnapName,
+  getSnapStateSelector,
   resolveUserInterface,
+  setSnapState,
   showUserInterface,
 } from './slice';
 import { MOCK_MANIFEST } from './test/mockManifest';
@@ -96,6 +100,33 @@ describe('showInAppNotification', () => {
     })
       .put(addNotification('foo'))
       .returns(null)
+      .silentRun();
+  });
+});
+
+describe('updateSnapState', () => {
+  it('puts the new snap state', async () => {
+    await expectSaga(updateSnapState, DEFAULT_SNAP_ID, 'foo')
+      .withState({
+        simulation: {
+          snapState: null,
+        },
+      })
+      .put(setSnapState('foo'))
+      .silentRun();
+  });
+});
+
+describe('getSnapState', () => {
+  it('returns the selected snap state', async () => {
+    await expectSaga(getSnapState, DEFAULT_SNAP_ID)
+      .withState({
+        simulation: {
+          snapState: 'foo',
+        },
+      })
+      .select(getSnapStateSelector)
+      .returns('foo')
       .silentRun();
   });
 });
