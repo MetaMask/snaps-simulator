@@ -1,7 +1,7 @@
 import fetchMock from 'jest-fetch-mock';
 import { expectSaga } from 'redux-saga-test-plan';
 
-import { setManifest, setSourceCode } from '../simulation';
+import { setIcon, setManifest, setSourceCode } from '../simulation';
 import { MOCK_MANIFEST } from '../simulation/test/mockManifest';
 import { MOCK_SNAP_SOURCE } from '../simulation/test/mockSnap';
 import { fetchingSaga, pollingSaga } from './sagas';
@@ -22,7 +22,13 @@ describe('fetchingSaga', () => {
   beforeEach(() => {
     fetchMock.resetMocks();
   });
+
   it('fetches the snap and updates manifest and source code', async () => {
+    // eslint-disable-next-line jest/prefer-spy-on
+    globalThis.URL.createObjectURL = jest
+      .fn()
+      .mockImplementation(() => 'blob:foo');
+
     fetchMock.mockResponses(JSON.stringify(MOCK_MANIFEST), MOCK_SNAP_SOURCE);
     await expectSaga(fetchingSaga)
       .withState({
@@ -35,6 +41,7 @@ describe('fetchingSaga', () => {
       })
       .put(setManifest(MOCK_MANIFEST))
       .put(setSourceCode(MOCK_SNAP_SOURCE))
+      .put(setIcon('blob:foo'))
       .silentRun();
   });
 

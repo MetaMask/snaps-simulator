@@ -1,5 +1,6 @@
 import { LocalLocation } from '@metamask/snaps-controllers/dist/snaps/location';
 import { SnapManifest, VirtualFile } from '@metamask/snaps-utils';
+import { assert } from '@metamask/utils';
 import { call, delay, put, all, select, takeLatest } from 'redux-saga/effects';
 
 import { getSnapUrl, setSnapUrl } from '../configuration';
@@ -10,6 +11,7 @@ import {
   setManifest,
   setSourceCode,
   setStatus,
+  setIcon,
 } from '../simulation';
 
 /**
@@ -30,22 +32,32 @@ export function* fetchingSaga() {
   const currentChecksum: string = yield select(getChecksum);
 
   const manifestChecksum = manifest.result.source.shasum;
-
   if (currentChecksum === manifestChecksum) {
     return;
   }
 
   yield put(setStatus(SnapStatus.Loading));
-
   yield put(setManifest(manifest.result));
-
   yield put(logDefault('Snap changed, rebooting...'));
 
   const bundlePath = manifest.result.source.location.npm.filePath;
-
   const bundle: VirtualFile = yield call([location, 'fetch'], bundlePath);
-
   yield put(setSourceCode(bundle.toString()));
+
+  const { iconPath } = manifest.result.source.location.npm;
+  if (iconPath) {
+    const icon: VirtualFile = yield call([location, 'fetch'], iconPath);
+    const extension = iconPath.split('.').pop();
+
+    assert(extension, 'Icon path should have an extension.');
+
+    const mimeType =
+      extension === 'svg' ? 'image/svg+xml' : `image/${extension}`;
+
+    const blob = new Blob([icon.value], { type: mimeType });
+    const blobUrl = URL.createObjectURL(blob);
+    yield put(setIcon(blobUrl));
+  }
 }
 
 /**
