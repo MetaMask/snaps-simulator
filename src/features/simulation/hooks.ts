@@ -7,7 +7,9 @@ import { addNotification } from '../notifications/slice';
 import {
   closeUserInterface,
   getSnapName,
+  getSnapStateSelector,
   resolveUserInterface,
+  setSnapState,
   showUserInterface,
 } from './slice';
 
@@ -105,4 +107,16 @@ export function* showInAppNotification(
   yield put(addNotification(message));
 
   return null;
+}
+
+export function* updateSnapState(
+  _snapId: string,
+  newSnapState: string | null,
+): SagaIterator {
+  yield put(setSnapState(newSnapState));
+}
+
+export function* getSnapState(): SagaIterator {
+  const state: string = yield select(getSnapStateSelector);
+  return state;
 }

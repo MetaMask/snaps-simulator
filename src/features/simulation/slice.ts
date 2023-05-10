@@ -30,6 +30,7 @@ type SimulationState = {
   manifest: SnapManifest | null;
   sourceCode: string;
   ui?: HandlerUserInterface | null;
+  snapState: string | null;
 };
 
 export const INITIAL_STATE: SimulationState = {
@@ -38,6 +39,7 @@ export const INITIAL_STATE: SimulationState = {
   permissionController: null,
   manifest: null,
   sourceCode: '',
+  snapState: null,
 };
 
 const slice = createSlice({
@@ -69,6 +71,9 @@ const slice = createSlice({
     closeUserInterface: (state) => {
       state.ui = null;
     },
+    setSnapState: (state, action: PayloadAction<string | null>) => {
+      state.snapState = action.payload;
+    },
   },
 });
 
@@ -88,6 +93,7 @@ export const {
   setSourceCode,
   showUserInterface,
   closeUserInterface,
+  setSnapState,
 } = slice.actions;
 
 export const simulation = slice.reducer;
@@ -120,4 +126,9 @@ export const getChecksum = createSelector(
 export const getUserInterface = createSelector(
   (state: { simulation: typeof INITIAL_STATE }) => state.simulation,
   (state) => state.ui,
+);
+
+export const getSnapStateSelector = createSelector(
+  (state: { simulation: typeof INITIAL_STATE }) => state.simulation,
+  (state) => state.snapState,
 );

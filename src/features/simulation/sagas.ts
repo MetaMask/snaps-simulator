@@ -25,9 +25,11 @@ import { all, call, put, select, takeLatest } from 'redux-saga/effects';
 import { runSaga } from '../../store/middleware';
 import { getSrp } from '../configuration';
 import {
+  getSnapState,
   showDialog,
   showInAppNotification,
   showNativeNotification,
+  updateSnapState,
 } from './hooks';
 import { createMiscMethodMiddleware } from './middleware';
 import {
@@ -78,6 +80,12 @@ export function* initSaga() {
       showInAppNotification: async (
         ...args: Parameters<typeof showInAppNotification>
       ) => await runSaga(showInAppNotification, ...args).toPromise(),
+      getSnapState: async (...args: Parameters<typeof getSnapState>) =>
+        await runSaga(getSnapState, ...args).toPromise(),
+      updateSnapState: async (...args: Parameters<typeof updateSnapState>) =>
+        await runSaga(updateSnapState, ...args).toPromise(),
+      clearSnapState: async (...args: Parameters<typeof updateSnapState>) =>
+        await runSaga(updateSnapState, args[0], null).toPromise(),
     }),
   };
 
