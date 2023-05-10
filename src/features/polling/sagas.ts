@@ -3,6 +3,7 @@ import { SnapManifest, VirtualFile } from '@metamask/snaps-utils';
 import { call, delay, put, all, select, takeLatest } from 'redux-saga/effects';
 
 import { getSnapUrl, setSnapUrl } from '../configuration';
+import { logDefault, logError } from '../console';
 import {
   SnapStatus,
   getChecksum,
@@ -38,6 +39,8 @@ export function* fetchingSaga() {
 
   yield put(setManifest(manifest.result));
 
+  yield put(logDefault('Snap changed, rebooting...'));
+
   const bundlePath = manifest.result.source.location.npm.filePath;
 
   const bundle: VirtualFile = yield call([location, 'fetch'], bundlePath);
@@ -55,8 +58,9 @@ export function* pollingSaga() {
     try {
       yield call(fetchingSaga);
       yield delay(500);
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
+      yield put(logError(error));
       yield put(setStatus(SnapStatus.Error));
       break;
     }

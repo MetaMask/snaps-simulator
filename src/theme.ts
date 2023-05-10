@@ -234,6 +234,9 @@ export const theme = extendTheme({
         flexDirection: 'column',
         minHeight: '$100vh',
       },
+      iframe: {
+        display: 'none',
+      },
     },
   },
 });
