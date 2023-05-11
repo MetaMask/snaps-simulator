@@ -235,8 +235,10 @@ export function* permissionsSaga({ payload }: PayloadAction<SnapManifest>) {
     );
 
     // TODO: Verify these
+    // Payload is frozen for unknown reasons, this breaks our superstruct validation.
+    // To circumvent we stringify and parse.
     const approvedPermissions = processSnapPermissions(
-      payload.initialPermissions,
+      JSON.parse(JSON.stringify(payload.initialPermissions)),
     );
 
     // Grant all permissions
