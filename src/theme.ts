@@ -46,6 +46,9 @@ export const theme = extendTheme({
       default: '#D34C46',
       muted: 'rgba(215, 56, 71, 0.1)',
     },
+    success: {
+      default: '#579F6E',
+    },
     background: {
       alternative: '#F2F4F6',
       hover: '#FAFBFC',

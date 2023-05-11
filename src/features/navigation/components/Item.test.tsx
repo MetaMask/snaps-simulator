@@ -8,9 +8,7 @@ describe('Item', () => {
     expect(() =>
       render(
         <List>
-          <Item icon="alert" path="foo">
-            Bar
-          </Item>
+          <Item path="foo">Bar</Item>
         </List>,
       ),
     ).not.toThrow();

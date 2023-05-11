@@ -9,11 +9,13 @@ import {
   transactions,
   notifications,
   console,
+  manifest,
 } from '../features';
 
 export const reducer = combineReducers({
   configuration,
   console,
+  manifest,
   notifications,
   simulation,
   [HandlerType.OnRpcRequest]: jsonRpc,
