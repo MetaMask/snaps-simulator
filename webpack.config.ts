@@ -1,4 +1,5 @@
 import ReactRefreshPlugin from '@pmmmwh/react-refresh-webpack-plugin';
+import FaviconsWebpackPlugin from 'favicons-webpack-plugin';
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MonacoEditorWebpackPlugin from 'monaco-editor-webpack-plugin';
@@ -75,6 +76,7 @@ const config: Configuration & Record<'devServer', DevServerConfiguration> = {
       languages: ['json'],
       features: ['bracketMatching', 'clipboard', 'hover'],
     }),
+    new FaviconsWebpackPlugin('./src/assets/favicon.svg'),
   ],
   cache: {
     type: 'filesystem',
