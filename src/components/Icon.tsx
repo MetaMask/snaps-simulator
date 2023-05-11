@@ -2,6 +2,7 @@ import { Image, PropsOf } from '@chakra-ui/react';
 import { FunctionComponent } from 'react';
 
 import alertIcon from '../assets/icons/alert.svg';
+import arrowDownIcon from '../assets/icons/arrow-down.svg';
 import arrowRightIcon from '../assets/icons/arrow-right.svg';
 import arrowTopRightIcon from '../assets/icons/arrow-top-right.svg';
 import computerIcon from '../assets/icons/computer.svg';
@@ -40,6 +41,10 @@ const DEFAULT_ICONS = {
   darkArrowTopRightIcon: {
     alt: 'Arrow pointing top right',
     src: darkArrowTopRightIcon,
+  },
+  arrowDown: {
+    alt: 'Arrow pointing down',
+    src: arrowDownIcon,
   },
   textBubble: {
     alt: 'Text bubble',
