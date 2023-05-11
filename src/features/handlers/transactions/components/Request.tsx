@@ -16,19 +16,7 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from '../../../../hooks';
 import { sendRequest } from '../../../simulation';
 import { getTransactionRequest } from '../slice';
-
-type TransactionFormData = {
-  chainId: string;
-  transactionOrigin: string;
-  from: string;
-  to: string;
-  nonce: string;
-  value: string;
-  data: string;
-  gas: string;
-  maxFeePerGas: string;
-  maxPriorityFeePerGas: string;
-};
+import { TransactionFormData, hexlifyTransactionData } from '../utils';
 
 export const Request: FunctionComponent = () => {
   const { request } = useSelector(getTransactionRequest);
@@ -63,7 +51,7 @@ export const Request: FunctionComponent = () => {
           method: 'onTransaction',
           params: {
             chainId,
-            transaction,
+            transaction: hexlifyTransactionData(transaction),
             transactionOrigin,
           },
         },
