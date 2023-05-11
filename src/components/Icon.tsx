@@ -8,6 +8,7 @@ import computerIcon from '../assets/icons/computer.svg';
 import configurationIcon from '../assets/icons/configuration.svg';
 import copiedIcon from '../assets/icons/copied.svg';
 import copyIcon from '../assets/icons/copy.svg';
+import darkArrowTopRightIcon from '../assets/icons/dark-arrow-top-right.svg';
 import dotIcon from '../assets/icons/dot.svg';
 import errorTriangleIcon from '../assets/icons/error-triangle.svg';
 import gitHubIcon from '../assets/icons/github.svg';
@@ -32,6 +33,10 @@ const DEFAULT_ICONS = {
   arrowTopRight: {
     alt: 'Arrow pointing top right',
     src: arrowTopRightIcon,
+  },
+  darkArrowTopRightIcon: {
+    alt: 'Arrow pointing top right',
+    src: darkArrowTopRightIcon,
   },
   textBubble: {
     alt: 'Text bubble',
