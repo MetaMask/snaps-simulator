@@ -20,9 +20,10 @@ export const Navigation: FunctionComponent = () => {
       size="fullWidth"
       display="flex"
       flexDirection="column"
+      padding={'2'}
       flex="1"
     >
-      <Stack as={List} spacing="4" flex="1">
+      <Stack as={List} spacing="2" flex="1">
         {NAVIGATION_ITEMS.map(
           ({ condition, icon, label, tag, description, path }) => {
             if (condition && !condition(applicationState)) {
@@ -37,9 +38,11 @@ export const Navigation: FunctionComponent = () => {
                     <Box as="span" fontWeight="600">
                       {label}
                     </Box>{' '}
-                    <Tag variant="code">{tag}</Tag>
+                    <Tag borderRadius={'base'} variant="code">
+                      {tag}
+                    </Tag>
                   </Text>
-                  <Text fontSize="xs" marginTop="1">
+                  <Text fontSize="sm" marginTop="1">
                     {description}
                   </Text>
                 </Box>
@@ -59,9 +62,11 @@ export const Navigation: FunctionComponent = () => {
               <Box as="span" fontWeight="600">
                 Manifest
               </Box>{' '}
-              <Tag variant="code">snap.manifest.json</Tag>
+              <Tag borderRadius={'base'} variant="code">
+                snap.manifest.json
+              </Tag>
             </Text>
-            <Text fontSize="xs" marginTop="1">
+            <Text fontSize="sm" marginTop="1">
               Validate the snap manifest
             </Text>
           </Box>

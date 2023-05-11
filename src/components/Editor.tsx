@@ -15,6 +15,7 @@ export type EditorProps = MonacoEditorProps & BoxProps;
  *
  * @param props - The props.
  * @param props.border - The border.
+ * @param props.borderRadius - The border radius.
  * @returns The editor component.
  */
 export const Editor: FunctionComponent<EditorProps> = ({
@@ -40,6 +41,7 @@ export const Editor: FunctionComponent<EditorProps> = ({
       padding="4"
       border={border}
       borderColor="gray.muted"
+      borderRadius="md"
       flex="1"
     >
       <MonacoEditor
