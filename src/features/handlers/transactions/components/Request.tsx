@@ -16,7 +16,7 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from '../../../../hooks';
 import { sendRequest } from '../../../simulation';
 import { getTransactionRequest } from '../slice';
-import { TransactionFormData, hexlifyTransactionData } from './util';
+import { TransactionFormData, hexlifyTransactionData } from '../utils';
 
 export const Request: FunctionComponent = () => {
   const { request } = useSelector(getTransactionRequest);
