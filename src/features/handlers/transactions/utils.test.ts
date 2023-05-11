@@ -1,4 +1,4 @@
-import { hexlifyTransactionData } from './util';
+import { hexlifyTransactionData } from './utils';
 
 describe('hexlifyTransactionData', () => {
   it('hexlifies decimals', () => {
