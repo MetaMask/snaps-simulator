@@ -1,20 +1,15 @@
-import { Box, ListItem, Stack } from '@chakra-ui/react';
+import { ListItem, Stack } from '@chakra-ui/react';
 import { FunctionComponent, ReactNode } from 'react';
 import { useMatch } from 'react-router-dom';
 
-import { Icon, IconName, Link } from '../../../components';
+import { Link } from '../../../components';
 
 type ItemProps = {
   path: string;
-  icon: IconName;
   children: ReactNode;
 };
 
-export const Item: FunctionComponent<ItemProps> = ({
-  path,
-  icon,
-  children,
-}) => {
+export const Item: FunctionComponent<ItemProps> = ({ path, children }) => {
   const active = useMatch(path);
   const isActive = Boolean(active);
 
@@ -32,8 +27,7 @@ export const Item: FunctionComponent<ItemProps> = ({
         }}
       >
         <Stack direction="row" align="center">
-          <Icon icon={icon} />
-          <Box>{children}</Box>
+          {children}
         </Stack>
       </Link>
     </ListItem>

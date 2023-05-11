@@ -1,15 +1,18 @@
 import { LocalLocation } from '@metamask/snaps-controllers/dist/snaps/location';
 import { SnapManifest, VirtualFile } from '@metamask/snaps-utils';
-import { call, delay, put, all, select, takeLatest } from 'redux-saga/effects';
+import equal from 'fast-deep-equal/es6';
+import { all, call, delay, put, select, takeLatest } from 'redux-saga/effects';
 
 import { getSnapUrl, setSnapUrl } from '../configuration';
 import { logDefault, logError } from '../console';
+import { ManifestStatus, setValid, validateManifest } from '../manifest';
 import {
-  SnapStatus,
-  getChecksum,
+  getSnapManifest,
+  setIcon,
   setManifest,
   setSourceCode,
   setStatus,
+  SnapStatus,
 } from '../simulation';
 
 /**
@@ -22,30 +25,38 @@ export function* fetchingSaga() {
   const url: string = yield select(getSnapUrl);
 
   const location = new LocalLocation(new URL(`local:${url}`));
-  const manifest: VirtualFile<SnapManifest> = yield call([
-    location,
-    'manifest',
-  ]);
+  const manifestJson: VirtualFile<string> = yield call(
+    [location, 'fetch'],
+    'snap.manifest.json',
+  );
 
-  const currentChecksum: string = yield select(getChecksum);
-
-  const manifestChecksum = manifest.result.source.shasum;
-
-  if (currentChecksum === manifestChecksum) {
+  const manifest = JSON.parse(manifestJson.toString('utf8')) as SnapManifest;
+  const currentManifest: SnapManifest = yield select(getSnapManifest);
+  if (equal(manifest, currentManifest)) {
     return;
   }
 
+  yield put(setValid(ManifestStatus.Unknown));
   yield put(setStatus(SnapStatus.Loading));
-
-  yield put(setManifest(manifest.result));
-
+  yield put(setManifest(manifest));
   yield put(logDefault('Snap changed, rebooting...'));
 
-  const bundlePath = manifest.result.source.location.npm.filePath;
+  try {
+    const bundlePath = manifest.source.location.npm.filePath;
+    const bundle: VirtualFile = yield call([location, 'fetch'], bundlePath);
+    yield put(setSourceCode(bundle.toString()));
 
-  const bundle: VirtualFile = yield call([location, 'fetch'], bundlePath);
+    const { iconPath } = manifest.source.location.npm;
+    if (iconPath) {
+      const icon: VirtualFile = yield call([location, 'fetch'], iconPath);
 
-  yield put(setSourceCode(bundle.toString()));
+      const blob = new Blob([icon.value], { type: 'image/svg+xml' });
+      const blobUrl = URL.createObjectURL(blob);
+      yield put(setIcon(blobUrl));
+    }
+  } finally {
+    yield put(validateManifest(manifest));
+  }
 }
 
 /**
@@ -62,6 +73,7 @@ export function* pollingSaga() {
       console.error(error);
       yield put(logError(error));
       yield put(setStatus(SnapStatus.Error));
+      yield put(setValid(ManifestStatus.Unknown));
       break;
     }
   }

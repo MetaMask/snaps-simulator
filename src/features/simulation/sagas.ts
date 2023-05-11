@@ -22,6 +22,7 @@ import { all, call, put, select, takeLatest } from 'redux-saga/effects';
 import { runSaga } from '../../store/middleware';
 import { getSrp } from '../configuration';
 import { logError } from '../console';
+import { ManifestStatus, setValid } from '../manifest';
 import {
   getSnapState,
   showDialog,
@@ -228,21 +229,28 @@ export function* requestSaga({ payload }: PayloadAction<SnapRpcHookArgs>) {
  * @yields Selects the permission controller
  */
 export function* permissionsSaga({ payload }: PayloadAction<SnapManifest>) {
-  const permissionController: GenericPermissionController = yield select(
-    getPermissionController,
-  );
+  try {
+    const permissionController: GenericPermissionController = yield select(
+      getPermissionController,
+    );
 
-  // TODO: Verify these
-  const approvedPermissions = processSnapPermissions(
-    payload.initialPermissions,
-  );
+    // TODO: Verify these
+    const approvedPermissions = processSnapPermissions(
+      payload.initialPermissions,
+    );
 
-  // Grant all permissions
-  yield call([permissionController, 'grantPermissions'], {
-    approvedPermissions,
-    subject: { origin: DEFAULT_SNAP_ID },
-    preserveExistingPermissions: false,
-  });
+    // Grant all permissions
+    yield call([permissionController, 'grantPermissions'], {
+      approvedPermissions,
+      subject: { origin: DEFAULT_SNAP_ID },
+      preserveExistingPermissions: false,
+    });
+  } catch (error: any) {
+    console.error(error);
+    yield put(logError(error));
+    yield put(setStatus(SnapStatus.Error));
+    yield put(setValid(ManifestStatus.Unknown));
+  }
 }
 
 /**

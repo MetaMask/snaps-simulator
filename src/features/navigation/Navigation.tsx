@@ -1,8 +1,9 @@
 import { Box, Container, List, Stack, Tag, Text } from '@chakra-ui/react';
 import { FunctionComponent } from 'react';
 
+import { Icon } from '../../components';
 import { useSelector } from '../../hooks';
-import { Item } from './components';
+import { Item, ManifestStatusIndicator } from './components';
 import { NAVIGATION_ITEMS } from './items';
 
 /**
@@ -23,20 +24,42 @@ export const Navigation: FunctionComponent = () => {
             }
 
             return (
-              <Item key={path} icon={icon} path={path}>
-                <Text>
-                  <Box as="span" fontWeight="600">
-                    {label}
-                  </Box>{' '}
-                  <Tag variant="code">{tag}</Tag>
-                </Text>
-                <Text fontSize="xs" marginTop="1">
-                  {description}
-                </Text>
+              <Item key={path} path={path}>
+                <Icon icon={icon} />
+                <Box>
+                  <Text>
+                    <Box as="span" fontWeight="600">
+                      {label}
+                    </Box>{' '}
+                    <Tag variant="code">{tag}</Tag>
+                  </Text>
+                  <Text fontSize="xs" marginTop="1">
+                    {description}
+                  </Text>
+                </Box>
               </Item>
             );
           },
         )}
+
+        {/* For now we declare this separately, because it has special state. */}
+        <Item key="manifest" path="/manifest">
+          <Box position="relative">
+            <Icon icon="manifest" />
+            <ManifestStatusIndicator />
+          </Box>
+          <Box>
+            <Text>
+              <Box as="span" fontWeight="600">
+                Manifest
+              </Box>{' '}
+              <Tag variant="code">snap.manifest.json</Tag>
+            </Text>
+            <Text fontSize="xs" marginTop="1">
+              Validate the snap manifest
+            </Text>
+          </Box>
+        </Item>
       </Stack>
     </Container>
   );
