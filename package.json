@@ -111,6 +111,8 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "favicons": "^7.1.2",
+    "favicons-webpack-plugin": "^6.0.0",
     "fork-ts-checker-webpack-plugin": "^8.0.0",
     "html-webpack-plugin": "^5.5.1",
     "jest": "^28.1.3",
@@ -155,7 +157,8 @@
       "@metamask/permission-controller>@metamask/controller-utils>ethereumjs-util>ethereum-cryptography>keccak": false,
       "@metamask/permission-controller>@metamask/controller-utils>ethereumjs-util>ethereum-cryptography>secp256k1": false,
       "@metamask/base-controller>@metamask/controller-utils>ethereumjs-util>ethereum-cryptography>keccak": false,
-      "@metamask/base-controller>@metamask/controller-utils>ethereumjs-util>ethereum-cryptography>secp256k1": false
+      "@metamask/base-controller>@metamask/controller-utils>ethereumjs-util>ethereum-cryptography>secp256k1": false,
+      "favicons>sharp": true
     }
   }
 }
