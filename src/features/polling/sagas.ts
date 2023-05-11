@@ -51,10 +51,7 @@ export function* fetchingSaga() {
 
     assert(extension, 'Icon path should have an extension.');
 
-    const mimeType =
-      extension === 'svg' ? 'image/svg+xml' : `image/${extension}`;
-
-    const blob = new Blob([icon.value], { type: mimeType });
+    const blob = new Blob([icon.value], { type: 'image/svg+xml' });
     const blobUrl = URL.createObjectURL(blob);
     yield put(setIcon(blobUrl));
   }
