@@ -22,7 +22,7 @@ export const validators: Validator[] = [
     manifestName: 'proposedName',
     validator: async (manifest: SnapManifest) => {
       const [error] = SnapManifestStruct.schema.proposedName.validate(
-        manifest.proposedName,
+        manifest?.proposedName,
       );
       return error?.message ?? true;
     },
@@ -32,7 +32,7 @@ export const validators: Validator[] = [
     manifestName: 'description',
     validator: async (manifest: SnapManifest) => {
       const [error] = SnapManifestStruct.schema.description.validate(
-        manifest.description,
+        manifest?.description,
       );
       return error?.message ?? true;
     },
@@ -43,7 +43,7 @@ export const validators: Validator[] = [
     validator: async (manifest: SnapManifest, { icon }) => {
       const [error] =
         SnapManifestStruct.schema.source.schema.location.schema.npm.schema.iconPath.validate(
-          manifest.source.location.npm.iconPath,
+          manifest?.source?.location?.npm?.iconPath,
         );
 
       if (error) {
@@ -62,7 +62,7 @@ export const validators: Validator[] = [
     manifestName: 'initialPermissions',
     validator: async (manifest: SnapManifest) => {
       const [error] = SnapManifestStruct.schema.initialPermissions.validate(
-        manifest.initialPermissions,
+        manifest?.initialPermissions,
       );
       return error?.message ?? true;
     },
@@ -81,7 +81,7 @@ export const validators: Validator[] = [
     validator: async (manifest: SnapManifest, { sourceCode }) => {
       const [error] =
         SnapManifestStruct.schema.source.schema.location.schema.npm.schema.filePath.validate(
-          manifest.source.location.npm.filePath,
+          manifest?.source?.location?.npm?.filePath,
         );
 
       if (error) {
