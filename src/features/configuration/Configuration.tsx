@@ -24,9 +24,7 @@ import {
   getSnapUrl,
   getSrp,
   setOpen,
-  setSesEnabled,
   setSnapUrl,
-  setSrp,
 } from './slice';
 
 export const Configuration = () => {
@@ -44,21 +42,16 @@ export const Configuration = () => {
     dispatch(setSnapUrl(event.currentTarget.value));
   };
 
-  const handleSrpChange = (event: FormEvent<HTMLTextAreaElement>) => {
-    dispatch(setSrp(event.currentTarget.value));
-  };
-
-  const handleSesToggle = () => {
-    dispatch(setSesEnabled(!sesEnabled));
-  };
+  // const handleSrpChange = (event: FormEvent<HTMLTextAreaElement>) => {
+  //   dispatch(setSrp(event.currentTarget.value));
+  // };
+  //
+  // const handleSesToggle = () => {
+  //   dispatch(setSesEnabled(!sesEnabled));
+  // };
 
   return (
-    <Modal
-      isOpen={isOpen}
-      onClose={handleClose}
-      closeOnOverlayClick={true}
-      closeOnEsc={false}
-    >
+    <Modal isOpen={isOpen} onClose={handleClose}>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader pb="0">
@@ -74,7 +67,12 @@ export const Configuration = () => {
             <Input type="text" value={snapUrl} onChange={handleSnapUrlChange} />
 
             <FormLabel mt="4">Environment SRP</FormLabel>
-            <Textarea value={srp} onChange={handleSrpChange} />
+            <Textarea
+              value={srp}
+              readOnly={true}
+              color="text.muted"
+              // onChange={handleSrpChange}
+            />
 
             <HStack mt="4" alignItems="center" justifyContent="space-between">
               <FormLabel mb="0" htmlFor="ses-switch">
@@ -84,7 +82,9 @@ export const Configuration = () => {
                 id="ses-switch"
                 size="lg"
                 isChecked={sesEnabled}
-                onChange={handleSesToggle}
+                // onChange={handleSesToggle}
+                readOnly={true}
+                colorScheme="gray"
               />
             </HStack>
           </FormControl>
