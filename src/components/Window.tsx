@@ -7,6 +7,7 @@ type WindowProps = {
   snapName: string;
   snapId: string;
   children: ReactNode;
+  showAuthorship?: boolean;
 };
 
 /**
@@ -16,12 +17,14 @@ type WindowProps = {
  * @param props.snapName - The name of the snap.
  * @param props.snapId - The ID of the snap.
  * @param props.children - The children to render inside the window.
+ * @param props.showAuthorship - Show the authorship component.
  * @returns The window component.
  */
 export const Window: FunctionComponent<WindowProps> = ({
   snapName,
   snapId,
   children,
+  showAuthorship = true,
 }) => (
   <Flex
     direction="column"
@@ -30,7 +33,7 @@ export const Window: FunctionComponent<WindowProps> = ({
     height="600px"
     paddingY="4"
   >
-    <Author snapName={snapName} snapId={snapId} />
+    {showAuthorship && <Author snapName={snapName} snapId={snapId} />}
     {children}
   </Flex>
 );

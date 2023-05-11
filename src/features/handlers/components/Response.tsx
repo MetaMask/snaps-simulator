@@ -1,10 +1,10 @@
-import { Center, Heading, Text, Box } from '@chakra-ui/react';
+import { Center, Heading, Text, Box, Skeleton } from '@chakra-ui/react';
 import { HandlerType } from '@metamask/snaps-utils';
 
-import { Delineator, Editor, Icon } from '../../../components';
+import { Delineator, Editor, Icon, Window } from '../../../components';
 import { useSelector, useHandler } from '../../../hooks';
 import { Renderer } from '../../renderer';
-import { getSnapName } from '../../simulation';
+import { DEFAULT_SNAP_ID, getSnapName } from '../../simulation';
 
 export const Response = () => {
   const handler = useHandler();
@@ -39,10 +39,20 @@ export const Response = () => {
 
   if (handler === HandlerType.OnTransaction && response.result?.content) {
     return (
-      <Box margin="4" flex="1">
-        <Delineator snapName={snapName}>
-          <Renderer node={response.result.content} />
-        </Delineator>
+      <Box margin="4">
+        <Window
+          snapName={snapName}
+          snapId={DEFAULT_SNAP_ID}
+          showAuthorship={false}
+        >
+          <Box margin="4" flex="1">
+            <Skeleton height="38px" mb="4" speed={3} />
+            <Skeleton height="285px" mb="4" speed={3} />
+            <Delineator snapName={snapName}>
+              <Renderer node={response.result.content} />
+            </Delineator>
+          </Box>
+        </Window>
       </Box>
     );
   }
