@@ -4,6 +4,7 @@ export const DEFAULT_SRP =
   'test test test test test test test test test test test ball';
 
 const INITIAL_STATE = {
+  open: false,
   snapUrl: 'http://localhost:8080',
   srp: DEFAULT_SRP,
   sesEnabled: true,
@@ -13,6 +14,12 @@ const slice = createSlice({
   name: 'configuration',
   initialState: INITIAL_STATE,
   reducers: {
+    openConfigurationModal(state) {
+      state.open = true;
+    },
+    setOpen(state, action: PayloadAction<boolean>) {
+      state.open = action.payload;
+    },
     setSnapUrl(state, action: PayloadAction<string>) {
       state.snapUrl = action.payload;
     },
@@ -25,8 +32,19 @@ const slice = createSlice({
   },
 });
 
-export const { setSnapUrl, setSrp, setSesEnabled } = slice.actions;
+export const {
+  openConfigurationModal,
+  setOpen,
+  setSnapUrl,
+  setSrp,
+  setSesEnabled,
+} = slice.actions;
 export const configuration = slice.reducer;
+
+export const getOpen = createSelector(
+  (state: { configuration: typeof INITIAL_STATE }) => state.configuration,
+  (state) => state.open,
+);
 
 export const getSnapUrl = createSelector(
   (state: { configuration: typeof INITIAL_STATE }) => state.configuration,

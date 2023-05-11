@@ -11,6 +11,7 @@ describe('configuration slice', () => {
       const url = 'http://localhost:9090';
       const result = reducer(
         {
+          open: false,
           snapUrl: '',
           srp: '',
           sesEnabled: true,
@@ -27,6 +28,7 @@ describe('configuration slice', () => {
       const srp = 'test test test test test test test test test test test ball';
       const result = reducer(
         {
+          open: false,
           snapUrl: '',
           srp: '',
           sesEnabled: true,
@@ -42,6 +44,7 @@ describe('configuration slice', () => {
     it('sets the SES enabled flag', () => {
       const result = reducer(
         {
+          open: false,
           snapUrl: '',
           srp: '',
           sesEnabled: true,

@@ -6,10 +6,17 @@ import { Link } from '../../../components';
 
 type ItemProps = {
   path: string;
+  isExternal?: boolean;
+  onClick?: () => void;
   children: ReactNode;
 };
 
-export const Item: FunctionComponent<ItemProps> = ({ path, children }) => {
+export const Item: FunctionComponent<ItemProps> = ({
+  path,
+  isExternal = false,
+  onClick,
+  children,
+}) => {
   const active = useMatch(path);
   const isActive = Boolean(active);
 
@@ -20,6 +27,8 @@ export const Item: FunctionComponent<ItemProps> = ({ path, children }) => {
         variant={isActive ? 'navigation-active' : 'navigation-default'}
         to={path}
         display="block"
+        isExternal={isExternal}
+        onClick={onClick}
         _hover={{
           textDecoration: 'none',
           opacity: 1,

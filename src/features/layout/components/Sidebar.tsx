@@ -1,7 +1,8 @@
-import { Box } from '@chakra-ui/react';
+import { Flex } from '@chakra-ui/react';
 import { FunctionComponent } from 'react';
 
 import { Navigation } from '../../navigation';
+import { Bottom } from '../../navigation/components';
 
 /**
  * The sidebar component, which holds the navigation buttons, etc.
@@ -9,7 +10,8 @@ import { Navigation } from '../../navigation';
  * @returns The sidebar component.
  */
 export const Sidebar: FunctionComponent = () => (
-  <Box width="375px" borderRight="muted" flexShrink="0">
+  <Flex width="375px" borderRight="muted" flexShrink="0" flexDirection="column">
     <Navigation />
-  </Box>
+    <Bottom />
+  </Flex>
 );

@@ -10,6 +10,7 @@ import copiedIcon from '../assets/icons/copied.svg';
 import copyIcon from '../assets/icons/copy.svg';
 import dotIcon from '../assets/icons/dot.svg';
 import errorTriangleIcon from '../assets/icons/error-triangle.svg';
+import gitHubIcon from '../assets/icons/github.svg';
 import manifestIcon from '../assets/icons/manifest.svg';
 import moonIcon from '../assets/icons/moon.svg';
 import playErrorIcon from '../assets/icons/play-error.svg';
@@ -87,6 +88,10 @@ const DEFAULT_ICONS = {
   manifest: {
     alt: 'Manifest',
     src: manifestIcon,
+  },
+  gitHub: {
+    alt: 'GitHub',
+    src: gitHubIcon,
   },
 };
 
