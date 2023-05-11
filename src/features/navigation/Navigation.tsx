@@ -20,7 +20,7 @@ export const Navigation: FunctionComponent = () => {
       size="fullWidth"
       display="flex"
       flexDirection="column"
-      padding={'2'}
+      padding="2"
       flex="1"
     >
       <Stack as={List} spacing="2" flex="1">
