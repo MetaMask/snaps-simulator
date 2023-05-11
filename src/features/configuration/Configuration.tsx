@@ -71,7 +71,7 @@ export const Configuration = () => {
               value={srp}
               readOnly={true}
               color="text.muted"
-              fontSize={'sm'}
+              fontSize="sm"
               // onChange={handleSrpChange}
             />
 
