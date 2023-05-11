@@ -33,7 +33,7 @@ export const Validation: FunctionComponent = () => {
           <br />
           and have a <i>snap.manifest.json</i>
           <br />
-          file in the root of you repository.
+          file in the root of your repository.
         </Text>
       </Center>
     );
