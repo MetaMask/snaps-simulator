@@ -91,7 +91,7 @@ export const Configuration = () => {
           </FormControl>
         </ModalBody>
         <Divider my="4" />
-        <ModalFooter pb={'6'} pt={'2'}>
+        <ModalFooter pb="6" pt="2">
           <Button
             fontFamily={'default'}
             fontWeight={'semibold'}
