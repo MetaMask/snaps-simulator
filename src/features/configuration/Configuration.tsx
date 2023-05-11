@@ -51,7 +51,7 @@ export const Configuration = () => {
   // };
 
   return (
-    <Modal isOpen={isOpen} onClose={handleClose} closeOnOverlayClick={true}>
+    <Modal isOpen={isOpen} onClose={handleClose}>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader pb="0">
