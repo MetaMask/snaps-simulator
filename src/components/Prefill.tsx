@@ -17,6 +17,10 @@ export const Prefill: FunctionComponent<PrefillProps> = ({
     fontSize="xs"
     fontFamily="code"
     borderRadius="xl"
+    background="background.alternative"
+    _hover={{
+      background: 'info.muted',
+    }}
     {...props}
   >
     {children}
