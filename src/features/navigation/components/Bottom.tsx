@@ -14,7 +14,7 @@ export const Bottom: FunctionComponent = () => {
   };
 
   return (
-    <List borderTop="1px solid" borderTopColor="border.default" padding="4">
+    <List borderTop="1px solid" borderTopColor="border.default" padding="2">
       <Item
         path="https://github.com/MetaMask/snaps-simulator"
         isExternal={true}
@@ -26,7 +26,7 @@ export const Bottom: FunctionComponent = () => {
               GitHub
             </Box>
           </Text>
-          <Text fontSize="xs" marginTop="1">
+          <Text fontSize="sm" marginTop="1">
             Report an issue or contribute to the project
           </Text>
         </Box>
@@ -39,7 +39,7 @@ export const Bottom: FunctionComponent = () => {
               Settings
             </Box>
           </Text>
-          <Text fontSize="xs" marginTop="1">
+          <Text fontSize="sm" marginTop="1">
             Configure the simulation environment
           </Text>
         </Box>
