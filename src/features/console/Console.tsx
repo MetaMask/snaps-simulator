@@ -6,8 +6,9 @@ import {
   TabPanels,
   Tabs,
 } from '@chakra-ui/react';
-import { FunctionComponent, useEffect, useRef } from 'react';
+import { FunctionComponent, useEffect, useRef, useState } from 'react';
 
+import { Icon } from '../../components';
 import { useSelector } from '../../hooks';
 import { ConsoleContent } from './ConsoleContent';
 import { getConsoleEntries } from './slice';
@@ -20,6 +21,8 @@ import { getConsoleEntries } from './slice';
 export const Console: FunctionComponent = () => {
   const ref = useRef<HTMLDivElement>(null);
 
+  const [collapsed, setCollapsed] = useState(false);
+
   const entries = useSelector(getConsoleEntries);
 
   useEffect(() => {
@@ -29,17 +32,36 @@ export const Console: FunctionComponent = () => {
     }
   }, [entries]);
 
+  const handleToggleConsole = () => {
+    setCollapsed((state) => !state);
+  };
+
   return (
     <Flex
       borderTop="1px solid"
       borderColor="border.default"
-      height="266px"
+      height={collapsed ? '47px' : '266px'}
+      transition="height 0.5s"
       flexDirection="column"
       overflow="hidden"
     >
       <Tabs display="flex" flexDirection="column" flex="1" overflow="hidden">
-        <TabList>
+        <TabList pr="2">
           <Tab>Console</Tab>
+          <Flex
+            alignItems="center"
+            ml="auto"
+            onClick={handleToggleConsole}
+            _hover={{
+              cursor: 'pointer',
+            }}
+          >
+            <Icon
+              icon="arrowDown"
+              height="14px"
+              transform={collapsed ? 'rotate(180deg)' : 'rotate(0deg)'}
+            />
+          </Flex>
         </TabList>
         <TabPanels
           display="flex"
