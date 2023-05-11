@@ -11,7 +11,19 @@ describe('transactions', () => {
     it('sets the request', () => {
       const result = reducer(
         INITIAL_STATE,
-        setTransactionRequest({ chainId: 'bar', transaction: 'foo' }),
+        setTransactionRequest({
+          request: {
+            jsonrpc: '2.0',
+            id: '1',
+            method: 'foo',
+            params: {
+              chainId: 'eip155:1',
+              transaction: {
+                value: '0x00',
+              },
+            },
+          },
+        }),
       );
 
       expect(result.request).toStrictEqual({ origin: 'foo' });
@@ -20,7 +32,19 @@ describe('transactions', () => {
     it('pushes the request to history', () => {
       const result = reducer(
         INITIAL_STATE,
-        setTransactionRequest({ chainId: 'bar', transaction: 'foo' }),
+        setTransactionRequest({
+          request: {
+            jsonrpc: '2.0',
+            id: '1',
+            method: 'foo',
+            params: {
+              chainId: 'eip155:1',
+              transaction: {
+                value: '0x00',
+              },
+            },
+          },
+        }),
       );
 
       expect(result.history).toStrictEqual([
@@ -34,8 +58,17 @@ describe('transactions', () => {
       const result = reducer(
         INITIAL_STATE,
         setTransactionRequestFromHistory({
-          chainId: 'bar',
-          transaction: 'foo',
+          request: {
+            jsonrpc: '2.0',
+            id: '1',
+            method: 'foo',
+            params: {
+              chainId: 'eip155:1',
+              transaction: {
+                value: '0x00',
+              },
+            },
+          },
         }),
       );
 
@@ -46,8 +79,17 @@ describe('transactions', () => {
       const result = reducer(
         INITIAL_STATE,
         setTransactionRequestFromHistory({
-          chainId: 'bar',
-          transaction: 'foo',
+          request: {
+            jsonrpc: '2.0',
+            id: '1',
+            method: 'foo',
+            params: {
+              chainId: 'eip155:1',
+              transaction: {
+                value: '0x00',
+              },
+            },
+          },
         }),
       );
 

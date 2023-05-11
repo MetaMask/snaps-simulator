@@ -9,7 +9,7 @@ import { DEFAULT_SNAP_ID, getSnapName } from '../../simulation';
 export const Response = () => {
   const handler = useHandler();
   const response = useSelector((state) => state[handler].response);
-  const snapName = useSelector(getSnapName);
+  const snapName = useSelector(getSnapName) as string;
 
   if (!response) {
     return (
@@ -37,7 +37,9 @@ export const Response = () => {
     );
   }
 
-  if (handler === HandlerType.OnTransaction && response.result?.content) {
+  const content = (response as any).result?.content;
+
+  if (handler === HandlerType.OnTransaction && content) {
     return (
       <Box margin="4">
         <Window
@@ -49,7 +51,7 @@ export const Response = () => {
             <Skeleton height="38px" mb="4" speed={3} />
             <Skeleton height="285px" mb="4" speed={3} />
             <Delineator snapName={snapName}>
-              <Renderer node={response.result.content} />
+              <Renderer node={content} />
             </Delineator>
           </Box>
         </Window>

@@ -19,41 +19,52 @@ import { getTransactionRequest } from '../slice';
 
 type TransactionFormData = {
   chainId: string;
-  transaction: string;
   transactionOrigin: string;
+  from: string;
+  to: string;
+  nonce: string;
+  value: string;
+  data: string;
+  gas: string;
+  maxFeePerGas: string;
+  maxPriorityFeePerGas: string;
 };
 
 export const Request: FunctionComponent = () => {
-  const { chainId, transaction, transactionOrigin } = useSelector(
-    getTransactionRequest,
-  );
+  const { request } = useSelector(getTransactionRequest);
+  const {
+    chainId: defaultChainId,
+    transactionOrigin: defaultTransactionOrigin,
+    transaction: defaultTransaction,
+  } = request?.params ?? {};
   const {
     handleSubmit,
     register,
-    control,
     formState: { errors },
   } = useForm<TransactionFormData>({
     defaultValues: {
-      chainId: chainId ?? '',
-      transactionOrigin: transactionOrigin ?? '',
-      transaction: transaction ?? '',
+      chainId: defaultChainId ?? '',
+      transactionOrigin: defaultTransactionOrigin ?? '',
+      ...defaultTransaction,
     },
   });
 
   const dispatch = useDispatch();
 
   const onSubmit = (data: TransactionFormData) => {
+    const { chainId, transactionOrigin, ...transaction } = data;
     dispatch(
       sendRequest({
         origin: '',
         handler: HandlerType.OnTransaction,
         request: {
           jsonrpc: '2.0',
-          method: '',
+          // This doesn't actually matter as it is stripped, but it shows up nicely in the history view
+          method: 'onTransaction',
           params: {
-            chainId: data.chainId,
-            transaction: JSON.parse(data.transaction),
-            transactionOrigin: data.transactionOrigin,
+            chainId,
+            transaction,
+            transactionOrigin,
           },
         },
       }),
@@ -95,26 +106,26 @@ export const Request: FunctionComponent = () => {
         </FormControl>
       </Flex>
 
-      <FormControl isInvalid={Boolean(errors.fromAddress)}>
-        <FormLabel htmlFor="fromAddress">From Address</FormLabel>
+      <FormControl isInvalid={Boolean(errors.from)}>
+        <FormLabel htmlFor="from">From Address</FormLabel>
         <Input
-          id="fromAddress"
+          id="from"
           placeholder="0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
           fontFamily="code"
-          {...register('fromAddress')}
+          {...register('from')}
         />
-        <FormErrorMessage>{errors.fromAddress?.message}</FormErrorMessage>
+        <FormErrorMessage>{errors.from?.message}</FormErrorMessage>
       </FormControl>
 
-      <FormControl isInvalid={Boolean(errors.toAddress)}>
-        <FormLabel htmlFor="toAddress">To Address</FormLabel>
+      <FormControl isInvalid={Boolean(errors.to)}>
+        <FormLabel htmlFor="to">To Address</FormLabel>
         <Input
-          id="toAddress"
+          id="to"
           placeholder="0x9f2817015caF6607C1198fB943A8241652EE8906"
           fontFamily="code"
-          {...register('toAddress')}
+          {...register('to')}
         />
-        <FormErrorMessage>{errors.toAddress?.message}</FormErrorMessage>
+        <FormErrorMessage>{errors.to?.message}</FormErrorMessage>
       </FormControl>
 
       <FormControl isInvalid={Boolean(errors.value)}>
@@ -133,15 +144,15 @@ export const Request: FunctionComponent = () => {
       </FormControl>
 
       <Flex gap="2">
-        <FormControl isInvalid={Boolean(errors.gasLimit)}>
-          <FormLabel htmlFor="gasLimit">Gas Limit</FormLabel>
+        <FormControl isInvalid={Boolean(errors.gas)}>
+          <FormLabel htmlFor="gas">Gas Limit</FormLabel>
           <Input
-            id="gasLimit"
+            id="gas"
             placeholder="21000"
             fontFamily="code"
-            {...register('gasLimit')}
+            {...register('gas')}
           />
-          <FormErrorMessage>{errors.gasLimit?.message}</FormErrorMessage>
+          <FormErrorMessage>{errors.gas?.message}</FormErrorMessage>
         </FormControl>
 
         <FormControl isInvalid={Boolean(errors.nonce)}>
