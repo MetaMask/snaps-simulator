@@ -161,7 +161,7 @@ export const Request: FunctionComponent = () => {
             fontFamily="code"
             {...register('value')}
           />
-          <InputRightAddon children="ETH" />
+          <InputRightAddon children="ETH" fontSize="sm" />
         </InputGroup>
 
         <FormErrorMessage>{errors.value?.message}</FormErrorMessage>
@@ -201,7 +201,7 @@ export const Request: FunctionComponent = () => {
               fontFamily="code"
               {...register('maxFeePerGas')}
             />
-            <InputRightAddon children="GWEI" />
+            <InputRightAddon children="GWEI" fontSize="sm" />
           </InputGroup>
 
           <FormErrorMessage>{errors.maxFeePerGas?.message}</FormErrorMessage>
@@ -218,7 +218,7 @@ export const Request: FunctionComponent = () => {
               fontFamily="code"
               {...register('maxPriorityFeePerGas')}
             />
-            <InputRightAddon children="GWEI" />
+            <InputRightAddon children="GWEI" fontSize="sm" />
           </InputGroup>
 
           <FormErrorMessage>
