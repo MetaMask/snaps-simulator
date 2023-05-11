@@ -5,16 +5,17 @@ import { createSelector } from '@reduxjs/toolkit';
 import { createHandlerSlice } from '../slice';
 
 type Request = {
-  origin: string;
-  request?: JsonRpcRequest;
+  request?: JsonRpcRequest<{
+    chainId: string;
+    transaction: Record<string, any>;
+    transactionOrigin?: string;
+  }>;
 };
 
 type Response = string;
 
 export const INITIAL_STATE = {
-  request: {
-    origin: '',
-  },
+  request: {},
   response: null,
   history: [],
 };

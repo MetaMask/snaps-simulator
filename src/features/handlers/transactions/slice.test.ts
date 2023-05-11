@@ -11,20 +11,71 @@ describe('transactions', () => {
     it('sets the request', () => {
       const result = reducer(
         INITIAL_STATE,
-        setTransactionRequest({ origin: 'foo' }),
+        setTransactionRequest({
+          request: {
+            jsonrpc: '2.0',
+            id: '1',
+            method: 'foo',
+            params: {
+              chainId: 'eip155:1',
+              transaction: {
+                value: '0x00',
+              },
+            },
+          },
+        }),
       );
 
-      expect(result.request).toStrictEqual({ origin: 'foo' });
+      expect(result.request).toStrictEqual({
+        request: {
+          jsonrpc: '2.0',
+          id: '1',
+          method: 'foo',
+          params: {
+            chainId: 'eip155:1',
+            transaction: {
+              value: '0x00',
+            },
+          },
+        },
+      });
     });
 
     it('pushes the request to history', () => {
       const result = reducer(
         INITIAL_STATE,
-        setTransactionRequest({ origin: 'foo' }),
+        setTransactionRequest({
+          request: {
+            jsonrpc: '2.0',
+            id: '1',
+            method: 'foo',
+            params: {
+              chainId: 'eip155:1',
+              transaction: {
+                value: '0x00',
+              },
+            },
+          },
+        }),
       );
 
       expect(result.history).toStrictEqual([
-        { date: expect.any(Date), request: { origin: 'foo' } },
+        {
+          date: expect.any(Date),
+          request: {
+            request: {
+              jsonrpc: '2.0',
+              id: '1',
+              method: 'foo',
+              params: {
+                chainId: 'eip155:1',
+                transaction: {
+                  value: '0x00',
+                },
+              },
+            },
+          },
+        },
       ]);
     });
   });
@@ -33,16 +84,52 @@ describe('transactions', () => {
     it('sets the request', () => {
       const result = reducer(
         INITIAL_STATE,
-        setTransactionRequestFromHistory({ origin: 'foo' }),
+        setTransactionRequestFromHistory({
+          request: {
+            jsonrpc: '2.0',
+            id: '1',
+            method: 'foo',
+            params: {
+              chainId: 'eip155:1',
+              transaction: {
+                value: '0x00',
+              },
+            },
+          },
+        }),
       );
 
-      expect(result.request).toStrictEqual({ origin: 'foo' });
+      expect(result.request).toStrictEqual({
+        request: {
+          jsonrpc: '2.0',
+          id: '1',
+          method: 'foo',
+          params: {
+            chainId: 'eip155:1',
+            transaction: {
+              value: '0x00',
+            },
+          },
+        },
+      });
     });
 
     it('does not push to history', () => {
       const result = reducer(
         INITIAL_STATE,
-        setTransactionRequestFromHistory({ origin: 'foo' }),
+        setTransactionRequestFromHistory({
+          request: {
+            jsonrpc: '2.0',
+            id: '1',
+            method: 'foo',
+            params: {
+              chainId: 'eip155:1',
+              transaction: {
+                value: '0x00',
+              },
+            },
+          },
+        }),
       );
 
       expect(result.history).toStrictEqual([]);

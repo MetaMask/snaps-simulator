@@ -3,6 +3,7 @@
 import { tagAnatomy, formAnatomy, tabsAnatomy } from '@chakra-ui/anatomy';
 import {
   createMultiStyleConfigHelpers,
+  cssVar,
   defineStyle,
   defineStyleConfig,
   extendTheme,
@@ -223,6 +224,15 @@ export const theme = extendTheme({
           fontFamily: 'custom',
         }),
       },
+    }),
+
+    Skeleton: defineStyleConfig({
+      baseStyle: defineStyle({
+        [cssVar('skeleton-start-color').variable]:
+          'colors.background.alternative',
+        [cssVar('skeleton-end-color').variable]: 'colors.border.default',
+        borderRadius: 'lg',
+      }),
     }),
   },
 
