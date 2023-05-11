@@ -106,6 +106,22 @@ export const theme = extendTheme({
               boxShadow: 'none',
             },
           },
+          textarea: {
+            marginBottom: 4,
+            borderColor: 'border.default',
+            outline: 'none',
+            fontSize: 'sm',
+            _active: {
+              borderColor: 'border.active',
+              outline: 'none',
+              boxShadow: 'none',
+            },
+            _focusVisible: {
+              borderColor: 'border.active',
+              outline: 'none',
+              boxShadow: 'none',
+            },
+          },
         },
       }),
     }),
