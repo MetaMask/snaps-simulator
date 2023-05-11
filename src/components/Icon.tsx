@@ -10,6 +10,7 @@ import copiedIcon from '../assets/icons/copied.svg';
 import copyIcon from '../assets/icons/copy.svg';
 import dotIcon from '../assets/icons/dot.svg';
 import errorTriangleIcon from '../assets/icons/error-triangle.svg';
+import manifestIcon from '../assets/icons/manifest.svg';
 import moonIcon from '../assets/icons/moon.svg';
 import playErrorIcon from '../assets/icons/play-error.svg';
 import playMutedIcon from '../assets/icons/play-muted.svg';
@@ -82,6 +83,10 @@ const DEFAULT_ICONS = {
   moon: {
     alt: 'Moon',
     src: moonIcon,
+  },
+  manifest: {
+    alt: 'Manifest',
+    src: manifestIcon,
   },
 };
 

@@ -8,7 +8,7 @@ describe('Item', () => {
     expect(() =>
       render(
         <List>
-          <Item path="foo">Bar</Item>
+          <Item isValid={true} name="foo" manifestName="bar" />
         </List>,
       ),
     ).not.toThrow();
