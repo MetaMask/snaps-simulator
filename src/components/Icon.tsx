@@ -8,10 +8,13 @@ import computerIcon from '../assets/icons/computer.svg';
 import configurationIcon from '../assets/icons/configuration.svg';
 import copiedIcon from '../assets/icons/copied.svg';
 import copyIcon from '../assets/icons/copy.svg';
+import cronjobIcon from '../assets/icons/cronjob.svg';
 import darkArrowTopRightIcon from '../assets/icons/dark-arrow-top-right.svg';
 import dotIcon from '../assets/icons/dot.svg';
 import errorTriangleIcon from '../assets/icons/error-triangle.svg';
 import gitHubIcon from '../assets/icons/github.svg';
+import insightsIcon from '../assets/icons/insights.svg';
+import jsonRpcIcon from '../assets/icons/json-rpc.svg';
 import manifestIcon from '../assets/icons/manifest.svg';
 import moonIcon from '../assets/icons/moon.svg';
 import playErrorIcon from '../assets/icons/play-error.svg';
@@ -97,6 +100,18 @@ const DEFAULT_ICONS = {
   gitHub: {
     alt: 'GitHub',
     src: gitHubIcon,
+  },
+  cronjob: {
+    alt: 'Cronjob',
+    src: cronjobIcon,
+  },
+  insights: {
+    alt: 'Insights',
+    src: insightsIcon,
+  },
+  jsonRpc: {
+    alt: 'JSON-RPC',
+    src: jsonRpcIcon,
   },
 };
 
