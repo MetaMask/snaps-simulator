@@ -1,6 +1,5 @@
 import { LocalLocation } from '@metamask/snaps-controllers/dist/snaps/location';
 import { SnapManifest, VirtualFile } from '@metamask/snaps-utils';
-import { assert } from '@metamask/utils';
 import { call, delay, put, all, select, takeLatest } from 'redux-saga/effects';
 
 import { getSnapUrl, setSnapUrl } from '../configuration';
@@ -47,9 +46,6 @@ export function* fetchingSaga() {
   const { iconPath } = manifest.result.source.location.npm;
   if (iconPath) {
     const icon: VirtualFile = yield call([location, 'fetch'], iconPath);
-    const extension = iconPath.split('.').pop();
-
-    assert(extension, 'Icon path should have an extension.');
 
     const blob = new Blob([icon.value], { type: 'image/svg+xml' });
     const blobUrl = URL.createObjectURL(blob);
