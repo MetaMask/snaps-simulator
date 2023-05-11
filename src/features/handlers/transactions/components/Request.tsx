@@ -18,21 +18,40 @@ import { sendRequest } from '../../../simulation';
 import { getTransactionRequest } from '../slice';
 import { TransactionFormData, hexlifyTransactionData } from '../utils';
 
+const PLACEHOLDERS = {
+  chainId: 'eip155:1',
+  origin: 'metamask.io',
+  from: '0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045',
+  to: '0x9f2817015caF6607C1198fB943A8241652EE8906',
+  value: '0.01',
+  gas: '21000',
+  nonce: '5',
+  maxFeePerGas: '10',
+  maxPriorityFeePerGas: '1',
+  data: '0x',
+};
+
 export const Request: FunctionComponent = () => {
   const { request } = useSelector(getTransactionRequest);
   const {
     chainId: defaultChainId,
     transactionOrigin: defaultTransactionOrigin,
-    transaction: defaultTransaction,
+    transaction: previousTransaction,
   } = request?.params ?? {};
+  const {
+    chainId: _chainId,
+    origin: _origin,
+    ...placeholderTransaction
+  } = PLACEHOLDERS;
+  const defaultTransaction = previousTransaction ?? placeholderTransaction;
   const {
     handleSubmit,
     register,
     formState: { errors },
   } = useForm<TransactionFormData>({
     defaultValues: {
-      chainId: defaultChainId ?? '',
-      transactionOrigin: defaultTransactionOrigin ?? '',
+      chainId: defaultChainId ?? PLACEHOLDERS.chainId,
+      transactionOrigin: defaultTransactionOrigin ?? PLACEHOLDERS.origin,
       ...defaultTransaction,
     },
   });
@@ -73,7 +92,7 @@ export const Request: FunctionComponent = () => {
           <FormLabel htmlFor="chainId">Chain ID</FormLabel>
           <Input
             id="chainId"
-            placeholder="eip155:1"
+            placeholder={PLACEHOLDERS.chainId}
             fontFamily="code"
             {...register('chainId')}
           />
@@ -84,7 +103,7 @@ export const Request: FunctionComponent = () => {
           <FormLabel htmlFor="origin">Transaction Origin</FormLabel>
           <Input
             id="origin"
-            placeholder="metamask.io"
+            placeholder={PLACEHOLDERS.origin}
             fontFamily="code"
             {...register('transactionOrigin')}
           />
@@ -98,7 +117,7 @@ export const Request: FunctionComponent = () => {
         <FormLabel htmlFor="from">From Address</FormLabel>
         <Input
           id="from"
-          placeholder="0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
+          placeholder={PLACEHOLDERS.from}
           fontFamily="code"
           {...register('from')}
         />
@@ -109,7 +128,7 @@ export const Request: FunctionComponent = () => {
         <FormLabel htmlFor="to">To Address</FormLabel>
         <Input
           id="to"
-          placeholder="0x9f2817015caF6607C1198fB943A8241652EE8906"
+          placeholder={PLACEHOLDERS.to}
           fontFamily="code"
           {...register('to')}
         />
@@ -121,7 +140,7 @@ export const Request: FunctionComponent = () => {
         <InputGroup>
           <Input
             id="value"
-            placeholder="0.01"
+            placeholder={PLACEHOLDERS.value}
             fontFamily="code"
             {...register('value')}
           />
@@ -136,7 +155,7 @@ export const Request: FunctionComponent = () => {
           <FormLabel htmlFor="gas">Gas Limit</FormLabel>
           <Input
             id="gas"
-            placeholder="21000"
+            placeholder={PLACEHOLDERS.gas}
             fontFamily="code"
             {...register('gas')}
           />
@@ -147,7 +166,7 @@ export const Request: FunctionComponent = () => {
           <FormLabel htmlFor="nonce">Nonce</FormLabel>
           <Input
             id="nonce"
-            placeholder="5"
+            placeholder={PLACEHOLDERS.nonce}
             fontFamily="code"
             {...register('nonce')}
           />
@@ -161,7 +180,7 @@ export const Request: FunctionComponent = () => {
           <InputGroup>
             <Input
               id="maxFeePerGas"
-              placeholder="10"
+              placeholder={PLACEHOLDERS.maxFeePerGas}
               fontFamily="code"
               {...register('maxFeePerGas')}
             />
@@ -178,7 +197,7 @@ export const Request: FunctionComponent = () => {
           <InputGroup>
             <Input
               id="maxPriorityFeePerGas"
-              placeholder="1"
+              placeholder={PLACEHOLDERS.maxPriorityFeePerGas}
               fontFamily="code"
               {...register('maxPriorityFeePerGas')}
             />
@@ -195,7 +214,7 @@ export const Request: FunctionComponent = () => {
         <FormLabel htmlFor="data">Data</FormLabel>
         <Textarea
           id="data"
-          placeholder="0x"
+          placeholder={PLACEHOLDERS.data}
           fontFamily="code"
           {...register('data')}
         />
