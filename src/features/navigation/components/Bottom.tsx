@@ -14,7 +14,7 @@ export const Bottom: FunctionComponent = () => {
   };
 
   return (
-    <List borderTop="1px solid" borderTopColor="border.default" padding="2">
+    <List borderTop="1px solid" borderTopColor="border.default" padding="4">
       <Item
         path="https://github.com/MetaMask/snaps-simulator"
         isExternal={true}
