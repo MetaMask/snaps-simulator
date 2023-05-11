@@ -55,9 +55,9 @@ export const Configuration = () => {
       <ModalOverlay />
       <ModalContent>
         <ModalHeader pb="0">
-          <Text fontSize="2xl">Configure environment</Text>
-          <Text fontSize="md" color="#535A61" fontWeight="400">
-            Settings and variables to setup the context for the simulation.
+          <Text fontSize="md">Configure environment</Text>
+          <Text fontSize="sm" color="#535A61" fontWeight="400">
+            Settings and variables to setup the simulation context.
           </Text>
         </ModalHeader>
         <Divider my="4" />
@@ -71,10 +71,11 @@ export const Configuration = () => {
               value={srp}
               readOnly={true}
               color="text.muted"
+              fontSize="sm"
               // onChange={handleSrpChange}
             />
 
-            <HStack mt="4" alignItems="center" justifyContent="space-between">
+            <HStack mt="6" alignItems="center" justifyContent="space-between">
               <FormLabel mb="0" htmlFor="ses-switch">
                 Secure EcmaScript (SES)
               </FormLabel>
@@ -89,9 +90,15 @@ export const Configuration = () => {
             </HStack>
           </FormControl>
         </ModalBody>
-
-        <ModalFooter>
-          <Button width="100%" onClick={handleClose}>
+        <Divider my="4" />
+        <ModalFooter pb="6" pt="2">
+          <Button
+            fontFamily="default"
+            fontWeight="semibold"
+            fontSize="sm"
+            width="100%"
+            onClick={handleClose}
+          >
             Apply config
           </Button>
         </ModalFooter>

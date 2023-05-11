@@ -23,7 +23,7 @@ export const NAVIGATION_ITEMS: NavigationItem[] = [
   {
     label: 'JSON-RPC',
     tag: 'onRpcRequest',
-    description: 'Send JSON-RPC requests to the snap',
+    description: 'Send a JSON-RPC request to the snap',
     icon: 'textBubble',
     path: `/handler/${HandlerType.OnRpcRequest}`,
   },
@@ -37,7 +37,7 @@ export const NAVIGATION_ITEMS: NavigationItem[] = [
   {
     label: 'Transaction',
     tag: 'onTransaction',
-    description: 'Send transactions to the snap',
+    description: 'Send a transaction to the snap',
     icon: 'textBubble',
     path: `/handler/${HandlerType.OnTransaction}`,
   },
