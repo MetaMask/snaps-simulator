@@ -2,7 +2,7 @@ import { Box } from '@chakra-ui/react';
 import { FunctionComponent } from 'react';
 
 import { useSelector } from '../../../hooks';
-import { getManifestStatus, ManifestStatus } from '../../manifest';
+import { getManifestStatus, ManifestStatus } from '../../manifest/slice';
 
 const MANIFEST_COLORS = {
   [ManifestStatus.Valid]: 'success.default',

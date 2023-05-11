@@ -10,6 +10,7 @@ import {
 
 type LinkProps = {
   to: string;
+  isExternal?: boolean;
 } & ChakraLinkProps &
   RouterLinkProps;
 
@@ -21,14 +22,26 @@ type LinkProps = {
  * @param props - The props of the component.
  * @param props.to - The path to link to.
  * @param props.children - The children of the component.
+ * @param props.isExternal - Whether the link is external or not.
  * @returns The link component.
  */
 export const Link: FunctionComponent<LinkProps> = ({
   to,
+  isExternal = false,
   children,
   ...props
-}) => (
-  <ChakraLink as={RouterLink} to={to} {...props}>
-    {children}
-  </ChakraLink>
-);
+}) => {
+  if (isExternal) {
+    return (
+      <ChakraLink isExternal={true} href={to} {...props}>
+        {children}
+      </ChakraLink>
+    );
+  }
+
+  return (
+    <ChakraLink as={RouterLink} to={to} {...props}>
+      {children}
+    </ChakraLink>
+  );
+};

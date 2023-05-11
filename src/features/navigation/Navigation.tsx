@@ -15,8 +15,14 @@ export const Navigation: FunctionComponent = () => {
   const applicationState = useSelector((state) => state);
 
   return (
-    <Container as="nav" size="fullWidth">
-      <Stack as={List} spacing="4">
+    <Container
+      as="nav"
+      size="fullWidth"
+      display="flex"
+      flexDirection="column"
+      flex="1"
+    >
+      <Stack as={List} spacing="4" flex="1">
         {NAVIGATION_ITEMS.map(
           ({ condition, icon, label, tag, description, path }) => {
             if (condition && !condition(applicationState)) {
