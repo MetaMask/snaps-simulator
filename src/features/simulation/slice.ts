@@ -29,6 +29,7 @@ type SimulationState = {
   permissionController: GenericPermissionController | null;
   manifest: SnapManifest | null;
   sourceCode: string;
+  icon?: string;
   ui?: HandlerUserInterface | null;
   snapState: string | null;
 };
@@ -65,6 +66,9 @@ const slice = createSlice({
     setSourceCode(state, action: PayloadAction<string>) {
       state.sourceCode = action.payload;
     },
+    setIcon(state, action: PayloadAction<string>) {
+      state.icon = action.payload;
+    },
     showUserInterface: (state, action: PayloadAction<HandlerUserInterface>) => {
       state.ui = action.payload;
     },
@@ -91,6 +95,7 @@ export const {
   setPermissionController,
   setManifest,
   setSourceCode,
+  setIcon,
   showUserInterface,
   closeUserInterface,
   setSnapState,
@@ -116,6 +121,11 @@ export const getPermissionController = createSelector(
 export const getSnapName = createSelector(
   (state: { simulation: typeof INITIAL_STATE }) => state.simulation,
   (state) => state.manifest?.proposedName,
+);
+
+export const getIcon = createSelector(
+  (state: { simulation: typeof INITIAL_STATE }) => state.simulation,
+  (state) => state.icon,
 );
 
 export const getChecksum = createSelector(

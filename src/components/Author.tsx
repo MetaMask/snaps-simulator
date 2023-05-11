@@ -1,4 +1,4 @@
-import { Box, Flex, Text } from '@chakra-ui/react';
+import { Flex, Text } from '@chakra-ui/react';
 import { FunctionComponent } from 'react';
 
 import { SnapIcon } from './SnapIcon';
@@ -20,10 +20,9 @@ export const Author: FunctionComponent<AuthorProps> = ({
     borderColor="border.default"
     borderRadius="32px"
     padding="1"
+    alignItems="center"
   >
-    <Box position="relative">
-      <SnapIcon snapName={snapName} />
-    </Box>
+    <SnapIcon snapName={snapName} />
     <Flex direction="column" justify="center">
       <Text fontSize="sm" lineHeight="157%" fontFamily="custom">
         {snapName}

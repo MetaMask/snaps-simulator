@@ -10,6 +10,7 @@ import {
   setManifest,
   setSourceCode,
   setStatus,
+  setIcon,
 } from '../simulation';
 
 /**
@@ -30,22 +31,26 @@ export function* fetchingSaga() {
   const currentChecksum: string = yield select(getChecksum);
 
   const manifestChecksum = manifest.result.source.shasum;
-
   if (currentChecksum === manifestChecksum) {
     return;
   }
 
   yield put(setStatus(SnapStatus.Loading));
-
   yield put(setManifest(manifest.result));
-
   yield put(logDefault('Snap changed, rebooting...'));
 
   const bundlePath = manifest.result.source.location.npm.filePath;
-
   const bundle: VirtualFile = yield call([location, 'fetch'], bundlePath);
-
   yield put(setSourceCode(bundle.toString()));
+
+  const { iconPath } = manifest.result.source.location.npm;
+  if (iconPath) {
+    const icon: VirtualFile = yield call([location, 'fetch'], iconPath);
+
+    const blob = new Blob([icon.value], { type: 'image/svg+xml' });
+    const blobUrl = URL.createObjectURL(blob);
+    yield put(setIcon(blobUrl));
+  }
 }
 
 /**
