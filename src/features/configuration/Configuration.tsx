@@ -94,7 +94,7 @@ export const Configuration = () => {
         <ModalFooter pb="6" pt="2">
           <Button
             fontFamily="default"
-            fontWeight={'semibold'}
+            fontWeight="semibold"
             fontSize={'sm'}
             width="100%"
             onClick={handleClose}
