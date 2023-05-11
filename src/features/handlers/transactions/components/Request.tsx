@@ -17,6 +17,7 @@ import { useDispatch, useSelector } from '../../../../hooks';
 import { sendRequest } from '../../../simulation';
 import { getTransactionRequest } from '../slice';
 import { TransactionFormData, hexlifyTransactionData } from '../utils';
+import { TransactionPrefills } from './TransactionPrefills';
 
 const PLACEHOLDERS = {
   chainId: 'eip155:1',
@@ -47,6 +48,7 @@ export const Request: FunctionComponent = () => {
   const {
     handleSubmit,
     register,
+    setValue,
     formState: { errors },
   } = useForm<TransactionFormData>({
     defaultValues: {
@@ -78,6 +80,19 @@ export const Request: FunctionComponent = () => {
     );
   };
 
+  const handlePrefill = (prefill: TransactionFormData) => {
+    setValue('chainId', prefill.chainId);
+    setValue('transactionOrigin', prefill.transactionOrigin);
+    setValue('from', prefill.from);
+    setValue('to', prefill.to);
+    setValue('value', prefill.value);
+    setValue('data', prefill.data);
+    setValue('gas', prefill.gas);
+    setValue('maxFeePerGas', prefill.maxFeePerGas);
+    setValue('maxPriorityFeePerGas', prefill.maxPriorityFeePerGas);
+    setValue('nonce', prefill.nonce);
+  };
+
   return (
     <Flex
       as="form"
@@ -87,6 +102,8 @@ export const Request: FunctionComponent = () => {
       onSubmit={handleSubmit(onSubmit)}
       id="request-form"
     >
+      <TransactionPrefills onClick={handlePrefill} />
+
       <Flex gap="2">
         <FormControl isInvalid={Boolean(errors.chainId)}>
           <FormLabel htmlFor="chainId">Chain ID</FormLabel>
@@ -144,7 +161,7 @@ export const Request: FunctionComponent = () => {
             fontFamily="code"
             {...register('value')}
           />
-          <InputRightAddon children="ETH" />
+          <InputRightAddon children="ETH" fontSize="sm" />
         </InputGroup>
 
         <FormErrorMessage>{errors.value?.message}</FormErrorMessage>
@@ -184,7 +201,7 @@ export const Request: FunctionComponent = () => {
               fontFamily="code"
               {...register('maxFeePerGas')}
             />
-            <InputRightAddon children="GWEI" />
+            <InputRightAddon children="GWEI" fontSize="sm" />
           </InputGroup>
 
           <FormErrorMessage>{errors.maxFeePerGas?.message}</FormErrorMessage>
@@ -201,7 +218,7 @@ export const Request: FunctionComponent = () => {
               fontFamily="code"
               {...register('maxPriorityFeePerGas')}
             />
-            <InputRightAddon children="GWEI" />
+            <InputRightAddon children="GWEI" fontSize="sm" />
           </InputGroup>
 
           <FormErrorMessage>
