@@ -1,18 +1,20 @@
+/* eslint-disable react/no-children-prop */
 import {
   Flex,
   FormControl,
   FormErrorMessage,
   FormLabel,
   Input,
+  InputGroup,
+  InputRightAddon,
+  Textarea,
 } from '@chakra-ui/react';
 import { HandlerType } from '@metamask/snaps-utils';
 import { FunctionComponent } from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 
-import { Editor } from '../../../../components';
 import { useDispatch, useSelector } from '../../../../hooks';
 import { sendRequest } from '../../../simulation';
-import { SAMPLE_JSON_RPC_REQUEST } from '../../json-rpc/schema';
 import { getTransactionRequest } from '../slice';
 
 type TransactionFormData = {
@@ -67,42 +69,138 @@ export const Request: FunctionComponent = () => {
       onSubmit={handleSubmit(onSubmit)}
       id="request-form"
     >
-      <FormControl isInvalid={Boolean(errors.chainId)}>
-        <FormLabel htmlFor="chainId">Chain ID</FormLabel>
+      <Flex gap="2">
+        <FormControl isInvalid={Boolean(errors.chainId)}>
+          <FormLabel htmlFor="chainId">Chain ID</FormLabel>
+          <Input
+            id="chainId"
+            placeholder="eip155:1"
+            fontFamily="code"
+            {...register('chainId')}
+          />
+          <FormErrorMessage>{errors.chainId?.message}</FormErrorMessage>
+        </FormControl>
+
+        <FormControl isInvalid={Boolean(errors.transactionOrigin)}>
+          <FormLabel htmlFor="origin">Transaction Origin</FormLabel>
+          <Input
+            id="origin"
+            placeholder="metamask.io"
+            fontFamily="code"
+            {...register('transactionOrigin')}
+          />
+          <FormErrorMessage>
+            {errors.transactionOrigin?.message}
+          </FormErrorMessage>
+        </FormControl>
+      </Flex>
+
+      <FormControl isInvalid={Boolean(errors.fromAddress)}>
+        <FormLabel htmlFor="fromAddress">From Address</FormLabel>
         <Input
-          id="chainId"
-          placeholder="eip155:1"
+          id="fromAddress"
+          placeholder="0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
           fontFamily="code"
-          {...register('chainId')}
+          {...register('fromAddress')}
         />
-        <FormErrorMessage>{errors.chainId?.message}</FormErrorMessage>
+        <FormErrorMessage>{errors.fromAddress?.message}</FormErrorMessage>
       </FormControl>
 
-      <FormControl isInvalid={Boolean(errors.transactionOrigin)}>
-        <FormLabel htmlFor="origin">Transaction Origin</FormLabel>
+      <FormControl isInvalid={Boolean(errors.toAddress)}>
+        <FormLabel htmlFor="toAddress">To Address</FormLabel>
         <Input
-          id="origin"
-          placeholder="metamask.io"
+          id="toAddress"
+          placeholder="0x9f2817015caF6607C1198fB943A8241652EE8906"
           fontFamily="code"
-          {...register('transactionOrigin')}
+          {...register('toAddress')}
         />
-        <FormErrorMessage>{errors.transactionOrigin?.message}</FormErrorMessage>
+        <FormErrorMessage>{errors.toAddress?.message}</FormErrorMessage>
       </FormControl>
 
-      <FormControl
-        isInvalid={Boolean(errors.transaction)}
-        display="flex"
-        flexDirection="column"
-        flex="1"
-      >
-        <FormLabel htmlFor="transaction">Transaction</FormLabel>
-        <Controller
-          control={control}
-          name="transaction"
-          render={({ field: { onChange, value } }) => (
-            <Editor onChange={onChange} value={value} />
-          )}
+      <FormControl isInvalid={Boolean(errors.value)}>
+        <FormLabel htmlFor="value">Value</FormLabel>
+        <InputGroup>
+          <Input
+            id="value"
+            placeholder="0.01"
+            fontFamily="code"
+            {...register('value')}
+          />
+          <InputRightAddon children="ETH" />
+        </InputGroup>
+
+        <FormErrorMessage>{errors.value?.message}</FormErrorMessage>
+      </FormControl>
+
+      <Flex gap="2">
+        <FormControl isInvalid={Boolean(errors.gasLimit)}>
+          <FormLabel htmlFor="gasLimit">Gas Limit</FormLabel>
+          <Input
+            id="gasLimit"
+            placeholder="21000"
+            fontFamily="code"
+            {...register('gasLimit')}
+          />
+          <FormErrorMessage>{errors.gasLimit?.message}</FormErrorMessage>
+        </FormControl>
+
+        <FormControl isInvalid={Boolean(errors.nonce)}>
+          <FormLabel htmlFor="nonce">Nonce</FormLabel>
+          <Input
+            id="nonce"
+            placeholder="5"
+            fontFamily="code"
+            {...register('nonce')}
+          />
+          <FormErrorMessage>{errors.nonce?.message}</FormErrorMessage>
+        </FormControl>
+      </Flex>
+
+      <Flex gap="2">
+        <FormControl isInvalid={Boolean(errors.maxFeePerGas)}>
+          <FormLabel htmlFor="maxFeePerGas">Max Fee Per Gas</FormLabel>
+          <InputGroup>
+            <Input
+              id="maxFeePerGas"
+              placeholder="10"
+              fontFamily="code"
+              {...register('maxFeePerGas')}
+            />
+            <InputRightAddon children="GWEI" />
+          </InputGroup>
+
+          <FormErrorMessage>{errors.maxFeePerGas?.message}</FormErrorMessage>
+        </FormControl>
+
+        <FormControl isInvalid={Boolean(errors.maxPriorityFeePerGas)}>
+          <FormLabel htmlFor="maxPriorityFeePerGas">
+            Max Priority Fee Per Gas
+          </FormLabel>
+          <InputGroup>
+            <Input
+              id="maxPriorityFeePerGas"
+              placeholder="1"
+              fontFamily="code"
+              {...register('maxPriorityFeePerGas')}
+            />
+            <InputRightAddon children="GWEI" />
+          </InputGroup>
+
+          <FormErrorMessage>
+            {errors.maxPriorityFeePerGas?.message}
+          </FormErrorMessage>
+        </FormControl>
+      </Flex>
+
+      <FormControl isInvalid={Boolean(errors.data)}>
+        <FormLabel htmlFor="data">Data</FormLabel>
+        <Textarea
+          id="data"
+          placeholder="0x"
+          fontFamily="code"
+          {...register('data')}
         />
+        <FormErrorMessage>{errors.data?.message}</FormErrorMessage>
       </FormControl>
     </Flex>
   );
