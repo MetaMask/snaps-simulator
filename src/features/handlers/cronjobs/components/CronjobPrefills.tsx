@@ -1,5 +1,5 @@
 import { Box, Flex, Text } from '@chakra-ui/react';
-import { FunctionComponent, useEffect, useState } from 'react';
+import { FunctionComponent } from 'react';
 
 import { useSelector } from '../../../../hooks';
 import { getSnapManifest } from '../../../simulation';
@@ -15,20 +15,7 @@ export const CronjobPrefills: FunctionComponent<CronjobPrefillsProps> = ({
   const manifest = useSelector(getSnapManifest);
   const jobs = manifest?.initialPermissions?.['endowment:cronjob']?.jobs;
 
-  const [prefills, setPrefills] = useState<CronjobData[]>([]);
-
-  useEffect(() => {
-    if (jobs) {
-      setPrefills(
-        jobs.map(({ request }) => ({
-          method: request.method,
-          params: request.params,
-        })),
-      );
-    }
-  }, [jobs]);
-
-  if (!jobs || prefills.length === 0) {
+  if (!jobs?.length) {
     return null;
   }
 
@@ -38,7 +25,7 @@ export const CronjobPrefills: FunctionComponent<CronjobPrefillsProps> = ({
         Manifest cronjobs
       </Text>
       <Flex gap="2">
-        {prefills.map(({ method, params }, index) => (
+        {jobs.map(({ request: { method, params } }, index) => (
           <CronjobPrefill
             key={`cronjob-prefill-${index}`}
             method={method}
