@@ -128,11 +128,6 @@ export const getIcon = createSelector(
   (state) => state.icon,
 );
 
-export const getChecksum = createSelector(
-  (state: { simulation: typeof INITIAL_STATE }) => state.simulation,
-  (state) => state.manifest?.source.shasum,
-);
-
 export const getUserInterface = createSelector(
   (state: { simulation: typeof INITIAL_STATE }) => state.simulation,
   (state) => state.ui,

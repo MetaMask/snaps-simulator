@@ -39,7 +39,7 @@ export const validators: Validator[] = [
   },
   {
     name: 'Icon',
-    manifestName: 'icon',
+    manifestName: 'iconPath',
     validator: async (manifest: SnapManifest, { icon }) => {
       const [error] =
         SnapManifestStruct.schema.source.schema.location.schema.npm.schema.iconPath.validate(

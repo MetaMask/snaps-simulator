@@ -45,7 +45,7 @@ export const Navigation: FunctionComponent = () => {
         {/* For now we declare this separately, because it has special state. */}
         <Item key="manifest" path="/manifest">
           <Box position="relative">
-            <Icon icon="snap" />
+            <Icon icon="manifest" />
             <ManifestStatusIndicator />
           </Box>
           <Box>

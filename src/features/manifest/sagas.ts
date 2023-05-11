@@ -3,11 +3,12 @@ import { PayloadAction } from '@reduxjs/toolkit';
 import { SagaIterator } from 'redux-saga';
 import { all, call, put, select, takeLatest } from 'redux-saga/effects';
 
-import { getSourceCode, setManifest } from '../simulation';
+import { getIcon, getSourceCode } from '../simulation';
 import {
   ManifestStatus,
   setResults,
   setValid,
+  validateManifest,
   ValidationResult,
 } from './slice';
 import { validators } from './validators';
@@ -23,7 +24,7 @@ export function* validationSaga({
   payload: manifest,
 }: PayloadAction<SnapManifest>): SagaIterator {
   const sourceCode = yield select(getSourceCode);
-  const icon = ''; // yield select(getIcon);
+  const icon = yield select(getIcon);
 
   const results: ValidationResult[] = [];
 
@@ -57,5 +58,5 @@ export function* validationSaga({
  * @yields The validation saga.
  */
 export function* manifestSaga() {
-  yield all([takeLatest(setManifest, validationSaga)]);
+  yield all([takeLatest(validateManifest, validationSaga)]);
 }

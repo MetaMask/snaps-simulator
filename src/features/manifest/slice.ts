@@ -1,4 +1,10 @@
-import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { SnapManifest } from '@metamask/snaps-utils';
+import {
+  createAction,
+  createSelector,
+  createSlice,
+  PayloadAction,
+} from '@reduxjs/toolkit';
 
 import { Validator } from './validators';
 
@@ -35,6 +41,10 @@ const slice = createSlice({
     },
   },
 });
+
+export const validateManifest = createAction<SnapManifest>(
+  `${slice.name}/validateManifest`,
+);
 
 export const { setValid, setResults } = slice.actions;
 export const manifest = slice.reducer;
