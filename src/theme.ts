@@ -228,7 +228,8 @@ export const theme = extendTheme({
 
     Skeleton: defineStyleConfig({
       baseStyle: defineStyle({
-        [cssVar('skeleton-start-color').variable]: 'colors.background.alternative',
+        [cssVar('skeleton-start-color').variable]:
+          'colors.background.alternative',
         [cssVar('skeleton-end-color').variable]: 'colors.border.default',
         borderRadius: 'lg',
       }),
