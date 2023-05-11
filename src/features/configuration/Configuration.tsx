@@ -95,7 +95,7 @@ export const Configuration = () => {
           <Button
             fontFamily="default"
             fontWeight="semibold"
-            fontSize={'sm'}
+            fontSize="sm"
             width="100%"
             onClick={handleClose}
           >
