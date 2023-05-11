@@ -8,6 +8,7 @@ export * from './Delineator';
 export * from './Editor';
 export * from './Icon';
 export * from './Logo';
+export * from './Prefill';
 export * from './Root';
 export * from './Link';
 export * from './Window';

@@ -14,6 +14,8 @@ import { useDispatch, useSelector } from '../../../../hooks';
 import { sendRequest } from '../../../simulation';
 import { SAMPLE_JSON_RPC_REQUEST } from '../../json-rpc/schema';
 import { getCronjobRequest } from '../slice';
+import { CronjobData } from './CronjobPrefill';
+import { CronjobPrefills } from './CronjobPrefills';
 
 type CronjobFormData = {
   origin: string;
@@ -26,6 +28,7 @@ export const Request: FunctionComponent = () => {
     handleSubmit,
     register,
     control,
+    setValue,
     formState: { errors },
   } = useForm<CronjobFormData>({
     defaultValues: {
@@ -48,6 +51,21 @@ export const Request: FunctionComponent = () => {
     );
   };
 
+  const handlePrefill = (data: CronjobData) => {
+    setValue(
+      'request',
+      JSON.stringify(
+        {
+          jsonrpc: '2.0',
+          id: 1,
+          ...data,
+        },
+        null,
+        2,
+      ),
+    );
+  };
+
   return (
     <Flex
       as="form"
@@ -57,6 +75,8 @@ export const Request: FunctionComponent = () => {
       onSubmit={handleSubmit(onSubmit)}
       id="request-form"
     >
+      <CronjobPrefills onClick={handlePrefill} />
+
       <FormControl isInvalid={Boolean(errors.origin)}>
         <FormLabel htmlFor="origin">Origin</FormLabel>
         <Input
