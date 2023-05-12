@@ -1,6 +1,10 @@
-import { SnapManifest } from '@metamask/snaps-utils';
 import { expectSaga } from 'redux-saga-test-plan';
 
+import { MOCK_MANIFEST_FILE } from '../simulation/test/mockManifest';
+import {
+  MOCK_SNAP_ICON_FILE,
+  MOCK_SNAP_SOURCE_FILE,
+} from '../simulation/test/mockSnap';
 import { validationSaga } from './sagas';
 import {
   ManifestStatus,
@@ -11,19 +15,19 @@ import {
 
 describe('validationSaga', () => {
   it('validates the manifest', async () => {
-    await expectSaga(validationSaga, validateManifest({} as SnapManifest))
+    await expectSaga(validationSaga, validateManifest(MOCK_MANIFEST_FILE))
       .withState({
         simulation: {
-          sourceCode: 'source code',
-          icon: 'icon',
+          sourceCode: MOCK_SNAP_SOURCE_FILE,
+          icon: MOCK_SNAP_ICON_FILE,
         },
       })
       .call.like({
         args: [
-          {},
+          MOCK_MANIFEST_FILE,
           {
-            sourceCode: 'source code',
-            icon: 'icon',
+            sourceCode: MOCK_SNAP_SOURCE_FILE,
+            icon: MOCK_SNAP_ICON_FILE,
           },
         ],
       })

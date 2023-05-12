@@ -2,8 +2,16 @@ import fetchMock from 'jest-fetch-mock';
 import { expectSaga } from 'redux-saga-test-plan';
 
 import { setIcon, setManifest, setSourceCode } from '../simulation';
-import { MOCK_MANIFEST } from '../simulation/test/mockManifest';
-import { MOCK_SNAP_SOURCE } from '../simulation/test/mockSnap';
+import {
+  MOCK_MANIFEST,
+  MOCK_MANIFEST_FILE,
+} from '../simulation/test/mockManifest';
+import {
+  MOCK_SNAP_ICON,
+  MOCK_SNAP_ICON_FILE,
+  MOCK_SNAP_SOURCE,
+  MOCK_SNAP_SOURCE_FILE,
+} from '../simulation/test/mockSnap';
 import { fetchingSaga, pollingSaga } from './sagas';
 
 fetchMock.enableMocks();
@@ -24,12 +32,11 @@ describe('fetchingSaga', () => {
   });
 
   it('fetches the snap and updates manifest and source code', async () => {
-    // eslint-disable-next-line jest/prefer-spy-on
-    globalThis.URL.createObjectURL = jest
-      .fn()
-      .mockImplementation(() => 'blob:foo');
-
-    fetchMock.mockResponses(JSON.stringify(MOCK_MANIFEST), MOCK_SNAP_SOURCE);
+    fetchMock.mockResponses(
+      JSON.stringify(MOCK_MANIFEST),
+      MOCK_SNAP_SOURCE,
+      MOCK_SNAP_ICON,
+    );
     await expectSaga(fetchingSaga)
       .withState({
         configuration: {
@@ -39,9 +46,9 @@ describe('fetchingSaga', () => {
           manifest: null,
         },
       })
-      .put(setManifest(MOCK_MANIFEST))
-      .put(setSourceCode(MOCK_SNAP_SOURCE))
-      .put(setIcon('blob:foo'))
+      .put(setManifest(MOCK_MANIFEST_FILE))
+      .put(setSourceCode(MOCK_SNAP_SOURCE_FILE))
+      .put(setIcon(MOCK_SNAP_ICON_FILE))
       .silentRun();
   });
 
@@ -53,11 +60,12 @@ describe('fetchingSaga', () => {
           snapUrl: 'http://localhost:8080',
         },
         simulation: {
-          manifest: MOCK_MANIFEST,
+          manifest: MOCK_MANIFEST_FILE,
         },
       })
-      .not.put(setManifest(MOCK_MANIFEST))
-      .not.put(setSourceCode(MOCK_SNAP_SOURCE))
+      .not.put.actionType(setManifest.type)
+      .not.put.actionType(setSourceCode.type)
+      .not.put.actionType(setIcon.type)
       .silentRun();
   });
 });

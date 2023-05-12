@@ -1,4 +1,5 @@
 import { IframeExecutionService } from '@metamask/snaps-controllers';
+import { VirtualFile } from '@metamask/snaps-utils';
 
 import {
   SnapStatus,
@@ -10,7 +11,7 @@ import {
   INITIAL_STATE,
 } from './slice';
 import { MockExecutionService } from './test/mockExecutionService';
-import { MOCK_MANIFEST } from './test/mockManifest';
+import { MOCK_MANIFEST, MOCK_MANIFEST_FILE } from './test/mockManifest';
 
 describe('simulation slice', () => {
   describe('setStatus', () => {
@@ -36,17 +37,20 @@ describe('simulation slice', () => {
 
   describe('setSourceCode', () => {
     it('sets the source code', () => {
-      const result = reducer(INITIAL_STATE, setSourceCode('foo'));
+      const result = reducer(
+        INITIAL_STATE,
+        setSourceCode(new VirtualFile('foo')),
+      );
 
-      expect(result.sourceCode).toBe('foo');
+      expect(result.sourceCode?.value).toBe('foo');
     });
   });
 
   describe('setManifest', () => {
     it('sets the manifest', () => {
-      const result = reducer(INITIAL_STATE, setManifest(MOCK_MANIFEST));
+      const result = reducer(INITIAL_STATE, setManifest(MOCK_MANIFEST_FILE));
 
-      expect(result.manifest).toBe(MOCK_MANIFEST);
+      expect(result.manifest?.result).toStrictEqual(MOCK_MANIFEST);
     });
   });
 });

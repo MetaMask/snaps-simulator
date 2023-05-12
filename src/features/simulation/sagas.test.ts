@@ -18,7 +18,8 @@ import {
 } from './slice';
 import { processSnapPermissions } from './snap-permissions';
 import { MockExecutionService } from './test/mockExecutionService';
-import { MOCK_MANIFEST } from './test/mockManifest';
+import { MOCK_MANIFEST, MOCK_MANIFEST_FILE } from './test/mockManifest';
+import { MOCK_SNAP_SOURCE, MOCK_SNAP_SOURCE_FILE } from './test/mockSnap';
 
 describe('initSaga', () => {
   it('initializes the execution environment', async () => {
@@ -33,20 +34,19 @@ describe('initSaga', () => {
 
 describe('rebootSaga', () => {
   it('reboots the execution environment when source code changes', async () => {
-    const sourceCode = 'foo';
     const executionService = new MockExecutionService();
     const permissionController = {
       hasPermission: jest.fn().mockImplementation(() => true),
       getEndowments: jest.fn().mockResolvedValue([]),
     } as unknown as GenericPermissionController;
-    await expectSaga(rebootSaga, setSourceCode(sourceCode))
+    await expectSaga(rebootSaga, setSourceCode(MOCK_SNAP_SOURCE_FILE))
       .withState({
         simulation: { executionService, permissionController },
       })
       .call([executionService, 'terminateAllSnaps'])
       .call([executionService, 'executeSnap'], {
         snapId: DEFAULT_SNAP_ID,
-        sourceCode,
+        sourceCode: MOCK_SNAP_SOURCE,
         endowments: DEFAULT_ENDOWMENTS,
       })
       .silentRun();
@@ -93,7 +93,7 @@ describe('permissionsSaga', () => {
     const approvedPermissions = processSnapPermissions(
       MOCK_MANIFEST.initialPermissions,
     );
-    await expectSaga(permissionsSaga, setManifest(MOCK_MANIFEST))
+    await expectSaga(permissionsSaga, setManifest(MOCK_MANIFEST_FILE))
       .withState({
         simulation: { permissionController },
       })

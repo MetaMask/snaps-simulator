@@ -19,7 +19,7 @@ import {
   setSnapState,
   showUserInterface,
 } from './slice';
-import { MOCK_MANIFEST } from './test/mockManifest';
+import { MOCK_MANIFEST_FILE } from './test/mockManifest';
 
 Object.defineProperty(globalThis, 'Notification', {
   value: class Notification {
@@ -34,7 +34,7 @@ describe('showDialog', () => {
     await expectSaga(showDialog, DEFAULT_SNAP_ID, DialogType.Alert, text('foo'))
       .withState({
         simulation: {
-          manifest: MOCK_MANIFEST,
+          manifest: MOCK_MANIFEST_FILE,
         },
       })
       .select(getSnapName)
@@ -61,7 +61,7 @@ describe('showNativeNotification', () => {
     })
       .withState({
         simulation: {
-          manifest: MOCK_MANIFEST,
+          manifest: MOCK_MANIFEST_FILE,
         },
       })
       .call([Notification, 'requestPermission'])
@@ -78,7 +78,7 @@ describe('showNativeNotification', () => {
     })
       .withState({
         simulation: {
-          manifest: MOCK_MANIFEST,
+          manifest: MOCK_MANIFEST_FILE,
         },
       })
       .call([Notification, 'requestPermission'])
