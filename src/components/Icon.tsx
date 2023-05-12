@@ -1,5 +1,5 @@
 import { Image, PropsOf } from '@chakra-ui/react';
-import { FunctionComponent } from 'react';
+import { forwardRef, ForwardRefExoticComponent } from 'react';
 
 import alertIcon from '../assets/icons/alert.svg';
 import arrowDownIcon from '../assets/icons/arrow-down.svg';
@@ -142,18 +142,24 @@ export type IconProps = {
  * @param props.height - The height of the icon. Defaults to '32px'.
  * @returns The icon component.
  */
-export const Icon: FunctionComponent<IconProps> = ({
-  icon,
-  alt = DEFAULT_ICONS[icon].alt,
-  width = '32px',
-  height = width,
-  ...props
-}) => (
-  <Image
-    src={DEFAULT_ICONS[icon].src}
-    alt={alt}
-    width={width}
-    height={height}
-    {...props}
-  />
+export const Icon: ForwardRefExoticComponent<IconProps> = forwardRef(
+  (
+    {
+      icon,
+      alt = DEFAULT_ICONS[icon].alt,
+      width = '32px',
+      height = width,
+      ...props
+    },
+    ref,
+  ) => (
+    <Image
+      ref={ref}
+      src={DEFAULT_ICONS[icon].src}
+      alt={alt}
+      width={width}
+      height={height}
+      {...props}
+    />
+  ),
 );

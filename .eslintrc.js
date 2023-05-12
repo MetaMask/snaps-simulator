@@ -20,6 +20,9 @@ module.exports = {
             allow: ['Text'],
           },
         ],
+
+        'react/display-name': 'off',
+        'react/prop-types': 'off',
       },
       settings: {
         react: {

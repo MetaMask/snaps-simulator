@@ -18,7 +18,7 @@ const config: Configuration & Record<'devServer', DevServerConfiguration> = {
         use: 'swc-loader',
       },
       {
-        test: /\.mjs$/u,
+        test: /\.m?js$/u,
         include: /node_modules/u,
         type: 'javascript/auto',
         resolve: {
@@ -73,8 +73,8 @@ const config: Configuration & Record<'devServer', DevServerConfiguration> = {
       },
     }),
     new MonacoEditorWebpackPlugin({
-      languages: ['json'],
-      features: ['bracketMatching', 'clipboard', 'hover'],
+      languages: ['json', 'typescript'],
+      features: ['bracketMatching', 'clipboard', 'hover', 'unicodeHighlighter'],
     }),
     new FaviconsWebpackPlugin('./src/assets/favicon.svg'),
   ],
