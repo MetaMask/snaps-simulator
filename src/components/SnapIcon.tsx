@@ -20,10 +20,14 @@ export type SnapIconProps = {
 export const SnapIcon: FunctionComponent<SnapIconProps> = ({ snapName }) => {
   const snapIcon = useSelector(getIcon);
 
+  const blob =
+    snapIcon && new Blob([snapIcon.value], { type: 'image/svg+xml' });
+  const blobUrl = blob && URL.createObjectURL(blob);
+
   return (
     <Box position="relative">
       <Avatar
-        src={snapIcon as string}
+        src={blobUrl as string}
         name={snapName.slice(1, 2).toUpperCase()}
         fontSize="md"
         background="background.alternative"

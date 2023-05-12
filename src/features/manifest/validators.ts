@@ -1,12 +1,17 @@
-import { SnapManifest, SnapManifestStruct } from '@metamask/snaps-utils';
+import {
+  SnapManifest,
+  SnapManifestStruct,
+  VirtualFile,
+  getSnapChecksum,
+} from '@metamask/snaps-utils';
 
 type ValidatorContext = {
-  sourceCode: string;
-  icon: string;
+  sourceCode: VirtualFile<string>;
+  icon: VirtualFile<string>;
 };
 
 type ValidatorFunction = (
-  value: SnapManifest,
+  value: VirtualFile<SnapManifest>,
   context: ValidatorContext,
 ) => Promise<boolean | string>;
 
@@ -20,9 +25,9 @@ export const validators: Validator[] = [
   {
     name: 'Title',
     manifestName: 'proposedName',
-    validator: async (manifest: SnapManifest) => {
+    validator: async (manifest: VirtualFile<SnapManifest>) => {
       const [error] = SnapManifestStruct.schema.proposedName.validate(
-        manifest?.proposedName,
+        manifest?.result?.proposedName,
       );
       return error?.message ?? true;
     },
@@ -30,9 +35,9 @@ export const validators: Validator[] = [
   {
     name: 'Description',
     manifestName: 'description',
-    validator: async (manifest: SnapManifest) => {
+    validator: async (manifest: VirtualFile<SnapManifest>) => {
       const [error] = SnapManifestStruct.schema.description.validate(
-        manifest?.description,
+        manifest?.result?.description,
       );
       return error?.message ?? true;
     },
@@ -40,10 +45,10 @@ export const validators: Validator[] = [
   {
     name: 'Icon',
     manifestName: 'iconPath',
-    validator: async (manifest: SnapManifest, { icon }) => {
+    validator: async (manifest: VirtualFile<SnapManifest>, { icon }) => {
       const [error] =
         SnapManifestStruct.schema.source.schema.location.schema.npm.schema.iconPath.validate(
-          manifest?.source?.location?.npm?.iconPath,
+          manifest?.result?.source?.location?.npm?.iconPath,
         );
 
       if (error) {
@@ -60,9 +65,9 @@ export const validators: Validator[] = [
   {
     name: 'Permissions',
     manifestName: 'initialPermissions',
-    validator: async (manifest: SnapManifest) => {
+    validator: async (manifest: VirtualFile<SnapManifest>) => {
       const [error] = SnapManifestStruct.schema.initialPermissions.validate(
-        manifest?.initialPermissions,
+        manifest?.result?.initialPermissions,
       );
       return error?.message ?? true;
     },
@@ -70,18 +75,33 @@ export const validators: Validator[] = [
   {
     name: 'Checksum',
     manifestName: 'source.shasum',
-    validator: async () => {
-      // TODO: Fetch all required files for calculating checksum.
+    validator: async (
+      manifest: VirtualFile<SnapManifest>,
+      { sourceCode, icon },
+    ) => {
+      if (manifest) {
+        const manifestShasum = manifest.result?.source.shasum;
+        const calculatedShasum = getSnapChecksum({
+          manifest,
+          sourceCode,
+          svgIcon: icon,
+        });
+
+        if (manifestShasum !== calculatedShasum) {
+          return `Checksum mismatch - expected "${calculatedShasum}" got "${manifestShasum}"`;
+        }
+      }
+
       return true;
     },
   },
   {
     name: 'Bundle',
     manifestName: 'filePath',
-    validator: async (manifest: SnapManifest, { sourceCode }) => {
+    validator: async (manifest: VirtualFile<SnapManifest>, { sourceCode }) => {
       const [error] =
         SnapManifestStruct.schema.source.schema.location.schema.npm.schema.filePath.validate(
-          manifest?.source?.location?.npm?.filePath,
+          manifest?.result?.source?.location?.npm?.filePath,
         );
 
       if (error) {

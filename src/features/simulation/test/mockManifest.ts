@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { SemVerVersion } from '@metamask/utils';
+import { SnapManifest, VirtualFile } from '@metamask/snaps-utils';
+import { SemVerVersion, stringToBytes } from '@metamask/utils';
 
 export const MOCK_MANIFEST = {
   version: '1.0.0' as SemVerVersion,
@@ -30,4 +31,13 @@ export const MOCK_MANIFEST = {
     snap_dialog: {},
   },
   manifestVersion: '0.1' as const,
+};
+
+export const MOCK_MANIFEST_FILE = new VirtualFile<SnapManifest>(
+  stringToBytes(JSON.stringify(MOCK_MANIFEST)),
+);
+MOCK_MANIFEST_FILE.result = MOCK_MANIFEST;
+MOCK_MANIFEST_FILE.path = 'snap.manifest.json';
+MOCK_MANIFEST_FILE.data = {
+  canonicalPath: `local:http://localhost:8080/${MOCK_MANIFEST_FILE.path}`,
 };
