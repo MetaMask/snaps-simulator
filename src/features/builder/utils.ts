@@ -1,9 +1,26 @@
 import { Component, NodeType, Panel } from '@metamask/snaps-ui';
 import { deepClone } from '@metamask/snaps-utils';
-import { assert } from '@metamask/utils';
+import { assert, hasProperty } from '@metamask/utils';
 import { NodeModel } from '@minoru/react-dnd-treeview';
 import typescript from 'prettier/parser-typescript';
 import prettier from 'prettier/standalone';
+
+/**
+ * Get the text of a node model.
+ *
+ * @param nodeModel - The node model.
+ * @returns The text of the node model, or `null` if the node model does not
+ * have text.
+ */
+export function getNodeText(nodeModel: NodeModel<Component>) {
+  assert(nodeModel.data, 'Node model must have data.');
+
+  if (hasProperty(nodeModel.data, 'value')) {
+    return nodeModel.data.value as string;
+  }
+
+  return null;
+}
 
 /**
  * Convert an array of node models to a component. This is useful for converting
@@ -16,7 +33,6 @@ export function nodeModelsToComponent(
   nodeModels: NodeModel<Component>[],
 ): Panel {
   // We want to clone the node models so that we don't mutate the original data.
-  // data.
   const clonedModels = deepClone(nodeModels);
 
   for (const nodeModel of clonedModels) {

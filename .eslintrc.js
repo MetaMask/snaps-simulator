@@ -3,6 +3,10 @@ module.exports = {
 
   extends: ['@metamask/eslint-config'],
 
+  settings: {
+    'import/extensions': ['.ts', '.tsx'],
+  },
+
   overrides: [
     {
       files: ['*.ts', '*.tsx'],

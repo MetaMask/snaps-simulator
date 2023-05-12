@@ -1,4 +1,4 @@
-import { Divider } from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
 import { Component } from '@metamask/snaps-ui';
 import {
   NodeModel,
@@ -9,6 +9,7 @@ import {
 import { FunctionComponent, useEffect, useRef } from 'react';
 
 import { Node } from './Node';
+import { Start } from './Start';
 
 export type NodeTreeProps = {
   items: NodeModel<Component>[];
@@ -54,12 +55,29 @@ export const NodeTree: FunctionComponent<NodeTreeProps> = ({
     setItems(newItems);
   };
 
-  const handleRender: NodeRender<Component> = (node, { depth }) => {
-    return <Node node={node} depth={depth} onChange={handleChange} />;
+  const handleClose = (node: NodeModel<Component>) => {
+    const newItems = items.filter((item) => item.id !== node.id);
+    setItems(newItems);
+  };
+
+  const handleRender: NodeRender<Component> = (node, { depth, isDragging }) => {
+    if (items.length <= 1) {
+      return <Start />;
+    }
+
+    return (
+      <Node
+        node={node}
+        depth={depth}
+        onChange={handleChange}
+        onClose={handleClose}
+        isDragging={isDragging}
+      />
+    );
   };
 
   const handleRenderPlaceholder = () => {
-    return <Divider margin="0" padding="0" />;
+    return <Box width="100%" height="20px" />;
   };
 
   const handleCanDrag = (node?: NodeModel<Component>) => {
@@ -90,19 +108,21 @@ export const NodeTree: FunctionComponent<NodeTreeProps> = ({
   }, [items, ref]);
 
   return (
-    <Tree
-      ref={ref}
-      tree={items}
-      rootId={0}
-      render={handleRender}
-      insertDroppableFirst={false}
-      canDrag={handleCanDrag}
-      canDrop={handleCanDrop}
-      onDrop={handleDrop}
-      initialOpen={true}
-      sort={false}
-      extraAcceptTypes={['template']}
-      placeholderRender={handleRenderPlaceholder}
-    />
+    <Box sx={{ ul: { listStyleType: 'none' }, li: { marginTop: '2' } }}>
+      <Tree
+        ref={ref}
+        tree={items}
+        rootId={0}
+        render={handleRender}
+        insertDroppableFirst={false}
+        canDrag={handleCanDrag}
+        canDrop={handleCanDrop}
+        onDrop={handleDrop}
+        initialOpen={true}
+        sort={false}
+        extraAcceptTypes={['template']}
+        placeholderRender={handleRenderPlaceholder}
+      />
+    </Box>
   );
 };

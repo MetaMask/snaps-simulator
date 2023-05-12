@@ -1,26 +1,20 @@
-import {
-  Box,
-  ButtonGroup,
-  Editable,
-  EditableInput,
-  EditablePreview,
-  Flex,
-  IconButton,
-  Input,
-  useEditableControls,
-} from '@chakra-ui/react';
-import { Heading, Text } from '@metamask/snaps-ui';
+import { Box, Input } from '@chakra-ui/react';
+import { Component, Heading, Text } from '@metamask/snaps-ui';
+import { assert } from '@metamask/utils';
 import { NodeModel } from '@minoru/react-dnd-treeview';
-import { FunctionComponent, useState } from 'react';
+import { ChangeEvent, FunctionComponent, useState } from 'react';
 
-import { Icon } from '../../../components';
+import { getNodeText } from '../utils';
+import { BaseNode } from './BaseNode';
 
 export type EditableComponent = Text | Heading;
 
 type EditableNodeProps = {
   node: NodeModel<EditableComponent>;
   depth: number;
+  isDragging: boolean;
   onChange?: (node: NodeModel<EditableComponent>, value: string) => void;
+  onClose?: ((node: NodeModel<Component>) => void) | undefined;
 };
 
 /**
@@ -29,56 +23,38 @@ type EditableNodeProps = {
  * @param props - The props of the component.
  * @param props.node - The editable node to render.
  * @param props.depth - The depth of the node in the tree.
+ * @param props.isDragging - Whether the node is being dragged.
  * @param props.onChange - A function to call when the node changes.
+ * @param props.onClose - A function to call when the node is closed.
  * @returns An editable node component.
  */
 export const EditableNode: FunctionComponent<EditableNodeProps> = ({
   node,
   depth,
+  isDragging,
   onChange,
+  onClose,
 }) => {
-  const EditableControls = () => {
-    const {
-      isEditing,
-      getSubmitButtonProps,
-      getCancelButtonProps,
-      getEditButtonProps,
-    } = useEditableControls();
+  const text = getNodeText(node);
+  assert(text, 'Node must have text.');
 
-    if (isEditing) {
-      return (
-        <ButtonGroup justifyContent="center" size="sm">
-          <IconButton
-            icon={<Icon icon="play" />}
-            {...(getSubmitButtonProps() as any)}
-          />
-          <IconButton
-            icon={<Icon icon="playMuted" />}
-            {...(getCancelButtonProps() as any)}
-          />
-        </ButtonGroup>
-      );
-    }
+  const [value, setValue] = useState(text);
 
-    return <Icon icon="play" {...getEditButtonProps()} />;
-  };
-
-  const [value, setValue] = useState(node.text);
-
-  const handleChange = (newValue: string) => {
-    setValue(newValue);
-    onChange?.(node, newValue);
+  const handleChange = (newValue: ChangeEvent<HTMLInputElement>) => {
+    setValue(newValue.target.value);
+    onChange?.(node, newValue.target.value);
   };
 
   return (
-    <Box marginLeft={`${depth * 16}px`} boxShadow="md" padding="2">
-      <Editable value={value} onChange={handleChange}>
-        <Flex alignItems="center" gap="1.5">
-          <EditablePreview />
-          <Input as={EditableInput} />
-          <EditableControls />
-        </Flex>
-      </Editable>
+    <Box marginLeft={`${depth * 16}px`}>
+      <BaseNode node={node} isDragging={isDragging} onClose={onClose}>
+        <Input
+          value={value}
+          onChange={handleChange}
+          fontSize="sm"
+          background="white"
+        />
+      </BaseNode>
     </Box>
   );
 };

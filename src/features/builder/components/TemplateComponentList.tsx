@@ -1,4 +1,4 @@
-import { Flex, List, ListItem } from '@chakra-ui/react';
+import { Box, Flex, List, ListItem, Text } from '@chakra-ui/react';
 import { copyable, divider, heading, panel, text } from '@metamask/snaps-ui';
 import { FunctionComponent } from 'react';
 
@@ -42,22 +42,33 @@ export const TemplateComponentList: FunctionComponent<ComponentsListProps> = ({
   nextId,
   incrementId,
 }) => (
-  <Flex as={List} gap="2">
-    {TEMPLATE_COMPONENTS.map((component) => (
-      <ListItem key={`component-${component.text}`}>
-        <Prefill cursor="move">
-          <TemplateComponent
-            incrementId={incrementId}
-            node={{
-              id: nextId,
-              parent: 0,
-              droppable: component.droppable,
-              text: component.text,
-              data: component.data,
-            }}
-          />
-        </Prefill>
-      </ListItem>
-    ))}
-  </Flex>
+  <Box>
+    <Text
+      fontSize="xs"
+      fontWeight="600"
+      lineHeight="133%"
+      color="text.alternative"
+      marginBottom="1"
+    >
+      Components
+    </Text>
+    <Flex as={List} gap="2">
+      {TEMPLATE_COMPONENTS.map((component) => (
+        <ListItem key={`component-${component.text}`}>
+          <Prefill cursor="move">
+            <TemplateComponent
+              incrementId={incrementId}
+              node={{
+                id: nextId,
+                parent: 0,
+                droppable: component.droppable,
+                text: component.text,
+                data: component.data,
+              }}
+            />
+          </Prefill>
+        </ListItem>
+      ))}
+    </Flex>
+  </Box>
 );

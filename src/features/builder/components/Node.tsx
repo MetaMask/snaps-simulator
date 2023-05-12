@@ -1,9 +1,10 @@
-import { Box, Text } from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
 import { Component, NodeType } from '@metamask/snaps-ui';
 import { assert } from '@metamask/utils';
 import { NodeModel } from '@minoru/react-dnd-treeview';
 import { FunctionComponent } from 'react';
 
+import { BaseNode } from './BaseNode';
 import { EditableComponent, EditableNode } from './EditableNode';
 
 export const EDITABLE_NODES = [
@@ -15,7 +16,9 @@ export const EDITABLE_NODES = [
 type NodeProps = {
   node: NodeModel<Component>;
   depth: number;
+  isDragging: boolean;
   onChange: (node: NodeModel<Component>, value: string) => void;
+  onClose?: ((node: NodeModel<Component>) => void) | undefined;
 };
 
 /**
@@ -25,13 +28,17 @@ type NodeProps = {
  * @param props - The props of the component.
  * @param props.node - The node to render.
  * @param props.depth - The depth of the node in the tree.
+ * @param props.isDragging - Whether the node is being dragged.
  * @param props.onChange - A function to call when the node changes.
+ * @param props.onClose - A function to call when the node is closed.
  * @returns A node component.
  */
 export const Node: FunctionComponent<NodeProps> = ({
   node,
   depth,
+  isDragging,
   onChange,
+  onClose,
 }) => {
   assert(node.data?.type, 'Node must have a type.');
   if (EDITABLE_NODES.includes(node.data.type)) {
@@ -39,14 +46,16 @@ export const Node: FunctionComponent<NodeProps> = ({
       <EditableNode
         node={node as NodeModel<EditableComponent>}
         depth={depth}
+        isDragging={isDragging}
         onChange={onChange}
+        onClose={onClose}
       />
     );
   }
 
   return (
-    <Box marginLeft={`${depth * 16}px`} boxShadow="md" padding="2">
-      <Text>{node.text}</Text>
+    <Box marginLeft={`${depth * 16}px`}>
+      <BaseNode node={node} isDragging={isDragging} onClose={onClose} />
     </Box>
   );
 };
