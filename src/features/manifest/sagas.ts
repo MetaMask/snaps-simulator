@@ -1,4 +1,4 @@
-import { SnapManifest } from '@metamask/snaps-utils';
+import { SnapManifest, VirtualFile } from '@metamask/snaps-utils';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { SagaIterator } from 'redux-saga';
 import { all, call, put, select, takeLatest } from 'redux-saga/effects';
@@ -22,9 +22,9 @@ import { validators } from './validators';
  */
 export function* validationSaga({
   payload: manifest,
-}: PayloadAction<SnapManifest>): SagaIterator {
-  const sourceCode = yield select(getSourceCode);
-  const icon = yield select(getIcon);
+}: PayloadAction<VirtualFile<SnapManifest>>): SagaIterator {
+  const sourceCode: VirtualFile<string> = yield select(getSourceCode);
+  const icon: VirtualFile<string> = yield select(getIcon);
 
   const results: ValidationResult[] = [];
 

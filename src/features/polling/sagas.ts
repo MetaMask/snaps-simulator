@@ -25,37 +25,44 @@ export function* fetchingSaga() {
   const url: string = yield select(getSnapUrl);
 
   const location = new LocalLocation(new URL(`local:${url}`));
-  const manifestJson: VirtualFile<string> = yield call(
+  const manifestFile: VirtualFile<SnapManifest> = yield call(
     [location, 'fetch'],
     'snap.manifest.json',
   );
+  const parsedManifest = JSON.parse(
+    manifestFile.toString('utf8'),
+  ) as SnapManifest;
+  manifestFile.result = parsedManifest;
 
-  const manifest = JSON.parse(manifestJson.toString('utf8')) as SnapManifest;
   const currentManifest: SnapManifest = yield select(getSnapManifest);
-  if (equal(manifest, currentManifest)) {
+  if (equal(parsedManifest, currentManifest)) {
     return;
   }
 
   yield put(setValid(ManifestStatus.Unknown));
   yield put(setStatus(SnapStatus.Loading));
-  yield put(setManifest(manifest));
+  yield put(setManifest(manifestFile));
   yield put(logDefault('Snap changed, rebooting...'));
 
   try {
-    const bundlePath = manifest.source.location.npm.filePath;
-    const bundle: VirtualFile = yield call([location, 'fetch'], bundlePath);
-    yield put(setSourceCode(bundle.toString()));
+    const bundlePath = parsedManifest.source.location.npm.filePath;
+    const bundle: VirtualFile<string> = yield call(
+      [location, 'fetch'],
+      bundlePath,
+    );
+    yield put(setSourceCode(bundle));
 
-    const { iconPath } = manifest.source.location.npm;
+    const { iconPath } = parsedManifest.source.location.npm;
     if (iconPath) {
-      const icon: VirtualFile = yield call([location, 'fetch'], iconPath);
+      const icon: VirtualFile<string> = yield call(
+        [location, 'fetch'],
+        iconPath,
+      );
 
-      const blob = new Blob([icon.value], { type: 'image/svg+xml' });
-      const blobUrl = URL.createObjectURL(blob);
-      yield put(setIcon(blobUrl));
+      yield put(setIcon(icon));
     }
   } finally {
-    yield put(validateManifest(manifest));
+    yield put(validateManifest(manifestFile));
   }
 }
 

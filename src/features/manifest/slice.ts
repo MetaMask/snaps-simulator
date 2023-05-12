@@ -1,4 +1,4 @@
-import { SnapManifest } from '@metamask/snaps-utils';
+import { SnapManifest, VirtualFile } from '@metamask/snaps-utils';
 import {
   createAction,
   createSelector,
@@ -42,7 +42,7 @@ const slice = createSlice({
   },
 });
 
-export const validateManifest = createAction<SnapManifest>(
+export const validateManifest = createAction<VirtualFile<SnapManifest>>(
   `${slice.name}/validateManifest`,
 );
 

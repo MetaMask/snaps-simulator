@@ -2,7 +2,11 @@ import { GenericPermissionController } from '@metamask/permission-controller';
 import { DialogType } from '@metamask/rpc-methods/dist/restricted/dialog';
 import { IframeExecutionService } from '@metamask/snaps-controllers';
 import { Component } from '@metamask/snaps-ui';
-import { SnapManifest, SnapRpcHookArgs } from '@metamask/snaps-utils';
+import {
+  SnapManifest,
+  SnapRpcHookArgs,
+  VirtualFile,
+} from '@metamask/snaps-utils';
 import {
   createAction,
   createSelector,
@@ -27,9 +31,9 @@ type SimulationState = {
   status: SnapStatus;
   executionService: IframeExecutionService | null;
   permissionController: GenericPermissionController | null;
-  manifest: SnapManifest | null;
-  sourceCode: string;
-  icon?: string;
+  manifest: VirtualFile<SnapManifest> | null;
+  sourceCode: VirtualFile<string> | null;
+  icon?: VirtualFile<string>;
   ui?: HandlerUserInterface | null;
   snapState: string | null;
 };
@@ -39,7 +43,7 @@ export const INITIAL_STATE: SimulationState = {
   executionService: null,
   permissionController: null,
   manifest: null,
-  sourceCode: '',
+  sourceCode: null,
   snapState: null,
 };
 
@@ -59,14 +63,14 @@ const slice = createSlice({
     ) {
       state.permissionController = action.payload as any;
     },
-    setManifest(state, action: PayloadAction<SnapManifest>) {
+    setManifest(state, action: PayloadAction<VirtualFile<SnapManifest>>) {
       // Type error occurs here due to some weirdness with SnapManifest and WritableDraft or PayloadAction
       state.manifest = action.payload as any;
     },
-    setSourceCode(state, action: PayloadAction<string>) {
+    setSourceCode(state, action: PayloadAction<VirtualFile<string>>) {
       state.sourceCode = action.payload;
     },
-    setIcon(state, action: PayloadAction<string>) {
+    setIcon(state, action: PayloadAction<VirtualFile<string>>) {
       state.icon = action.payload;
     },
     showUserInterface: (state, action: PayloadAction<HandlerUserInterface>) => {
@@ -120,7 +124,7 @@ export const getPermissionController = createSelector(
 
 export const getSnapName = createSelector(
   (state: { simulation: typeof INITIAL_STATE }) => state.simulation,
-  (state) => state.manifest?.proposedName,
+  (state) => state.manifest?.result.proposedName,
 );
 
 export const getIcon = createSelector(
@@ -140,7 +144,7 @@ export const getSnapStateSelector = createSelector(
 
 export const getSnapManifest = createSelector(
   (state: { simulation: typeof INITIAL_STATE }) => state.simulation,
-  (state) => state.manifest,
+  (state) => state.manifest?.result,
 );
 
 export const getSourceCode = createSelector(

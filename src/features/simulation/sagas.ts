@@ -12,7 +12,11 @@ import {
   setupMultiplex,
   endowmentCaveatSpecifications as snapsEndowmentCaveatSpecifications,
 } from '@metamask/snaps-controllers';
-import { SnapManifest, SnapRpcHookArgs } from '@metamask/snaps-utils';
+import {
+  SnapManifest,
+  SnapRpcHookArgs,
+  VirtualFile,
+} from '@metamask/snaps-utils';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { JsonRpcEngine } from 'json-rpc-engine';
 import { createEngineStream } from 'json-rpc-middleware-stream';
@@ -155,7 +159,7 @@ export function* initSaga() {
  * @param action.payload - The payload of the action, in this case the source code.
  * @yields Select for selecting the execution service and call to call the execution service.
  */
-export function* rebootSaga({ payload }: PayloadAction<string>) {
+export function* rebootSaga({ payload }: PayloadAction<VirtualFile<string>>) {
   const executionService: IframeExecutionService = yield select(
     getExecutionService,
   );
@@ -174,7 +178,7 @@ export function* rebootSaga({ payload }: PayloadAction<string>) {
     yield call([executionService, 'terminateAllSnaps']);
     yield call([executionService, 'executeSnap'], {
       snapId: DEFAULT_SNAP_ID,
-      sourceCode: payload,
+      sourceCode: payload.toString('utf8'),
       endowments,
     });
     yield put(setStatus(SnapStatus.Ok));
@@ -228,7 +232,9 @@ export function* requestSaga({ payload }: PayloadAction<SnapRpcHookArgs>) {
  * @param action.payload - The payload of the action, in this case a snap manifest.
  * @yields Selects the permission controller
  */
-export function* permissionsSaga({ payload }: PayloadAction<SnapManifest>) {
+export function* permissionsSaga({
+  payload,
+}: PayloadAction<VirtualFile<SnapManifest>>) {
   try {
     const permissionController: GenericPermissionController = yield select(
       getPermissionController,
@@ -238,7 +244,7 @@ export function* permissionsSaga({ payload }: PayloadAction<SnapManifest>) {
     // Payload is frozen for unknown reasons, this breaks our superstruct validation.
     // To circumvent we stringify and parse.
     const approvedPermissions = processSnapPermissions(
-      JSON.parse(JSON.stringify(payload.initialPermissions)),
+      JSON.parse(JSON.stringify(payload.result.initialPermissions)),
     );
 
     // Grant all permissions
