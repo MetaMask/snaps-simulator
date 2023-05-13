@@ -1,14 +1,24 @@
 import { Tag, TagProps } from '@chakra-ui/react';
 import { forwardRef, ReactNode } from 'react';
 
-import { Icon } from './Icon';
+import { Icon, IconName } from './Icon';
 
 type PrefillProps = TagProps & {
+  icon?: IconName;
+  iconLocation?: 'left' | 'right';
   children: ReactNode;
 };
 
 export const Prefill = forwardRef<unknown, PrefillProps>(
-  ({ children, ...props }, ref) => (
+  (
+    {
+      children,
+      icon = 'darkArrowTopRightIcon',
+      iconLocation = 'right',
+      ...props
+    },
+    ref,
+  ) => (
     <Tag
       ref={ref}
       width="fit-content"
@@ -22,8 +32,13 @@ export const Prefill = forwardRef<unknown, PrefillProps>(
       }}
       {...props}
     >
+      {iconLocation === 'left' && (
+        <Icon icon={icon} width="10px" marginRight="1" />
+      )}
       {children}
-      <Icon icon="darkArrowTopRightIcon" width="10px" marginLeft="1.5" />
+      {iconLocation === 'right' && (
+        <Icon icon={icon} width="10px" marginLeft="1" />
+      )}
     </Tag>
   ),
 );

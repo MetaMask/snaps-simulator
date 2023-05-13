@@ -53,6 +53,18 @@ export const EditableNode: FunctionComponent<EditableNodeProps> = ({
           onChange={handleChange}
           fontSize="sm"
           background="white"
+          borderColor="border.default"
+          outline="none"
+          _active={{
+            borderColor: 'border.active',
+            outline: 'none',
+            boxShadow: 'none',
+          }}
+          _focusVisible={{
+            borderColor: 'border.active',
+            outline: 'none',
+            boxShadow: 'none',
+          }}
         />
       </BaseNode>
     </Box>

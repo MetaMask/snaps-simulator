@@ -1,31 +1,51 @@
 import { Box, Flex, List, ListItem, Text } from '@chakra-ui/react';
-import { copyable, divider, heading, panel, text } from '@metamask/snaps-ui';
+import {
+  Component,
+  copyable,
+  divider,
+  heading,
+  panel,
+  text,
+} from '@metamask/snaps-ui';
 import { FunctionComponent } from 'react';
 
+import { IconName } from '../../../components';
 import { TemplateComponent } from './TemplateComponent';
 
-const TEMPLATE_COMPONENTS = [
+type TemplateComponent = {
+  icon: IconName;
+  text: string;
+  data: Component;
+  droppable: boolean;
+};
+
+const TEMPLATE_COMPONENTS: TemplateComponent[] = [
   {
+    icon: 'panel',
     text: 'Panel',
     data: panel([]),
     droppable: true,
   },
   {
+    icon: 'heading',
     text: 'Heading',
     data: heading('Heading'),
     droppable: false,
   },
   {
+    icon: 'text',
     text: 'Text',
     data: text('Text'),
     droppable: false,
   },
   {
+    icon: 'divider',
     text: 'Divider',
     data: divider(),
     droppable: false,
   },
   {
+    icon: 'copyable',
     text: 'Copyable',
     data: copyable('Copyable text'),
     droppable: false,
@@ -56,6 +76,7 @@ export const TemplateComponentList: FunctionComponent<ComponentsListProps> = ({
         <ListItem key={`component-${component.text}`}>
           <TemplateComponent
             incrementId={incrementId}
+            icon={component.icon}
             node={{
               id: nextId,
               parent: 0,

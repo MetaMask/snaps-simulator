@@ -4,15 +4,17 @@ import { NodeModel } from '@minoru/react-dnd-treeview';
 import { FunctionComponent } from 'react';
 import { useDrag } from 'react-dnd';
 
-import { Prefill } from '../../../components';
+import { IconName, Prefill } from '../../../components';
 
 type TemplateComponentProps = {
   node: NodeModel<Component>;
+  icon: IconName;
   incrementId: () => void;
 };
 
 export const TemplateComponent: FunctionComponent<TemplateComponentProps> = ({
   node,
+  icon,
   incrementId,
 }) => {
   const [, drag] = useDrag({
@@ -27,7 +29,13 @@ export const TemplateComponent: FunctionComponent<TemplateComponentProps> = ({
   });
 
   return (
-    <Prefill cursor="move" userSelect="none" ref={drag}>
+    <Prefill
+      icon={icon}
+      iconLocation="left"
+      cursor="move"
+      userSelect="none"
+      ref={drag}
+    >
       <Box>{node.text}</Box>
     </Prefill>
   );
