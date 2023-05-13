@@ -1,17 +1,19 @@
-import { Center, Heading, Text } from '@chakra-ui/react';
+import { Flex, Heading, Text } from '@chakra-ui/react';
 import { FunctionComponent } from 'react';
 
 import { Icon } from '../../../components';
 
 export const Start: FunctionComponent = () => (
-  <Center
-    flexDir="column"
-    border="1px solid"
+  <Flex
+    flexDirection="column"
+    alignItems="center"
     borderColor="border.default"
     padding="4"
+    paddingTop="12"
     borderRadius="lg"
     background="background.alternative"
-    height="300px"
+    flex="1"
+    marginY="-4"
   >
     <Icon icon="drag" marginBottom="1.5" />
     <Heading
@@ -28,5 +30,5 @@ export const Start: FunctionComponent = () => (
       <br />
       predefined components above.
     </Text>
-  </Center>
+  </Flex>
 );

@@ -31,6 +31,7 @@ import playIcon from '../assets/icons/play.svg';
 import snapIcon from '../assets/icons/snap.svg';
 import textBubbleIcon from '../assets/icons/text-bubble.svg';
 import textIcon from '../assets/icons/text.svg';
+import uiIcon from '../assets/icons/ui.svg';
 
 const DEFAULT_ICONS = {
   alert: {
@@ -152,6 +153,10 @@ const DEFAULT_ICONS = {
   panel: {
     alt: 'Panel',
     src: panelIcon,
+  },
+  ui: {
+    alt: 'UI',
+    src: uiIcon,
   },
 };
 

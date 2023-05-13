@@ -38,6 +38,7 @@ export const BaseNode: FunctionComponent<BaseNodeProps> = ({
       borderColor="border.default"
       // opacity={isDragging ? 0.5 : 1}
       display={isDragging ? 'none' : 'flex'}
+      marginX="4"
     >
       <Icon icon={node.data.type as IconName} width="16px" />
       <Text

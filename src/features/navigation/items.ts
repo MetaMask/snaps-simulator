@@ -45,7 +45,7 @@ export const NAVIGATION_ITEMS: NavigationItem[] = [
     label: 'UI Builder',
     tag: 'ui',
     description: 'Build a user interface for the snap',
-    icon: 'jsonRpc',
+    icon: 'ui',
     path: '/builder',
   },
 ];

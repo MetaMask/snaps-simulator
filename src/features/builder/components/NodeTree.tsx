@@ -1,4 +1,4 @@
-import { Box } from '@chakra-ui/react';
+import { Box, Flex } from '@chakra-ui/react';
 import { Component } from '@metamask/snaps-ui';
 import {
   NodeModel,
@@ -56,7 +56,10 @@ export const NodeTree: FunctionComponent<NodeTreeProps> = ({
   };
 
   const handleClose = (node: NodeModel<Component>) => {
-    const newItems = items.filter((item) => item.id !== node.id);
+    const newItems = items.filter(
+      (item) => item.id !== node.id && item.parent !== node.id,
+    );
+
     setItems(newItems);
   };
 
@@ -98,7 +101,11 @@ export const NodeTree: FunctionComponent<NodeTreeProps> = ({
       dropTargetId?: string | number;
     },
   ) => {
-    return dropTarget?.droppable && dropTargetId !== 0;
+    if (dropTargetId) {
+      return dropTarget?.droppable && dropTargetId > 0;
+    }
+
+    return false;
   };
 
   useEffect(() => {
@@ -108,7 +115,31 @@ export const NodeTree: FunctionComponent<NodeTreeProps> = ({
   }, [items, ref]);
 
   return (
-    <Box sx={{ ul: { listStyleType: 'none' }, li: { marginTop: '2' } }}>
+    <Flex
+      border="1px solid"
+      borderColor="border.default"
+      borderRadius="lg"
+      flex="1"
+      sx={{
+        // eslint-disable-next-line @typescript-eslint/naming-convention
+        '& > ul': {
+          display: 'flex',
+          flexDirection: 'column',
+          flex: 1,
+          marginY: '4',
+          // eslint-disable-next-line @typescript-eslint/naming-convention
+          '& > li': {
+            display: 'flex',
+            flexDirection: 'column',
+            flex: 1,
+            marginTop: '0',
+          },
+        },
+        ul: { listStyleType: 'none' },
+        // eslint-disable-next-line @typescript-eslint/naming-convention
+        li: { marginTop: '2' },
+      }}
+    >
       <Tree
         ref={ref}
         tree={items}
@@ -123,6 +154,6 @@ export const NodeTree: FunctionComponent<NodeTreeProps> = ({
         extraAcceptTypes={['template']}
         placeholderRender={handleRenderPlaceholder}
       />
-    </Box>
+    </Flex>
   );
 };

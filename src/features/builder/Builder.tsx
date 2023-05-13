@@ -7,7 +7,7 @@ import {
   TabPanels,
   Tabs,
 } from '@chakra-ui/react';
-import { Component, heading, NodeType, text } from '@metamask/snaps-ui';
+import { Component, NodeType } from '@metamask/snaps-ui';
 import { NodeModel } from '@minoru/react-dnd-treeview';
 import { FunctionComponent, useState } from 'react';
 
@@ -27,20 +27,6 @@ export const Builder: FunctionComponent = () => {
         type: NodeType.Panel,
         children: [],
       },
-    },
-    {
-      id: 2,
-      parent: 1,
-      text: 'Heading',
-      droppable: false,
-      data: heading('Heading'),
-    },
-    {
-      id: 3,
-      parent: 1,
-      text: 'Text',
-      droppable: false,
-      data: text('Lorem ipsum dolor sit amet, consectetur adipiscing elit.'),
     },
   ]);
 

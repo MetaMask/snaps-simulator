@@ -42,7 +42,7 @@ export const TemplateComponentList: FunctionComponent<ComponentsListProps> = ({
   nextId,
   incrementId,
 }) => (
-  <Box>
+  <Box marginBottom="4">
     <Text
       fontSize="xs"
       fontWeight="600"
