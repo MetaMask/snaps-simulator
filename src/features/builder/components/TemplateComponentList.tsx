@@ -2,7 +2,6 @@ import { Box, Flex, List, ListItem, Text } from '@chakra-ui/react';
 import { copyable, divider, heading, panel, text } from '@metamask/snaps-ui';
 import { FunctionComponent } from 'react';
 
-import { Prefill } from '../../../components';
 import { TemplateComponent } from './TemplateComponent';
 
 const TEMPLATE_COMPONENTS = [
@@ -55,18 +54,16 @@ export const TemplateComponentList: FunctionComponent<ComponentsListProps> = ({
     <Flex as={List} gap="2">
       {TEMPLATE_COMPONENTS.map((component) => (
         <ListItem key={`component-${component.text}`}>
-          <Prefill cursor="move">
-            <TemplateComponent
-              incrementId={incrementId}
-              node={{
-                id: nextId,
-                parent: 0,
-                droppable: component.droppable,
-                text: component.text,
-                data: component.data,
-              }}
-            />
-          </Prefill>
+          <TemplateComponent
+            incrementId={incrementId}
+            node={{
+              id: nextId,
+              parent: 0,
+              droppable: component.droppable,
+              text: component.text,
+              data: component.data,
+            }}
+          />
         </ListItem>
       ))}
     </Flex>

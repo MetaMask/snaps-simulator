@@ -53,7 +53,12 @@ export const Builder: FunctionComponent = () => {
               flex="1"
               overflow="hidden"
             >
-              <TabPanel display="flex" flexDirection="column" flex="1">
+              <TabPanel
+                display="flex"
+                flexDirection="column"
+                flex="1"
+                overflowY="auto"
+              >
                 <TemplateComponentList nextId={id} incrementId={incrementId} />
                 <NodeTree items={items} setItems={setItems} />
               </TabPanel>
