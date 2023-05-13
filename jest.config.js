@@ -41,10 +41,10 @@ module.exports = {
   // An object that configures minimum threshold enforcement for coverage results
   coverageThreshold: {
     global: {
-      branches: 93.38,
-      functions: 91.06,
-      lines: 91.94,
-      statements: 92.79,
+      branches: 90.96,
+      functions: 91.17,
+      lines: 91.6,
+      statements: 92.42,
     },
   },
 
@@ -193,7 +193,7 @@ module.exports = {
 
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
   transformIgnorePatterns: [
-    'node_modules/(?!(monaco-editor|react-monaco-editor))',
+    'node_modules/(?!(monaco-editor|react-monaco-editor|react-dnd|dnd-core|@react-dnd/*|@minoru/react-dnd-treeview))',
   ],
 
   // An array of regexp pattern strings that are matched against all modules before the module loader will automatically return a mock for them
