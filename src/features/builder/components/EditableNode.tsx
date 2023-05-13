@@ -36,7 +36,7 @@ export const EditableNode: FunctionComponent<EditableNodeProps> = ({
   onClose,
 }) => {
   const text = getNodeText(node);
-  assert(text, 'Node must have text.');
+  assert(text !== null, 'Node must have text.');
 
   const [value, setValue] = useState(text);
 
