@@ -30,7 +30,7 @@ export const NodeRenderer: FunctionComponent<NodeRendererProps> = ({
   return (
     <Window snapName={snapName} snapId={DEFAULT_SNAP_ID}>
       <Box margin="4" marginTop="0" flex="1">
-        <Delineator snapName="foo-snap">
+        <Delineator snapName={snapName}>
           <Renderer node={node} />
         </Delineator>
       </Box>
