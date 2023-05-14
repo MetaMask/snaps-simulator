@@ -1,5 +1,5 @@
 import { Image, PropsOf } from '@chakra-ui/react';
-import { FunctionComponent } from 'react';
+import { forwardRef, ForwardRefExoticComponent } from 'react';
 
 import alertIcon from '../assets/icons/alert.svg';
 import arrowDownIcon from '../assets/icons/arrow-down.svg';
@@ -9,21 +9,29 @@ import computerIcon from '../assets/icons/computer.svg';
 import configurationIcon from '../assets/icons/configuration.svg';
 import copiedIcon from '../assets/icons/copied.svg';
 import copyIcon from '../assets/icons/copy.svg';
+import copyableIcon from '../assets/icons/copyable.svg';
 import cronjobIcon from '../assets/icons/cronjob.svg';
+import crossIcon from '../assets/icons/cross.svg';
 import darkArrowTopRightIcon from '../assets/icons/dark-arrow-top-right.svg';
+import dividerIcon from '../assets/icons/divider.svg';
 import dotIcon from '../assets/icons/dot.svg';
+import dragIcon from '../assets/icons/drag.svg';
 import errorTriangleIcon from '../assets/icons/error-triangle.svg';
 import gitHubIcon from '../assets/icons/github.svg';
+import headingIcon from '../assets/icons/heading.svg';
 import insightsIcon from '../assets/icons/insights.svg';
 import jsonRpcIcon from '../assets/icons/json-rpc.svg';
 import manifestIcon from '../assets/icons/manifest.svg';
 import moonIcon from '../assets/icons/moon.svg';
+import panelIcon from '../assets/icons/panel.svg';
 import playErrorIcon from '../assets/icons/play-error.svg';
 import playMutedIcon from '../assets/icons/play-muted.svg';
 import playSuccessIcon from '../assets/icons/play-success.svg';
 import playIcon from '../assets/icons/play.svg';
 import snapIcon from '../assets/icons/snap.svg';
 import textBubbleIcon from '../assets/icons/text-bubble.svg';
+import textIcon from '../assets/icons/text.svg';
+import uiIcon from '../assets/icons/ui.svg';
 
 const DEFAULT_ICONS = {
   alert: {
@@ -118,6 +126,38 @@ const DEFAULT_ICONS = {
     alt: 'JSON-RPC',
     src: jsonRpcIcon,
   },
+  cross: {
+    alt: 'Cross',
+    src: crossIcon,
+  },
+  drag: {
+    alt: 'Drag',
+    src: dragIcon,
+  },
+  heading: {
+    alt: 'Heading',
+    src: headingIcon,
+  },
+  text: {
+    alt: 'Text',
+    src: textIcon,
+  },
+  copyable: {
+    alt: 'Copyable',
+    src: copyableIcon,
+  },
+  divider: {
+    alt: 'Divider',
+    src: dividerIcon,
+  },
+  panel: {
+    alt: 'Panel',
+    src: panelIcon,
+  },
+  ui: {
+    alt: 'UI',
+    src: uiIcon,
+  },
 };
 
 export type IconName = keyof typeof DEFAULT_ICONS;
@@ -142,18 +182,24 @@ export type IconProps = {
  * @param props.height - The height of the icon. Defaults to '32px'.
  * @returns The icon component.
  */
-export const Icon: FunctionComponent<IconProps> = ({
-  icon,
-  alt = DEFAULT_ICONS[icon].alt,
-  width = '32px',
-  height = width,
-  ...props
-}) => (
-  <Image
-    src={DEFAULT_ICONS[icon].src}
-    alt={alt}
-    width={width}
-    height={height}
-    {...props}
-  />
+export const Icon: ForwardRefExoticComponent<IconProps> = forwardRef(
+  (
+    {
+      icon,
+      alt = DEFAULT_ICONS[icon].alt,
+      width = '32px',
+      height = width,
+      ...props
+    },
+    ref,
+  ) => (
+    <Image
+      ref={ref}
+      src={DEFAULT_ICONS[icon].src}
+      alt={alt}
+      width={width}
+      height={height}
+      {...props}
+    />
+  ),
 );

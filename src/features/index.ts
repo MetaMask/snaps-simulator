@@ -1,3 +1,4 @@
+export * from './builder';
 export * from './handlers';
 export * from './layout';
 export * from './manifest';

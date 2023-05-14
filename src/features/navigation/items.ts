@@ -41,4 +41,11 @@ export const NAVIGATION_ITEMS: NavigationItem[] = [
     icon: 'insights',
     path: `/handler/${HandlerType.OnTransaction}`,
   },
+  {
+    label: 'UI Builder',
+    tag: 'ui',
+    description: 'Build a user interface for the snap',
+    icon: 'ui',
+    path: '/builder',
+  },
 ];

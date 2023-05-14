@@ -13,6 +13,7 @@ import {
   Transactions,
   Handler,
   Manifest,
+  Builder,
 } from './features';
 
 export const router = createHashRouter(
@@ -27,6 +28,7 @@ export const router = createHashRouter(
           />
         }
       />
+      <Route path="/builder" element={<Builder />} />
       <Route path="/manifest" element={<Manifest />} />
       <Route path="/handler" element={<Handler />}>
         <Route

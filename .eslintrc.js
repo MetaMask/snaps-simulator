@@ -3,6 +3,10 @@ module.exports = {
 
   extends: ['@metamask/eslint-config'],
 
+  settings: {
+    'import/extensions': ['.ts', '.tsx'],
+  },
+
   overrides: [
     {
       files: ['*.ts', '*.tsx'],
@@ -20,6 +24,9 @@ module.exports = {
             allow: ['Text'],
           },
         ],
+
+        'react/display-name': 'off',
+        'react/prop-types': 'off',
       },
       settings: {
         react: {

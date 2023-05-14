@@ -1,8 +1,10 @@
 import { ChakraProvider } from '@chakra-ui/react';
+import { getBackendOptions, MultiBackend } from '@minoru/react-dnd-treeview';
 import { FunctionComponent, ReactElement, StrictMode } from 'react';
+import { DndProvider } from 'react-dnd';
 import { Provider } from 'react-redux';
 
-import { Notifications } from '../features/notifications/Notifications';
+import { Notifications } from '../features';
 import type { createStore } from '../store';
 import { theme } from '../theme';
 
@@ -24,8 +26,10 @@ export const Root: FunctionComponent<RootProps> = ({ store, children }) => (
   <StrictMode>
     <Provider store={store}>
       <ChakraProvider theme={theme}>
-        <Notifications />
-        {children}
+        <DndProvider backend={MultiBackend} options={getBackendOptions()}>
+          <Notifications />
+          {children}
+        </DndProvider>
       </ChakraProvider>
     </Provider>
   </StrictMode>
