@@ -16,7 +16,7 @@ import { TemplateComponentList, NodeTree, NodeRenderer } from './components';
 import { nodeModelsToComponent, panelToCode } from './utils';
 
 export const Builder: FunctionComponent = () => {
-  const [id, setId] = useState<number>(100);
+  const [id, setId] = useState<number>(2);
   const [items, setItems] = useState<NodeModel<Component>[]>([
     {
       id: 1,

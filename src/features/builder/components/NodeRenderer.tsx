@@ -2,9 +2,11 @@ import { Box } from '@chakra-ui/react';
 import { Component } from '@metamask/snaps-ui';
 import { NodeModel } from '@minoru/react-dnd-treeview';
 import { FunctionComponent, useMemo } from 'react';
+import { useSelector } from 'react-redux';
 
 import { Delineator, Window } from '../../../components';
 import { Renderer } from '../../renderer';
+import { DEFAULT_SNAP_ID, getSnapName } from '../../simulation';
 import { nodeModelsToComponent } from '../utils';
 
 export type NodeRendererProps = {
@@ -22,10 +24,11 @@ export type NodeRendererProps = {
 export const NodeRenderer: FunctionComponent<NodeRendererProps> = ({
   items,
 }) => {
+  const snapName = useSelector(getSnapName) ?? 'Unknown';
   const node = useMemo(() => nodeModelsToComponent(items), [items]);
 
   return (
-    <Window snapName="foo-snap" snapId="bar-snap">
+    <Window snapName={snapName} snapId={DEFAULT_SNAP_ID}>
       <Box margin="4" marginTop="0" flex="1">
         <Delineator snapName="foo-snap">
           <Renderer node={node} />

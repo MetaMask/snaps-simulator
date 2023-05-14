@@ -36,7 +36,6 @@ export const BaseNode: FunctionComponent<BaseNodeProps> = ({
       alignItems="center"
       border="1px solid"
       borderColor="border.default"
-      // opacity={isDragging ? 0.5 : 1}
       display={isDragging ? 'none' : 'flex'}
       marginX="4"
       cursor={node.id > 1 ? 'move' : 'default'}
