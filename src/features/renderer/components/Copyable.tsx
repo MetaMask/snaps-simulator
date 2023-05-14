@@ -49,6 +49,7 @@ export const Copyable: FunctionComponent<CopyableProps> = ({ node, id }) => {
       justifyContent="space-between"
       marginBottom="1"
       key={`${id}-copyable`}
+      wordBreak="break-word"
     >
       <Text
         fontFamily="custom"

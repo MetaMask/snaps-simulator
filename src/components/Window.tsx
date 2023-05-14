@@ -32,6 +32,7 @@ export const Window: FunctionComponent<WindowProps> = ({
     maxWidth="360px"
     height="600px"
     paddingY="4"
+    overflowY="scroll"
   >
     {showAuthorship && <Author snapName={snapName} snapId={snapId} />}
     {children}
