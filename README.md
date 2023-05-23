@@ -2,6 +2,12 @@
 
 A simulator for MetaMask Snaps, to be used for testing and development.
 
+## ⚠️ Deprecated
+
+This repository is deprecated and no longer maintained. The code has been moved
+to the [`MetaMask/snaps-monorepo`](https://github.com/MetaMask/snaps-monorepo/tree/main/packages/snaps-simulator)
+repository.
+
 ## Contributing
 
 ### Setup
